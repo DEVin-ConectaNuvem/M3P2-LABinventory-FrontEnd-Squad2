@@ -21,7 +21,8 @@
     "vue3-gravatar": "^3.0.0",
     "vue-cookies": "^1.8.1",
     "vue-m-dialog": "^3.0.0",
-    "@meforma/vue-toaster": "^1.3.0"
+    "@meforma/vue-toaster": "^1.3.0",
+    "vue-loading-overlay": "5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
