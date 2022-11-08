@@ -35,24 +35,6 @@
       "name": "Maycon Robson Campos",
       "email": "maycon@email.com",
       "password": "abcd1234"
-    },
-    {
-      "id": 7,
-      "name": "Vinicius Possatto Stormoski",
-      "email": "vinicius@email.com",
-      "password": "abcd1234"
-    },
-    {
-      "email": "maycon.campos@gmail.com",
-      "password": "123456789",
-      "name": "Maycon R. Campos",
-      "id": 8
-    },
-    {
-      "email": "paulo@gmail.com",
-      "password": "123456789",
-      "name": "Paulo Brindola",
-      "id": 9
     }
   ],
   "collaborators": [
