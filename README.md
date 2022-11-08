@@ -1,4 +1,4 @@
-# m3p2-squad-2
+# devinhouse-proj2mod1
 
 ## Project setup
 ```
@@ -15,16 +15,6 @@ npm run serve
 npm run build
 ```
 
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
 ### Lints and fixes files
 ```
 npm run lint
@@ -32,3 +22,21 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Detalhes do Projeto
+
+* Crie uma conta
+* Faça login
+* Utilize as funcionalidades: Cadastro de produtos e itens, lista de colaboradores, emprestar item e inventário
+
+### Corrigir para funcionar 100%
+
+**View CadastroItem.vue**: EXCLUIR linhas 200 e 201 (description.reset());
+
+**Componente MediumCard.vue**: EXCLUIR prop: method;
+
+**View InventoryBook.vue e ListaUsuarios.vue**: em <*MediumCard*/> TROCAR ":method" por "@click";
+
+
+
+
