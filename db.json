@@ -1,36 +1,93 @@
 {
-    "users": [
-      {"name": "Adriano Matos Meier", "email": "adriano@email.com", "password": "abcd1234"},
-      {"name": "Josinaldo De Andrade Pereira", "email": "josinaldo@email.com", "password": "abcd1234"},
-      {"name": "Julia Da Silva Moura", "email": "julia@email.com", "password": "abcd1234"},
-      {"name": "Kauã Kirchner De Souza", "email": "kaua@email.com", "password": "abcd1234"},
-      {"name": "Marcelo Coelho", "email": "marcelo@email.com", "password": "abcd1234"},
-      {"name": "Maycon Robson Campos", "email": "maycon@email.com", "password": "abcd1234"},
-      {"name": "Vinicius Possatto Stormoski", "email": "vinicius@email.com", "password": "abcd1234"}
-    ],
-    "collaborators": [
-        {
-            "nome": "Adriano Matos Meier", "genero": "Masculino", "nascimento": "1980-02-07", "telefone": "48999887766", "bairro": "Caminho Novo",
-            "cargo": "DevOps", "cep": "88132-373", "complemento": "901A", "email": "adriano@email.com", "localidade": "Palhoça",
-            "logradouro": "Rua Thomé Israel da Silva", "numero": 105, "referencia": "Santa Ana Residence", "uf": "SC"
-        },
-        {
-            "nome": "Josinaldo De Andrade Pereira", "genero": "Masculino", "nascimento": "1985-01-27", "telefone": "48988765432", "bairro": "Agronomica",
-            "cargo": "DevOps", "cep": "88025-500", "complemento": "406A", "email": "josinaldo@email.com", "localidade": "Florianópolis",
-            "logradouro": "Rua Delminda Silveira", "numero": 729, "referencia": "Cond. Baia do Sol", "uf": "SC"
-        }
-    ],
-    "itens": [
-        {
-            "patrimonio": "AB1234-567",
-            "titulo": "Teclado sem fio ABNT2",
-            "categoria": "Acessórios",
-            "valor": "156,90",
-            "url": "https://m.media-amazon.com/images/I/61Vs0otp73L._AC_SY450_.jpg",
-            "marca": "Logitech",
-            "modelo": "K380",
-            "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
-            "emprestado": "Item disponível"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "name": "Adriano Matos Meier",
+      "email": "adriano@email.com",
+      "password": "abcd1234"
+    },
+    {
+      "id": 2,
+      "name": "Josinaldo De Andrade Pereira",
+      "email": "josinaldo@email.com",
+      "password": "abcd1234"
+    },
+    {
+      "id": 3,
+      "name": "Julia Da Silva Moura",
+      "email": "julia@email.com",
+      "password": "abcd1234"
+    },
+    {
+      "id": 4,
+      "name": "Kauã Kirchner De Souza",
+      "email": "kaua@email.com",
+      "password": "abcd1234"
+    },
+    {
+      "id": 5,
+      "name": "Marcelo Coelho",
+      "email": "marcelo@email.com",
+      "password": "abcd1234"
+    },
+    {
+      "id": 6,
+      "name": "Maycon Robson Campos",
+      "email": "maycon@email.com",
+      "password": "abcd1234"
+    },
+    {
+      "email": "maycon.campos@gmail.com",
+      "password": "123456789",
+      "name": "Maycon R. Campos",
+      "id": 7
+    }
+  ],
+  "collaborators": [
+    {
+      "nome": "Adriano Matos Meier",
+      "genero": "Masculino",
+      "nascimento": "1980-02-07",
+      "telefone": "48999887766",
+      "bairro": "Caminho Novo",
+      "cargo": "DevOps",
+      "cep": "88132-373",
+      "complemento": "901A",
+      "email": "adriano@email.com",
+      "localidade": "Palhoça",
+      "logradouro": "Rua Thomé Israel da Silva",
+      "numero": 105,
+      "referencia": "Santa Ana Residence",
+      "uf": "SC"
+    },
+    {
+      "nome": "Josinaldo De Andrade Pereira",
+      "genero": "Masculino",
+      "nascimento": "1985-01-27",
+      "telefone": "48988765432",
+      "bairro": "Agronomica",
+      "cargo": "DevOps",
+      "cep": "88025-500",
+      "complemento": "406A",
+      "email": "josinaldo@email.com",
+      "localidade": "Florianópolis",
+      "logradouro": "Rua Delminda Silveira",
+      "numero": 729,
+      "referencia": "Cond. Baia do Sol",
+      "uf": "SC"
+    }
+  ],
+  "itens": [
+    {
+      "patrimonio": "AB1234-567",
+      "titulo": "Teclado sem fio ABNT2",
+      "categoria": "Acessórios",
+      "valor": "156,90",
+      "url": "https://m.media-amazon.com/images/I/61Vs0otp73L._AC_SY450_.jpg",
+      "marca": "Logitech",
+      "modelo": "K380",
+      "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
+      "emprestado": "Item disponível"
+    }
+  ]
 }
