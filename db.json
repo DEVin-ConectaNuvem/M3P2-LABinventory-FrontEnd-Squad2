@@ -35,6 +35,18 @@
       "name": "Maycon Robson Campos",
       "email": "maycon.campos@gmail.com",
       "password": "abcd1234"
+    },
+    {
+      "name": "Kauã k",
+      "email": "kaua2@gmail.com",
+      "password": "12345678",
+      "id": 7
+    },
+    {
+      "name": "Kauã Kirchn",
+      "email": "kauakirchner@email.com",
+      "password": "kaua1234",
+      "id": 8
     }
   ],
   "collaborators": [
