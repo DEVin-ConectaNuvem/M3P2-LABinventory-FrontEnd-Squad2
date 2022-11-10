@@ -191,13 +191,15 @@ export default {
         // Salva no objeto itens no localstorage
         saveItem() {
             this.item.emprestado = 'Item disponível'
-            this.$store.commit('itens/saveItem', {...this.item})
-            let saved = this.$store.state.itens.saved
-            if (saved) {
+            this.$store.dispatch('itens/saveItem', {...this.item})
+            let error = this.$store.state.itens.error
+            if (!error) {
                 this.$toast.info('Item salvo com sucesso.', {position: 'top'})
+                let form = document.getElementById('newitem-form')
+                form.reset()
+            } else {
+                this.$toast.warning('Este patrimônio já está sendo utilizado.', {position: 'top'})
             }
-            let form = document.getElementById('newitem-form')
-            form.reset()
         },
         cleanForm() {
             let form = document.getElementById('newitem-form')

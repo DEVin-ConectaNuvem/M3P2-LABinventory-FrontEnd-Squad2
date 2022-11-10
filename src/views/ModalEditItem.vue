@@ -202,9 +202,9 @@ export default {
       // Salva as edições no item
       saveItem() {
         // Envia as edições para store
-        this.$store.commit('itens/saveItem', this.item)
-        let saved = this.$store.state.itens.saved
-            if (saved) {
+        this.$store.dispatch('itens/saveItem', this.item)
+        let edit = this.$store.state.itens.edit
+            if (!edit) {
               location.reload()
               this.$loading.show()
               this.$toast.info('Item salvo!', {position: 'top-right'})
@@ -215,7 +215,7 @@ export default {
       // Envia o código de patrimônio do item
       // a ser deletado para a store de itens
       delItem() {
-        this.$store.commit('itens/delItem', this.item.patrimonio)
+        this.$store.dispatch('itens/delItem', this.item.patrimonio)
       },
     },
     watch: {

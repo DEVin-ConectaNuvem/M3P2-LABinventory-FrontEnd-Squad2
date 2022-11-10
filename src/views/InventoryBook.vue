@@ -42,7 +42,7 @@
 
         <!-- CARDS do inventário -->
         <div id="inv-cards">
-            <div class="inv-card shadow" v-for="item in items" :key="item.id">
+            <div class="inv-card shadow" v-for="item in itemsLocal" :key="item.id">
                 <MediumCard 
                 cardType="inventory" 
                 :img="item.url" 
@@ -122,6 +122,9 @@ export default {
         allCollabs() {
             return this.$store.state.collaborators.collabs
         },
+        itemsLocal() {
+            return this.$store.state.itens.sendItens;
+        },  
         // Retorna o valor total em style currency para os SMALL CARDS
         currency() {
             let formatter = new Intl.NumberFormat('pt-BR', {
