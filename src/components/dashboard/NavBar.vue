@@ -2,7 +2,7 @@
 <div class="navbar-div">
     <!-- TÍTULO: referente a rota renderizada -->
     <div id="title">
-        <p>{{path}}</p>
+        <p class="current-route">{{path}}</p>
     </div>
     <!-- USER: nome e imagem -->
     <div id="user">
@@ -19,6 +19,7 @@ const cookies = useCookies().cookies
 
 export default {
     data() {
+        
         return {
             user: 'teste@teste.com', // Modificado pelo mounted
             userName: 'Username' // Modificado pelo mounted
