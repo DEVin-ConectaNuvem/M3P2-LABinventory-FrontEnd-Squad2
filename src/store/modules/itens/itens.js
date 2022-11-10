@@ -8,7 +8,7 @@ export default {
             item: {}, // Item selecionado para edição
             toEdit: null, // Código do patrimônio
             stats: {}, // Cálculos para SMALL CARDS no inventário
-            error: false
+            edit: false
         }
     },
     mutations: {
@@ -50,6 +50,7 @@ export default {
             // Salva o array objetos item atualizado no localStorage
             localStorage.setItem('itens', JSON.stringify(newItens))
         },
+        
         // Calcula estatísticas para SMALL CARDS
         itemStats(state) {
             // Quantidade de itens
@@ -78,14 +79,22 @@ export default {
                 context.state.sendItens = response.data;
             })
             context.state.sendItens.forEach(element => {
-                if(element.patrimonio === item.patrimonio) {
-                    context.state.error = true
-                    return false
+                if(element.patrimonio === context.state.toEdit) {
+                    context.state.edit = true
+                    item.patrimonio = context.state.toEdit
+                    axios.put(`http://localhost:3000/itens/${element.id}`, item, headers)
+                    .then(() => {
+                        context.commit("getItens")
+                        return true
+                    })
+                    .catch((e) => {
+                        console.error("error", e)
+                    })
+                    return true
                 }
             });
-            if(!context.state.error) {
+            if(!context.state.edit) {
                 
-                context.state.error = false
                 var headers = {
                     "Content-Type": "application/json"
                 }
@@ -99,54 +108,16 @@ export default {
                 .finally(() => {
                 })
             }
+            context.state.edit = false
             
         }
-
-
-    //         // Caso localStorage vazio, cria um array com objeto item e salva
-    //         if (localStorage.getItem('itens') === null) {
-    //             let itens = []
-    //             itens.push(item)
-    //             localStorage.setItem('itens', JSON.stringify(itens))
-    //         } else { // Caso já exista um array objetos item
-    //             let list = JSON.parse(localStorage.getItem('itens'))
-    //             //No caso de item editado, apenas substitui o item
-    //             let already = false
-    //             list.forEach(prod => {
-    //                 // Verifica se ao menos 3 keys são iguais
-    //                 let matches = 0
-    //                 for (const [key,] of Object.entries(prod)) {
-    //                     if (prod[key] == item[key]) {
-    //                         matches++
-    //                         if (matches > 2) {
-    //                             break
-    //                         }
-    //                     }
-    //                 }
-    //                 if (matches > 2) {
-    //                     let index = list.indexOf(prod)
-    //                     list[index] = item
-    //                     state.error = true
-    //                     already = true
-    //                 }
-    //             })
-    //             // Se não é um item editado, insere o novo objeto item no array
-    //             if (!already) {
-    //                 list.push(item)
-    //                 state.error = true
-    //             }
-    //             // Salva o array objetos item atualizado no localStorage
-    //             localStorage.setItem('itens', JSON.stringify(list))
-    //         }
-    //     },
     },
     getters: {
         // Retorna o último item selecionado para edição
         // Alimenta o modal Editar Item
         sendItemToEdit(state) {
             let itemToEdit = {}
-            let itens = JSON.parse(localStorage.getItem('itens'))
-            itens.forEach(item => {
+            state.sendItens.forEach(item => {
                 if (item.patrimonio == state.toEdit) {
                     itemToEdit = item
                 }
