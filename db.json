@@ -79,6 +79,7 @@
   ],
   "itens": [
     {
+      "id": 0,
       "patrimonio": "AB1234-567",
       "titulo": "Teclado sem fio ABNT2",
       "categoria": "Acessórios",

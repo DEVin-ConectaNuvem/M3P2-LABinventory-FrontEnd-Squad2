@@ -138,7 +138,7 @@ export default {
             // valor do select input
             let nome = document.getElementById(`${index}`).value
             // Insere key "emprestado: colaborador" no item
-            this.$store.commit('itens/flagItem', {
+            this.$store.dispatch('itens/flagItem', {
                 itemTo: nome,
                 itemWhich: item
             })
