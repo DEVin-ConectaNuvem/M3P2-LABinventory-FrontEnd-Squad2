@@ -1,42 +1,72 @@
+import axios from "axios";
+
+
 export default {
     namespaced: true,
     state() {
         return {
             // Utilizado para disparar mensagem de finalização
             // no compenente ModalNewAccount
-            success: false
+            success: false,
+            account: null,
+            users: [],
+            existe: false,
         }
     },
     mutations: {
+        setAccountUser(state, value) {
+            state.account = value
+        },
+        setUsers(state, users) {
+            state.users.push(users)
+        },
+        setExiste(state, value) {
+            state.existe = value
+        },
+        setSuccess(state, value) {
+            state.success = value
+        }
+    },
+    actions: {
         // Cria uma nova conta de usuário
         // Parâmetro user é enviado pelo modal de criação de conta
-        setAccount(state, user) {
-            let users = JSON.parse(localStorage.getItem('users'))
-            // Caso a lista users seja apagada do localstorage,
-            // recria-se aqui
-            if (users === null) {
-                let setUsers = []
-                localStorage.setItem('users', JSON.stringify(setUsers))
-                users = JSON.parse(localStorage.getItem('users'))
+        async setAccount(context, user) {
+            context.commit('setUsers', [])
+            context.commit("setExiste", false)
+            context.commit('setSuccess', false)
+
+            await axios.get("http://localhost:3000/users")
+            .then((response) => {
+                response.data.forEach(element => {
+                    context.commit('setUsers', element)
+                });
+            })
+            
+            context.state.users.forEach(element => {
+                if(element.email === user.email) {
+                    context.commit("setExiste", true)
+                }
+            });
+
+            if(context.state.existe) {
+                context.commit('setSuccess', false)
+                return false
             }
-            //Se o email já estiver cadastrado, "registered" recebe true
-            let registered = false
-            // Verifica se a conta já está criada
-            if (users.length > 0) {
-                users.forEach( item => {
-                  if (item.email == user.email) {
-                      registered = true
-                  }
-                })
+            var headers = {
+                "Content-Type": "application/json"
             }
-            // Se não houver o registro, cria a conta
-            // Armazena no localstorage
-            if (!registered) {
-                users.push(user)
-                let newUser = JSON.stringify(users)
-                localStorage.setItem('users', newUser)
-                state.success = true
-            }
+            await axios.post("http://localhost:3000/users", user, headers)
+            .then(() => {
+                context.commit("setUsers", user)
+                context.commit('setSuccess', true)
+                return true
+            })
+            .catch((e) => {
+                console.error("error", e)
+            })
+            .finally(() => {
+
+            })
         }
     }
 }
