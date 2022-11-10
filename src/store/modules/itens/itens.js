@@ -42,14 +42,6 @@ export default {
         editItem(state, patr) {
             state.toEdit = patr
         },
-        // Deleta um objeto item do array de itens pelo código de patrimônio
-        delItem(state, patr) {
-            let allItens = JSON.parse(localStorage.getItem('itens'))
-            // Filtra o array pelo cod. patrimonio
-            let newItens = allItens.filter(item => item.patrimonio !== patr)
-            // Salva o array objetos item atualizado no localStorage
-            localStorage.setItem('itens', JSON.stringify(newItens))
-        },
         
         // Calcula estatísticas para SMALL CARDS
         itemStats(state) {
@@ -110,7 +102,27 @@ export default {
             }
             context.state.edit = false
             
-        }
+        },
+        // Deleta um objeto item do array de itens pelo código de patrimônio
+        async delItem(context, patr) {
+            await axios.get("http://localhost:3000/itens")
+            .then((response) => {
+                context.state.sendItens = response.data;
+            })
+            context.state.sendItens.forEach(element => {
+                if(element.patrimonio === patr) {
+                    axios.delete(`http://localhost:3000/itens/${element.id}`)
+                    .then(() => {
+                        context.commit("getItens")
+                        return true
+                    })
+                    .catch((e) => {
+                        console.error("error", e)
+                    })
+                    return true
+                }
+            });
+        },
     },
     getters: {
         // Retorna o último item selecionado para edição

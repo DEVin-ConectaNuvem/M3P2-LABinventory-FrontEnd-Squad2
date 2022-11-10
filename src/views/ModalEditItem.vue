@@ -215,7 +215,7 @@ export default {
       // Envia o código de patrimônio do item
       // a ser deletado para a store de itens
       delItem() {
-        this.$store.commit('itens/delItem', this.item.patrimonio)
+        this.$store.dispatch('itens/delItem', this.item.patrimonio)
       },
     },
     watch: {
