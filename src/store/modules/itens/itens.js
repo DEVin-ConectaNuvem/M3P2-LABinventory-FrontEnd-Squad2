@@ -29,16 +29,7 @@ export default {
                 }
             })
         },
-        // Insere key "emprestado: colaborador no item"
-        flagItem(state, itemEmprestado) {
-            let itens = JSON.parse(localStorage.getItem('itens'))
-            itens.forEach(item => {
-                if (item.patrimonio === itemEmprestado.itemWhich.patrimonio) {
-                    item.emprestado = itemEmprestado.itemTo
-                }
-            })
-            localStorage.setItem('itens', JSON.stringify(itens))
-        },
+        
         editItem(state, patr) {
             state.toEdit = patr
         },
@@ -122,6 +113,26 @@ export default {
                     return true
                 }
             });
+        },
+        // Insere key "emprestado: colaborador no item"
+        flagItem(context, itemEmprestado) {
+            var headers = {
+                "Content-Type": "application/json"
+            }
+            context.state.sendItens.forEach(item => {
+                if (item.patrimonio === itemEmprestado.itemWhich.patrimonio) {
+                    item.emprestado = itemEmprestado.itemTo
+                    axios.put(`http://localhost:3000/itens/${item.id}`, item, headers)
+                        .then(() => {
+                            context.commit("getItens")
+                            return true
+                        })
+                        .catch((e) => {
+                            console.error("error", e)
+                        })
+                }
+            })
+            
         },
     },
     getters: {
