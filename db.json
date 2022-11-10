@@ -35,6 +35,12 @@
       "name": "Maycon Robson Campos",
       "email": "maycon.campos@gmail.com",
       "password": "abcd1234"
+    },
+    {
+      "name": "Marcoelho",
+      "email": "marcoelho@email.com",
+      "password": "12345678",
+      "id": 7
     }
   ],
   "collaborators": [
