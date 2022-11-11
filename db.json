@@ -85,6 +85,42 @@
       "modelo": "K380",
       "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
       "emprestado": "Adriano Matos Meier"
+    },
+    {
+      "id": 1,
+      "patrimonio": "BD1234-567",
+      "titulo": "Monitor Dell 32pol",
+      "categoria": "Acessórios",
+      "valor": "1299,90",
+      "url": "https://images.tcdn.com.br/img/img_prod/740836/monitor_dell_27_p2717h_1787_1_0866074eb5d7813176888736ba876367.jpg",
+      "marca": "Dell",
+      "modelo": "P3217h",
+      "descricao": "Monitor Dell 32 polegadas P3217h 2HDMI 2USB",
+      "emprestado": "Item disponível"
+    },
+    {
+      "id": 2,
+      "patrimonio": "AP9900-001",
+      "titulo": "Macbook Air M2",
+      "categoria": "Eletrônicos",
+      "valor": "3899,90",
+      "url": "https://www.apple.com/v/macbook-air-m2/b/images/overview/design/finish_silver__fl868a6lcs2u_large.jpg",
+      "marca": "Apple",
+      "modelo": "Air",
+      "descricao": "Macbook Air com chip M2 13 inch retina",
+      "emprestado": "Item disponível"
+    },
+    {
+      "id": 3,
+      "patrimonio": "LG6710-201",
+      "titulo": "Mouse Gamer",
+      "categoria": "Acessórios",
+      "valor": "239,89",
+      "url": "https://images.kabum.com.br/produtos/fotos/102649/mouse-gamer-logitech-g403-hero-16k-rgb-lightsync-16000-dpi_mouse-gamer-logitech-g403-hero-16k-rgb-lightsync-16000-dpi_1563479684_g.jpg",
+      "marca": "Logitech",
+      "modelo": "G403 Hero",
+      "descricao": "Mouse Gamer Logitech G403 Hero preto com fio",
+      "emprestado": "Item disponível"
     }
   ]
 }
