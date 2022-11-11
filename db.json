@@ -35,16 +35,11 @@
       "name": "Maycon Robson Campos",
       "email": "maycon.campos@gmail.com",
       "password": "abcd1234"
-    },
-    {
-      "name": "Marcoelho",
-      "email": "marcoelho@email.com",
-      "password": "12345678",
-      "id": 7
     }
   ],
   "collaborators": [
     {
+      "id": 0,
       "nome": "Adriano Matos Meier",
       "genero": "Masculino",
       "nascimento": "1980-02-07",
@@ -61,6 +56,7 @@
       "uf": "SC"
     },
     {
+      "id": 1,
       "nome": "Josinaldo De Andrade Pereira",
       "genero": "Masculino",
       "nascimento": "1985-01-27",
@@ -88,7 +84,7 @@
       "marca": "Logitech",
       "modelo": "K380",
       "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
-      "emprestado": "Item disponível"
+      "emprestado": "Adriano Matos Meier"
     }
   ]
 }
