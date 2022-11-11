@@ -41,10 +41,23 @@
       "email": "marcoelho@email.com",
       "password": "12345678",
       "id": 7
+    },
+    {
+      "name": "Kauã Kirchner ",
+      "email": "kauakirchner@email.com",
+      "password": "kaua1234",
+      "id": 8
+    },
+    {
+      "name": "Adria",
+      "email": "amm@email.com",
+      "password": "abcd1234",
+      "id": 9
     }
   ],
   "collaborators": [
     {
+      "id": 1,
       "nome": "Adriano Matos Meier",
       "genero": "Masculino",
       "nascimento": "1980-02-07",
@@ -61,6 +74,7 @@
       "uf": "SC"
     },
     {
+      "id": 2,
       "nome": "Josinaldo De Andrade Pereira",
       "genero": "Masculino",
       "nascimento": "1985-01-27",
@@ -75,20 +89,50 @@
       "numero": 729,
       "referencia": "Cond. Baia do Sol",
       "uf": "SC"
+    },
+    {
+      "nome": "Maycon R. Campos",
+      "genero": "Masculino",
+      "nascimento": "1982-08-26",
+      "telefone": "(48) 51454-5454",
+      "bairro": "Capoeiras",
+      "cargo": "Back-end dev",
+      "complemento": "casa",
+      "email": "maycon@gmail.com",
+      "localidade": "Florianópolis",
+      "logradouro": "Rua Paula Ramos",
+      "numero": "316",
+      "uf": "SC",
+      "id": 3
+    },
+    {
+      "nome": "Maycon R. Campos",
+      "genero": "Masculino",
+      "nascimento": "1982-08-26",
+      "telefone": "(48) 98444-4444",
+      "bairro": "Vila Nova",
+      "cargo": "Back-end dev",
+      "complemento": "casa",
+      "email": "maycon.campos@gmail.com",
+      "localidade": "Imbituba",
+      "logradouro": "Av Renato Ramos da Silva",
+      "numero": "3013",
+      "uf": "SC",
+      "id": 4
     }
   ],
   "itens": [
     {
-      "id": 0,
       "patrimonio": "AB1234-567",
-      "titulo": "Teclado sem fio ABNT2",
-      "categoria": "Acessórios",
-      "valor": "156,90",
-      "url": "https://m.media-amazon.com/images/I/61Vs0otp73L._AC_SY450_.jpg",
-      "marca": "Logitech",
-      "modelo": "K380",
-      "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
-      "emprestado": "Item disponível"
+      "titulo": "Pc gamer",
+      "categoria": "Eletrônicos",
+      "valor": "9999,99",
+      "url": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fs2.glbimg.com%2FEt0Z78geq2y9LpHy0U7e0OUHZWQ%3D%2F0x0%3A1200x630%2F984x0%2Fsmart%2Ffilters%3Astrip_icc()%2Fi.s3.glbimg.com%2Fv1%2FAUTH_08fbf48bc0524877943fe86e43087e7a%2Finternal_photos%2Fbs%2F2018%2F3%2FF%2FwN7K1ESaqCaKHclCcNAw%2Fwhatsapp-image-2018-11-26-at-20.19.38.jpeg&imgrefurl=https%3A%2F%2Fwww.techtudo.com.br%2Fnoticias%2F2018%2F11%2Fo-que-significa-pc-notebook-4k-mah-e-outros-termos-de-tecnologia.ghtml&tbnid=j_kAB9KVTu4ShM&vet=12ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ..i&docid=vMCMixvokim4iM&w=984&h=517&q=imagem%20pc&ved=2ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ",
+      "marca": "Dell",
+      "modelo": "PC-3000",
+      "descricao": "Anyway",
+      "emprestado": "Item disponível",
+      "id": 0
     }
   ]
 }
