@@ -32,15 +32,14 @@ export default {
             let checkDate = new Date(`${year}-${month}-${day}` + " 00:00:00")
             let birth = new Date(value + " 00:00:00")
             if (Date.parse(birth) > Date.parse(checkDate)) {
-                return 'Date is not valid.'
+                return 'Data inválida.'
             }
             return true
         }),
         // Verifica se tem 11 dígitos
         phonecheck: defineRule('phonecheck', value => {
-            let regexp = /^[0-9]{11}$/
-            if (!regexp.test(value)) {
-                return 'Utilize apenas números, com DDD'
+            if(value.length < 14){
+                return "Favor digitar um telefone válido"
             }
             return true
         }),
