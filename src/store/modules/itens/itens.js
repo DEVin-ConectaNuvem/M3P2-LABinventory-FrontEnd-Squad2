@@ -57,31 +57,32 @@ export default {
         // Salva um objeto item novo ou editado no localStorage
         async saveItem(context, item) {
 
-            await axios.get("http://localhost:3000/itens")
-            .then((response) => {
-                context.state.sendItens = response.data;
-            })
-            context.state.sendItens.forEach(element => {
-                if(element.patrimonio === context.state.toEdit) {
-                    context.state.edit = true
-                    item.patrimonio = context.state.toEdit
-                    axios.put(`http://localhost:3000/itens/${element.id}`, item, headers)
+            // await axios.get("http://localhost:3000/itens")
+            // .then((response) => {
+            //     context.state.sendItens = response.data;
+            // })
+            let count = 0
+            await context.state.sendItens.forEach(element => {
+                if(element.patrimonio === context.state.toEdit && element.patrimonio === item.patrimonio) {
+                    count++
+                    axios.patch(`http://localhost:3000/itens/${element.id}`, item, headers)
                     .then(() => {
                         context.commit("getItens")
-                        return true
                     })
                     .catch((e) => {
                         console.error("error", e)
                     })
-                    return true
+                }
+                
+                else if(element.patrimonio === item.patrimonio) {
+                    count++
                 }
             });
-            if(!context.state.edit) {
-                
+            if (count == 0) {
                 var headers = {
                     "Content-Type": "application/json"
                 }
-                await axios.post("http://localhost:3000/itens", item, headers)
+                axios.post("http://localhost:3000/itens", item, headers)
                 .then(() => {
                     return true
                 })
@@ -91,7 +92,6 @@ export default {
                 .finally(() => {
                 })
             }
-            context.state.edit = false
             
         },
         // Deleta um objeto item do array de itens pelo código de patrimônio
