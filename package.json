@@ -21,6 +21,7 @@
     "vue-toast-notification": "^3.0.2",
     "vue3-cookies": "^1.0.6",
     "vue3-gravatar": "^3.0.0",
+    "vue-the-mask": "^0.11.1",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
