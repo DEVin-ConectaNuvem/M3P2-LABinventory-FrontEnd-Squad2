@@ -131,7 +131,7 @@ export default {
             }).then(() => {
                 if(this.success) {
                     this.$router.push('/users/inventario')
-                    this.$toast.info(`Bem-vindo(a), ${this.user.email}`, {position: 'top-right'})
+                    this.$toast.info(`Bem-vindo(a), ${this.userLogged.name}!`, {position: 'top-right'})
 
                 } else {
                     this.$toast.error(this.errorMsg)
@@ -150,7 +150,7 @@ export default {
         ...mapState({
             success: (state) => state.auth.success,
             errorMsg: (state) => state.auth.errorMsg,
-            user: (state) => state.auth.user
+            userLogged: (state) => state.auth.user
         }),
         showMailError() {
             // Torna a visualização da mensagem de erro responsiva
