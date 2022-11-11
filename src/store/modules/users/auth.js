@@ -39,10 +39,6 @@ export default {
             "email": user.email,
             "status": true
           });
-          context.commit(
-            "setMsgError",
-            `Usuário ${context.state.user.email} logado com sucesso!`
-          );
           context.commit("setSuccess", true);
           return true;
         } else {

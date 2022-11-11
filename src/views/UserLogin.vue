@@ -128,67 +128,15 @@ export default {
             this['auth/authentication']({
                 "email": this.user.email,
                 "password": this.user.password
-            }).then((res) => {
-                console.log(res)
+            }).then(() => {
                 if(this.success) {
                     this.$router.push('/users/inventario')
                     this.$toast.info(`Bem-vindo(a), ${this.user.email}`, {position: 'top-right'})
+
                 } else {
                     this.$toast.error(this.errorMsg)
                 }
             })
-            
-            //Cookie contém nome, email e status: true ou false
-            let confirm = cookies.get('logged')
-            // Caso já exista um cookie com  status: true
-            if (confirm !== null) {
-               if (confirm.status === true) {
-                   this.$router.push('/users/inventario')
-               } else {
-                   // Se status: false envia para autenticação
-                   this.$store.commit('auth/authUser', {...this.user})
-                   // Verifica o cookie novamente
-                   confirm = cookies.get('logged')
-                   if(confirm.status === true) {
-                       // Pega o primeiro nome do usuário
-                       let name = confirm.name.split(' ')[0]
-                       
-                       location.reload()
-                       //this.$loading.show()
-                       this.$router.push('/users/inventario')
-                       this.$toast.info(`Bem-vindo(a), ${name}`, {position: 'top-right'})
-                   } else {
-                       // Se status: false ou não autenticou, mostra msg
-                       this.$toast.error(this.$store.state.auth.errorMsg)
-                   }
-               }
-            }
-            // Se o cookie estiver logged estiver vazio, segue para autenticar
-            if (confirm === null) { 
-               this.$store.commit('auth/authUser', {...this.user})
-               confirm = cookies.get('logged')
-               if (confirm != null) {
-                   if(confirm.status === true) {
-                       let name = confirm.name.split(' ')[0]
-                       
-                       location.reload()
-                       // Direciona usuário para o inventario
-                       this.$router.push('/users/inventario')
-                       //this.$loading.show()
-                       this.$toast.info(`Bem-vindo(a), ${name}`, {position: 'top-right'})
-                   } else {
-                       // Mostra mensagem referente ao tipo de erro
-                       this.$toast.error(this.$store.state.auth.errorMsg)
-                   }
-
-               } else {
-                   // Mostra mensagem referente ao tipo de erro
-                   this.$toast.error(this.$store.state.auth.errorMsg)
-               }
-                   
-            }
-            let form = document.getElementById('loginform')
-            form.reset()
         },
         cleanForm() {
             let form = document.getElementById('loginform')
@@ -201,7 +149,8 @@ export default {
     computed: {
         ...mapState({
             success: (state) => state.auth.success,
-            errorMsg: (state) => state.auth.errorMsg
+            errorMsg: (state) => state.auth.errorMsg,
+            user: (state) => state.auth.user
         }),
         showMailError() {
             // Torna a visualização da mensagem de erro responsiva
