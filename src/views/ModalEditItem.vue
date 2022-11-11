@@ -28,7 +28,8 @@
                 <div class="row mb-3">
                     <div class="col-4">
                         <label class="form-label">Patrimônio</label>
-                        <editItem-field 
+                        <editItem-field
+                        disabled 
                         type="text" 
                         class="form-control" 
                         name="patrimonio" 
@@ -205,8 +206,8 @@ export default {
         this.$store.dispatch('itens/saveItem', this.item)
         let edit = this.$store.state.itens.edit
             if (!edit) {
-              location.reload()
-              this.$loading.show()
+              // location.reload()
+              // this.$loading.show()
               this.$toast.info('Item salvo!', {position: 'top-right'})
             }
         let form = document.getElementById('editItem-form')
@@ -221,7 +222,7 @@ export default {
     watch: {
       // Popula this.item com os dados do item selecionado para edição
       edit(novoItem) {
-        this.item = novoItem
+        this.item = {...novoItem}
       }
     },
     computed: {
