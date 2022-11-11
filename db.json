@@ -35,16 +35,11 @@
       "name": "Maycon Robson Campos",
       "email": "maycon.campos@gmail.com",
       "password": "abcd1234"
-    },
-    {
-      "name": "Marcoelho",
-      "email": "marcoelho@email.com",
-      "password": "12345678",
-      "id": 7
     }
   ],
   "collaborators": [
     {
+      "id": 1,
       "nome": "Adriano Matos Meier",
       "genero": "Masculino",
       "nascimento": "1980-02-07",
@@ -61,6 +56,7 @@
       "uf": "SC"
     },
     {
+      "id": 2,
       "nome": "Josinaldo De Andrade Pereira",
       "genero": "Masculino",
       "nascimento": "1985-01-27",
@@ -75,11 +71,41 @@
       "numero": 729,
       "referencia": "Cond. Baia do Sol",
       "uf": "SC"
+    },
+    {
+      "id": 3,
+      "nome": "Maycon R. Campos",
+      "genero": "Masculino",
+      "nascimento": "1982-08-26",
+      "telefone": "(48) 51454-5454",
+      "bairro": "Capoeiras",
+      "cargo": "Back-end dev",
+      "complemento": "casa",
+      "email": "maycon@gmail.com",
+      "localidade": "Florianópolis",
+      "logradouro": "Rua Paula Ramos",
+      "numero": "316",
+      "uf": "SC"
+    },
+    {
+      "id": 4,
+      "nome": "Maycon R. Campos",
+      "genero": "Masculino",
+      "nascimento": "1982-08-26",
+      "telefone": "(48) 98444-4444",
+      "bairro": "Vila Nova",
+      "cargo": "Back-end dev",
+      "complemento": "casa",
+      "email": "maycon.campos@gmail.com",
+      "localidade": "Imbituba",
+      "logradouro": "Av Renato Ramos da Silva",
+      "numero": "3013",
+      "uf": "SC"
     }
   ],
   "itens": [
     {
-      "id": 0,
+      "id": 1,
       "patrimonio": "AB1234-567",
       "titulo": "Teclado sem fio ABNT2",
       "categoria": "Acessórios",
@@ -88,6 +114,42 @@
       "marca": "Logitech",
       "modelo": "K380",
       "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
+      "emprestado": "Adriano Matos Meier"
+    },
+    {
+      "id": 2,
+      "patrimonio": "BD1234-567",
+      "titulo": "Monitor Dell 32pol",
+      "categoria": "Acessórios",
+      "valor": "1299,90",
+      "url": "https://images.tcdn.com.br/img/img_prod/740836/monitor_dell_27_p2717h_1787_1_0866074eb5d7813176888736ba876367.jpg",
+      "marca": "Dell",
+      "modelo": "P3217h",
+      "descricao": "Monitor Dell 32 polegadas P3217h 2HDMI 2USB",
+      "emprestado": "Item disponível"
+    },
+    {
+      "id": 3,
+      "patrimonio": "AP9900-001",
+      "titulo": "Macbook Air M2",
+      "categoria": "Eletrônicos",
+      "valor": "3899,90",
+      "url": "https://www.apple.com/v/macbook-air-m2/b/images/overview/design/finish_silver__fl868a6lcs2u_large.jpg",
+      "marca": "Apple",
+      "modelo": "Air",
+      "descricao": "Macbook Air com chip M2 13 inch retina",
+      "emprestado": "Item disponível"
+    },
+    {
+      "id": 4,
+      "patrimonio": "LG6710-201",
+      "titulo": "Mouse Gamer",
+      "categoria": "Acessórios",
+      "valor": "239,89",
+      "url": "https://images.kabum.com.br/produtos/fotos/102649/mouse-gamer-logitech-g403-hero-16k-rgb-lightsync-16000-dpi_mouse-gamer-logitech-g403-hero-16k-rgb-lightsync-16000-dpi_1563479684_g.jpg",
+      "marca": "Logitech",
+      "modelo": "G403 Hero",
+      "descricao": "Mouse Gamer Logitech G403 Hero preto com fio",
       "emprestado": "Item disponível"
     }
   ]

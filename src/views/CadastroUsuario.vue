@@ -14,7 +14,6 @@
         <div class="container">
             <h5>Dados pessoais</h5>
             <collab-form 
-            @submit="saveCollab" 
             id="collab-form" 
             :validation-schema="schema" 
             v-slot="{ errors }">
@@ -72,7 +71,8 @@
                         <collab-field 
                         type="text" 
                         class="form-control" 
-                        name="phone" 
+                        name="phone"
+                        v-mask="['(##) ####-####', '(##) #####-####']"
                         v-model="collab.telefone" 
                         placeholder="ex.: 41993166596"
                         :disabled="disabled"/>
@@ -124,8 +124,8 @@
                         type="text" 
                         class="form-control" 
                         name="cep" 
+                        v-mask="'#####-###'"
                         v-model="cepNum" 
-                        @input=getCepInfo 
                         :disabled="disabled"/>
                         <span 
                         class="text-danger" 
@@ -134,13 +134,14 @@
                         </span>
                         <span 
                         class="text-danger" 
-                        v-text="errorMsg" 
-                        v-show="errorMsg">
+                        v-text="cepError" 
+                        v-show="cepError">
                         </span>
                     </div>
                     <div class="col-6">
                         <label class="form-label">Cidade</label>
                         <collab-field 
+                        v-model="address.localidade"
                         id='localidade' 
                         type="text" 
                         class="form-control" 
@@ -149,6 +150,7 @@
                     <div class="col-2">
                         <label class="form-label">Estado</label>
                         <collab-field 
+                        v-model="address.uf"
                         id='uf' 
                         type="text" 
                         class="form-control" 
@@ -159,10 +161,12 @@
                     <div class="col-10">
                         <label class="form-label">Logradouro</label>
                         <collab-field 
-                        id='logradouro' 
+                        v-model="address.logradouro"
                         type="text" 
                         class="form-control" 
-                        name="street" readonly/>
+                        name="logradouro"
+                        :disabled="disabled"
+                        />
                     </div>
                     <div class="col-2">
                         <label class="form-label">Número</label>
@@ -170,6 +174,7 @@
                         type="text" 
                         class="form-control" 
                         name="num" 
+                        v-mask="'######'"
                         v-model="collab.numero" 
                         :disabled="disabled"/>
                         <span 
@@ -193,9 +198,12 @@
                         <label class="form-label">Bairro</label>
                         <collab-field 
                         id='bairro' 
+                        v-model="address.bairro"
                         type="text" 
                         class="form-control" 
-                        name="zone" readonly/>
+                        name="zone"
+                        :disabled="disabled"
+                        />
                     </div>
                     <div class="col-4">
                         <label class="form-label">Ponto de referência</label>
@@ -215,6 +223,7 @@
                     Limpar
                     </button>
                     <button 
+                    @click.prevent="saveCollab" 
                     type="submit" 
                     class="btn btn-info">
                     Salvar</button>
@@ -227,10 +236,15 @@
 
 import { Form, Field } from 'vee-validate'
 import rules from '../validations/validatecollab'
+import { mask } from "vue-the-mask"
+import { mapState } from 'vuex'
 
 rules
 
 export default {
+    directives: {
+        mask
+    },  
 
     components: {
 
@@ -239,7 +253,7 @@ export default {
     },
     data() {
         return {
-
+            cidade: "",
             schema: {
                 name: 'required|namecheck',
                 genre: 'required',
@@ -248,11 +262,20 @@ export default {
                 email: 'required|emailcheck',
                 job: 'required',
                 cep: 'required',
-                num: 'required',
+                localidade: "required",
+
             },
             collab: {}, // Recebe os inputs
+            address: {},
             disabled: true, // Inputs desabilitados
             cepNum: null // Recebe o input de CEP
+        }
+    },
+    watch: {
+        cepNum() {
+            if(this.cepNum.length == 9) {
+                this.getCepInfo()
+            }
         }
     },
     methods: {
@@ -262,21 +285,36 @@ export default {
             if(this.cepNum.length >= 8) {
                 // Valida o CEP e preenche os campos relacionados
                 this.$store.dispatch('collaborators/cepInfo', this.cepNum)
+                .then(() => {
+                    console.log(this.cepInfo)
+                    this.address = {
+                        "localidade": this.cepInfo.localidade,
+                        "bairro": this.cepInfo.bairro,
+                        "logradouro": this.cepInfo.logradouro,
+                        "uf": this.cepInfo.uf,
+                    }
+                })
             }
         },
         // Salva o colaborador na lista no localstorage
         saveCollab() {
-            this.$store.commit('collaborators/saveCollab', {...this.collab})
-            let saved = this.$store.state.collaborators.saveSuccess
-            if (saved) {
-                this.$toast.info('Dados do colaborador salvos com sucesso.', {position: 'top'})
+            let collab = {
+                "collab": this.collab,
+                "address": this.address,
             }
-            let form = document.getElementById('collab-form')
-            form.reset()
+            this.$store.dispatch('collaborators/saveCollab', {...collab})
+            .then(() => {
+                if(this.exists) {
+                    this.$toast.error(this.msgError, {position: 'top'})
+                } else {
+                    this.$toast.info("Colaborador inserido com sucesso!", { position: "top" })
+                }
+            })
+            this.cleanForm()
         },
         cleanForm() {
-            let form = document.getElementById('collab-form')
-            form.reset() 
+            this.collab = {}
+            this.address = {}
         },
         // Acionado pelo switch button,
         // Habilita/desabilita edição dos campos
@@ -289,9 +327,14 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            cepInfo: (state) => state.collaborators.cepInfo,
+            exists: (state) => state.collaborators.exists,
+            msgError: (state) => state.collaborators.errorMsg
+        }),
         // Retorna Msg erro de CEP
-        errorMsg() {
-            return this.$store.getters['collaborators/sendErrorMsg']
+        cepError() {
+            return this.$store.getters['collaborators/errorCep']
         }
     },
 }
