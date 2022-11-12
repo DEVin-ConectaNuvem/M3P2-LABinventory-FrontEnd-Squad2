@@ -58,17 +58,9 @@ export default {
         collabDetails(item) {
             // Retorna o id de uma seleção de colaborador anterior a atual
             this.$store.commit('collaborators/setSelectedId', item.id)
-            let oldValue = this.$store.getters['collaborators/sendSelectedId']
+            //let oldValue = this.$store.getters['collaborators/sendSelectedId']
+           
             
-            console.log(oldValue)
-            // Se o colaborador selecionado é o mesmo
-            if(oldValue == item.id){
-                // Reseta o id na store para null, que era a condição inicial
-                this.$store.commit('collaborators/setSelectedId', null)
-            }else{
-                // Se for um colaborador diferente, state.selectedId recebe o id atual
-                this.$store.commit('collaborators/setSelectedId', item.id)
-            }
         },
         // Recebe o input da barra de busca de colaborador
         setCollabs() {
