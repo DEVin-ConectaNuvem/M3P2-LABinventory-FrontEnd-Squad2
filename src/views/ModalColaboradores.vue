@@ -274,23 +274,15 @@ export default {
     watch: {
         // Quando o modal para edição de colaboradores é chamado
         // esta computada é alterada com o id do colaborador
-        getSelectedId(newId, oldId) {
-            let newSelectedId = newId
-            // Se o novo id for null
-            if(newId == null){
-                // é porque foi selecionado o mesmo card em sequência
-                // então o id atual será o mesmo que estava antes
-                newSelectedId = oldId
-            }
-            // Com o novo id definido, define-se o colaborador e informações de CEP
-            let collabs = JSON.parse(localStorage.getItem('collaborators'))
-            collabs.forEach(item => {
-                if (item.id == newSelectedId) {
-                    this.collab = item
-                    this.cepNum = item.cep
-                    this.getCepInfo()
-                }
+        getSelectedId(newId) {
+            
+            this.$store.dispatch('collaborators/getOneCollab', newId)
+            .then((response) => {
+                this.collab = response
+               this.$store.state.collaborators.collabs = response
             })
+            
+            
         }
     },
     methods: {
@@ -314,7 +306,11 @@ export default {
             }
         },
         delCollab() {
-            this.$store.commit('collaborators/delCollab', this.collab.telefone)
+            let idColab = this.$store.getters['collaborators/sendSelectedId']
+            console.log('Modal')
+            console.log(idColab)
+            this.$store.commit('collaborators/delCollab', idColab)
+            location.reload()
         },
         cleanForm() {
             let form = document.getElementById('collab-form')
