@@ -75,14 +75,26 @@ export default {
         state.saveSuccess = false;
       }
     },
-    
-    delCollab(state, collab) {
-      let allCollabs = JSON.parse(localStorage.getItem("collaborators"));
-      // Filtra o array pelo telefone
-      let newCollabs = allCollabs.filter((item) => item.telefone !== collab);
-      // Salva o array atualizado no localStorage
-      localStorage.setItem("collaborators", JSON.stringify(newCollabs));
-      location.reload();
+
+    // Obtém a lista de colaboradores
+    // getCollabs(state) {
+    //   let collabs = JSON.parse(localStorage.getItem("collaborators"));
+    //   if (collabs !== null) {
+    //     state.collabs = collabs;
+    //   }
+    // },
+    delCollab(context, collab) {
+        axios
+        .delete(`http://localhost:3000/collaborators/${collab}`)
+        .then((response) => {
+          console.log(response)
+          
+        })
+        .catch(() => {
+          // No caso de qualquer outro erro na requisição
+          context.commit("setMsgError", "Erro na exclusão colaboradores.");
+        });
+
     },
     setCepInfo(state, info) {
       state.cepInfo = {
@@ -127,6 +139,36 @@ export default {
         });
 
         return this.state.collabs
+    },
+      async getOneCollab(context, id) {
+      
+      await axios
+        .get(`http://localhost:3000/collaborators/${id}`)
+        .then((response) => {
+          this.state.collabs = response.data
+          
+        })
+        .catch(() => {
+          // No caso de qualquer outro erro na requisição
+          context.commit("setMsgError", "Erro na consulta do colaborador.");
+        });
+
+        return this.state.collabs
+    },
+    async DelCollab(context, user) {
+      
+      await axios
+        .delete(`http://localhost:3000/collaborators/${user}`)
+        .then((response) => {
+          console.log(response)
+          
+        })
+        .catch(() => {
+          // No caso de qualquer outro erro na requisição
+          context.commit("setMsgError", "Erro na exclusão colaboradores.");
+        });
+
+        
     },
     
     // Recebe o CEP do novo ou colaborador editado
