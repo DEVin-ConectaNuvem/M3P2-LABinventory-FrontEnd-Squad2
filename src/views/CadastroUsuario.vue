@@ -276,7 +276,7 @@ export default {
             if(this.cepNum.length == 9) {
                 this.getCepInfo()
             }
-        }
+        },
     },
     methods: {
 
@@ -286,7 +286,6 @@ export default {
                 // Valida o CEP e preenche os campos relacionados
                 this.$store.dispatch('collaborators/cepInfo', this.cepNum)
                 .then(() => {
-                    console.log(this.cepInfo)
                     this.address = {
                         "localidade": this.cepInfo.localidade,
                         "bairro": this.cepInfo.bairro,
@@ -296,7 +295,7 @@ export default {
                 })
             }
         },
-        // Salva o colaborador na lista no localstorage
+        // Salva o colaborador na lista no json server
         saveCollab() {
             let collab = {
                 "collab": this.collab,
@@ -308,13 +307,14 @@ export default {
                     this.$toast.error(this.msgError, {position: 'top'})
                 } else {
                     this.$toast.info("Colaborador inserido com sucesso!", { position: "top" })
+                    this.cleanForm()
                 }
             })
-            this.cleanForm()
         },
         cleanForm() {
             this.collab = {}
             this.address = {}
+            
         },
         // Acionado pelo switch button,
         // Habilita/desabilita edição dos campos
