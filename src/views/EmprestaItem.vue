@@ -16,7 +16,8 @@
                     class="form-control shadow" 
                     id="search-item" 
                     type="text"
-                    placeholder="Digite para buscar..." 
+                    placeholder="Digite para buscar..."
+                    v-model="barraPesquisa" 
                     @input="setItems">
                 </div>
             </div>
@@ -98,38 +99,30 @@ export default {
 },
     data() {
         return {
-            items: [] // Populado pelo mounted e depois pela barra de busca
+            items: [], // Populado pelo mounted e depois pela barra de busca
+            barraPesquisa: ''
         }
     },
     methods: {
         setItems() {
-            // Barra de busca
-            let inputItem = document.getElementById('search-item')
-            // // Obtém a lista de itens na store
-            let allItems = this.$store.state.itens.sendItens
-            // Se o input estiver vazio
-            if (inputItem == null){
-                // Seta a lista completa
-                this.items = allItems
+            
+            if(this.barraPesquisa !== '') {
+                let pesquisa = () => {
+                return this.itemsLocal.filter(item =>
+                    item.titulo
+                    .toLowerCase()
+                        .includes(this.barraPesquisa.toLowerCase()));
+                } 
+                if(pesquisa) {
+                this.items = pesquisa(this.barraPesquisa);
+                if(this.items.length === 0) {
+                    this.$toast.error('Item não econtrado! Tente outro.', {
+                    position: 'top'
+                    });
+                }
+                } 
             } else {
-                // Se houver algum caracter,
-                // Cria uma nova lista de itens vazia
-                let filtered = []
-                // Percorre a lista de itens
-                allItems.forEach(item => {
-                    // Em cada item percorre as keys 
-                    // Se encontrar o caracter ou caracteres digitados
-                    // Insere o item na nova lista
-                    for (const [key] of Object.entries(item)) {
-                        // Transforma tudo para minúsculo e verifica se o caracter possui um index 
-                        if (item[key].toLowerCase().indexOf(inputItem.value.toLowerCase()) !== -1) {
-                            filtered.push(item)
-                            break
-                        }
-                    }
-                })
-                // Define a nova lista
-                this.items = filtered
+                this.items = this.itemsLocal;
             }
         },
         // Chamado pelo select input da tabela
@@ -157,7 +150,10 @@ export default {
         // Retorna a lista atual de colaboradores
         allCollabs() {
             return this.$store.state.collaborators.collabs
-        }
+        },
+        itemsLocal() {
+            return this.$store.state.itens.sendItens;
+        },
     },
     // Carrega as stores com o localstorage
     // Popula items
