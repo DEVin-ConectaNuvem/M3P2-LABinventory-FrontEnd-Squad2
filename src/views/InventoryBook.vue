@@ -36,13 +36,14 @@
             class="form-control" 
             type="text" 
             id="search-item" 
-            placeholder="Digite para buscar..." 
+            placeholder="Digite para buscar..."
+            v-model="barraPesquisa" 
             @input="setItems">
         </div>
 
         <!-- CARDS do inventário -->
         <div id="inv-cards">
-            <div class="inv-card shadow" v-for="item in itemsLocal" :key="item.id">
+            <div class="inv-card shadow" v-for="item in items" :key="item.id">
                 <MediumCard 
                 cardType="inventory" 
                 :img="item.url" 
@@ -77,7 +78,8 @@ export default {
     data() {
         return {
             items: [], // Populado pelo mounted e depois pela barra de busca
-            invStats: {} // Recebe as estatísticas da store
+            invStats: {}, // Recebe as estatísticas da store
+            barraPesquisa: ''
         }
     },
     methods: {
@@ -87,33 +89,23 @@ export default {
         // Chamado pela barra de busca
         // Filtra os cards apresentados em tela
         setItems() {
-            // Barra de busca
-            let inputItem = document.getElementById('search-item')
-            // Obtém a lista de itens na store
-            let allItems = this.$store.state.itens.sendItens
-            // Se o input estiver vazio
-            if (inputItem == null){
-                // Seta a lista completa
-                this.items = allItems
+            if(this.barraPesquisa !== '') {
+                let pesquisa = () => {
+                return this.itemsLocal.filter(item =>
+                    item.titulo
+                    .toLowerCase()
+                        .includes(this.barraPesquisa.toLowerCase()));
+                } 
+                if(pesquisa) {
+                this.items = pesquisa(this.barraPesquisa);
+                if(this.items.length === 0) {
+                    this.$toast.error('Item não econtrado! Tente outro.', {
+                    position: 'top'
+                    });
+                }
+                } 
             } else {
-                // Se houver algum caracter,
-                // Cria uma nova lista de itens vazia
-                let filtered = []
-                // Percorre a lista de itens
-                allItems.forEach(item => {
-                    // Em cada item percorre as keys 
-                    // Se encontrar o caracter ou caracteres digitados
-                    // insere o item na nova lista
-                    for (const [key] of Object.entries(item)) {
-                        // Transforma tudo para minúsculo e verifica se o caracter possui um index 
-                        if (item[key].toLowerCase().indexOf(inputItem.value.toLowerCase()) !== -1) {
-                            filtered.push(item)
-                            break
-                        }
-                    }
-                })
-                // Define a nova lista
-                this.items = filtered
+                this.items = this.itemsLocal;
             }
         }
     },
