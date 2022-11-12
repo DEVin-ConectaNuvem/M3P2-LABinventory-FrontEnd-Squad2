@@ -75,6 +75,7 @@ export default {
         state.saveSuccess = false;
       }
     },
+
     // Obtém a lista de colaboradores
     // getCollabs(state) {
     //   let collabs = JSON.parse(localStorage.getItem("collaborators"));
@@ -93,6 +94,7 @@ export default {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na exclusão colaboradores.");
         });
+
     },
     setCepInfo(state, info) {
       state.cepInfo = {
