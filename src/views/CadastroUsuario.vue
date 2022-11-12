@@ -287,6 +287,7 @@ export default {
                 this.$store.dispatch('collaborators/cepInfo', this.cepNum)
                 .then(() => {
                     this.address = {
+                        "cep": this.cepNum,
                         "localidade": this.cepInfo.localidade,
                         "bairro": this.cepInfo.bairro,
                         "logradouro": this.cepInfo.logradouro,
