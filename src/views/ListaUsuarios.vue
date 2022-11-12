@@ -60,7 +60,6 @@ export default {
             this.$store.commit('collaborators/setSelectedId', item.id)
             let oldValue = this.$store.getters['collaborators/sendSelectedId']
             
-            console.log(oldValue)
             // Se o colaborador selecionado é o mesmo
             if(oldValue == item.id){
                 // Reseta o id na store para null, que era a condição inicial
