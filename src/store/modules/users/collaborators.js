@@ -76,12 +76,12 @@ export default {
       }
     },
     // Obtém a lista de colaboradores
-    getCollabs(state) {
-      let collabs = JSON.parse(localStorage.getItem("collaborators"));
-      if (collabs !== null) {
-        state.collabs = collabs;
-      }
-    },
+    // getCollabs(state) {
+    //   let collabs = JSON.parse(localStorage.getItem("collaborators"));
+    //   if (collabs !== null) {
+    //     state.collabs = collabs;
+    //   }
+    // },
     delCollab(state, collab) {
       let allCollabs = JSON.parse(localStorage.getItem("collaborators"));
       // Filtra o array pelo telefone
@@ -118,6 +118,23 @@ export default {
     },
   },
   actions: {
+
+    async getCollabs(context) {
+      
+      await axios
+        .get("http://localhost:3000/collaborators")
+        .then((response) => {
+          this.state.collabs = response.data
+          
+        })
+        .catch(() => {
+          // No caso de qualquer outro erro na requisição
+          context.commit("setMsgError", "Erro na consulta de colaboradores.");
+        });
+
+        return this.state.collabs
+    },
+    
     // Recebe o CEP do novo ou colaborador editado
     // Verifica se o CEP é válido
     async cepInfo(context, cep) {
