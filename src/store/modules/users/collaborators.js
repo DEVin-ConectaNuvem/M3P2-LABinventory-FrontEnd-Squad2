@@ -75,13 +75,7 @@ export default {
         state.saveSuccess = false;
       }
     },
-    // Obtém a lista de colaboradores
-    // getCollabs(state) {
-    //   let collabs = JSON.parse(localStorage.getItem("collaborators"));
-    //   if (collabs !== null) {
-    //     state.collabs = collabs;
-    //   }
-    // },
+    
     delCollab(state, collab) {
       let allCollabs = JSON.parse(localStorage.getItem("collaborators"));
       // Filtra o array pelo telefone
