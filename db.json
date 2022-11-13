@@ -35,6 +35,12 @@
       "name": "Maycon Robson Campos",
       "email": "maycon.campos@gmail.com",
       "password": "abcd1234"
+    },
+    {
+      "name": "Vinicius",
+      "email": "admin@admin.com.br",
+      "password": "123123123",
+      "id": 7
     }
   ],
   "collaborators": [
@@ -101,7 +107,7 @@
       "marca": "Logitech",
       "modelo": "K380",
       "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
-      "emprestado": "Adriano Matos Meier"
+      "emprestado": "Vinicius Possatto Stormoski"
     },
     {
       "id": 2,
@@ -113,7 +119,7 @@
       "marca": "Dell",
       "modelo": "P3217h",
       "descricao": "Monitor Dell 32 polegadas P3217h 2HDMI 2USB",
-      "emprestado": "Item disponível"
+      "emprestado": "Vinicius Possatto Stormoski"
     },
     {
       "id": 3,
@@ -125,7 +131,7 @@
       "marca": "Apple",
       "modelo": "Air",
       "descricao": "Macbook Air com chip M2 13 inch retina",
-      "emprestado": "Item disponível"
+      "emprestado": "Josinaldo De Andrade Pereira"
     },
     {
       "id": 4,
@@ -137,7 +143,7 @@
       "marca": "Logitech",
       "modelo": "G403 Hero",
       "descricao": "Mouse Gamer Logitech G403 Hero preto com fio",
-      "emprestado": "Item disponível"
+      "emprestado": "Maycon R. Campos"
     }
   ]
 }
