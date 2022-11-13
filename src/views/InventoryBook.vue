@@ -121,6 +121,9 @@ export default {
         },
         itemsLocal() {
             return this.$store.state.itens.sendItens;
+        },
+        stats() {
+            return this.$store.state.itens.stats;
         },  
         // Retorna o valor total em style currency para os SMALL CARDS
         currency() {
@@ -134,20 +137,30 @@ export default {
             return curr
         }
     },
+    watch: {
+        itemsLocal() {
+            this.items = this.$store.getters['itens/getItems'];
+        },
+        stats() {
+            this.invStats = this.$store.getters['itens/getStats'];
+        }
+    },
     // Carrega store com dados do localstorage
     // Calcula as estatísticas
     mounted() {
         // Obtém LISTA DE ITENS
-        this.$store.commit('itens/getItens')
-        // Gera as ESTATÍSTICAS dos SMALL CARDS
-        this.$store.commit('itens/itemStats')
+        this.$store.dispatch('itens/getItens')
         // Popula lista de ESTATÍSTICAS
         this.invStats = this.$store.state.itens.stats
         // Obtém LISTA DE COLABORADORES
-        this.$store.commit('collaborators/getCollabs')
+        this.$store.dispatch('collaborators/getCollabs')
         // Popula lista de ITENS
         this.items = this.$store.getters['itens/getItems']
-    }
+    },
+    updated() {
+        // Gera as ESTATÍSTICAS dos SMALL CARDS
+        this.$store.commit('itens/itemStats')
+    },
 }
 </script>
 <style scoped>

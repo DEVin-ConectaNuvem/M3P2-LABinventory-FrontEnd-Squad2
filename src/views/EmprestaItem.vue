@@ -163,8 +163,8 @@ export default {
     // Carrega as stores com o localstorage
     // Popula items
     mounted() {
-        this.$store.commit('itens/getItens')
-        this.$store.commit('collaborators/getCollabs')
+        this.$store.dispatch('itens/getItens')
+        this.$store.dispatch('collaborators/getCollabs')
         this.items = this.$store.getters['itens/getItems']
     }
 }
