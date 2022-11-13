@@ -11,78 +11,13 @@ export default {
       errorCep: "",
       collabs: [],
       selectedId: null,
+      totalCollabs: 0
     };
   },
   mutations: {
     setSelectedId(state, value) {
       state.selectedId = value;
     },
-    // Recebe o objeto com os dados do colaborador
-    // Em caso de edição de colaborador cadastrado ou novo cadastro
-    saveCollab(state, collab) {
-      // Traz as informações de CEP do colaborador
-      let addressInfo = state.cepInfo;
-      // Retira a key "complemento" do objeto
-      let cleanInfo = {};
-      for (const [key, value] of Object.entries(addressInfo)) {
-        if (key !== "complemento") {
-          cleanInfo[key] = value;
-        }
-      }
-      // Objeto com as informações sobre o colaborador
-      let collabObj = { ...collab, ...cleanInfo };
-      try {
-        state.saveSuccess = false;
-        // Se localstorage estiver vazio
-        if (localStorage.getItem("collaborators") === null) {
-          let collaborators = [];
-          collabObj.id = 1;
-          collaborators.push(collabObj);
-          localStorage.setItem("collaborators", JSON.stringify(collaborators));
-          state.saveSuccess = true;
-        } else {
-          // Se localstorage contém uma lista
-          let collabList = JSON.parse(localStorage.getItem("collaborators"));
-          let already = false;
-          // Verifica se já está cadastrado
-          collabList.forEach((item) => {
-            let firstName = item.nome.split(" ")[0];
-            let collabFirstName = collabObj.nome.split(" ")[0];
-            if (
-              item.nascimento === collabObj.nascimento &&
-              firstName === collabFirstName
-            ) {
-              already = true;
-              // Etapa para casos de edição
-              let index = collabList.indexOf(item);
-              item = { ...collabObj };
-              collabList[index] = item;
-              localStorage.setItem("collaborators", JSON.stringify(collabList));
-              state.saveSuccess = true;
-            }
-          });
-          // Se não houver nenhum registro, insere e salva
-          if (!already) {
-            let index = collabList.length + 1;
-            collabObj.id = index;
-            collabList.push(collabObj);
-            localStorage.setItem("collaborators", JSON.stringify(collabList));
-            state.saveSuccess = true;
-          }
-        }
-      } catch (e) {
-        // Se der algum problema
-        state.saveSuccess = false;
-      }
-    },
-
-    // Obtém a lista de colaboradores
-    // getCollabs(state) {
-    //   let collabs = JSON.parse(localStorage.getItem("collaborators"));
-    //   if (collabs !== null) {
-    //     state.collabs = collabs;
-    //   }
-    // },
     delCollab(context, collab) {
         axios
         .delete(`http://localhost:3000/collaborators/${collab}`)
@@ -122,22 +57,25 @@ export default {
     setMsgErrorCep(state, msg) {
       state.errorCep = msg;
     },
+    totalCollabsStats(state, total) {
+      state.totalCollabs = total
+    }
   },
   actions: {
-
-    async getCollabs(context) {
       
-      await axios
+      async getCollabs(context) {
+        
+        await axios
         .get("http://localhost:3000/collaborators")
         .then((response) => {
           this.state.collabs = response.data
-          
+
         })
         .catch(() => {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na consulta de colaboradores.");
         });
-
+        context.commit("totalCollabsStats", this.state.collabs.length)
         return this.state.collabs
     },
       async getOneCollab(context, id) {
