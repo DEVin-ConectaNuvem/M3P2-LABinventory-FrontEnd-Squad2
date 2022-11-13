@@ -5,7 +5,7 @@
         <div class="row data-card">
             <SmallCard 
             :icon="'fa-solid fa-users fa-3x'" 
-            :data="allCollabs.length" 
+            :data="allCollabs" 
             :footer="'Colaboradores'">
             </SmallCard>
             <SmallCard 
@@ -92,11 +92,11 @@ export default {
             if(this.barraPesquisa !== '') {
                 let pesquisa = () => {
                 return this.itemsLocal.filter(item =>
-                    item.titulo
-                    .toLowerCase()
-                        .includes(this.barraPesquisa.toLowerCase()));
-                } 
-                if(pesquisa) {
+                item.titulo
+                .toLowerCase()
+                .includes(this.barraPesquisa.toLowerCase()));
+            } 
+            if(pesquisa) {
                 this.items = pesquisa(this.barraPesquisa);
                 let count = 0
                 if(this.items.length === 0) {
@@ -105,19 +105,19 @@ export default {
                         this.$toast.clear();
                     }
                     this.$toast.error('Item não econtrado! Tente outro.', {
-                    position: 'top'
+                        position: 'top'
                     });
                 }
-                } 
-            } else {
-                this.items = this.itemsLocal;
-            }
+            } 
+        } else {
+            this.items = this.itemsLocal;
         }
-    },
+    }
+},
     computed: {
         // Retorna a lista atual de colaboradores
         allCollabs() {
-            return this.$store.state.collaborators.collabs
+            return this.$store.state.collaborators.totalCollabs;
         },
         itemsLocal() {
             return this.$store.state.itens.sendItens;
@@ -128,9 +128,9 @@ export default {
         // Retorna o valor total em style currency para os SMALL CARDS
         currency() {
             let formatter = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-            minimumFractionDigits: 2
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2
             });
             let str = this.invStats.total
             let curr = formatter.format(str)
@@ -143,10 +143,8 @@ export default {
         },
         stats() {
             this.invStats = this.$store.getters['itens/getStats'];
-        }
+        },
     },
-    // Carrega store com dados do localstorage
-    // Calcula as estatísticas
     mounted() {
         // Obtém LISTA DE ITENS
         this.$store.dispatch('itens/getItens')
