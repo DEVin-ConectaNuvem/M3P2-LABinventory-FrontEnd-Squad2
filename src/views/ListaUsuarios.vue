@@ -78,7 +78,12 @@ export default {
                 } 
                 if(pesquisa) {
                 this.collabs = pesquisa(this.barraPesquisa);
+                let count = 0
                 if(this.collabs.length === 0) {
+                    count++
+                    if (count > 0) {
+                        this.$toast.clear();
+                    }
                     this.$toast.error('Usuário não econtrado! Tente outro.', {
                     position: 'top'
                     });

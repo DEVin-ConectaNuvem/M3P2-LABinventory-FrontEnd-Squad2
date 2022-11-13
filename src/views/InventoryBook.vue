@@ -98,7 +98,12 @@ export default {
                 } 
                 if(pesquisa) {
                 this.items = pesquisa(this.barraPesquisa);
+                let count = 0
                 if(this.items.length === 0) {
+                    count++
+                    if (count > 0) {
+                        this.$toast.clear();
+                    }
                     this.$toast.error('Item não econtrado! Tente outro.', {
                     position: 'top'
                     });
@@ -141,7 +146,7 @@ export default {
         // Obtém LISTA DE COLABORADORES
         this.$store.commit('collaborators/getCollabs')
         // Popula lista de ITENS
-        this.items = this.$store.state.itens.sendItens
+        this.items = this.$store.getters['itens/getItems']
     }
 }
 </script>

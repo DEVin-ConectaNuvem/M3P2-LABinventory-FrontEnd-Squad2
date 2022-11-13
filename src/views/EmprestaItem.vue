@@ -115,7 +115,12 @@ export default {
                 } 
                 if(pesquisa) {
                 this.items = pesquisa(this.barraPesquisa);
+                let count = 0
                 if(this.items.length === 0) {
+                    count++
+                    if (count > 0) {
+                        this.$toast.clear();
+                    }
                     this.$toast.error('Item não econtrado! Tente outro.', {
                     position: 'top'
                     });
@@ -138,8 +143,8 @@ export default {
             let msg1 = "O item está disponível"
             let msg2 = `Item emprestado para ${nome}`
             this.$toast.info(nome !== msg1 ? msg2 : msg1, {position: 'top'})
-            location.reload()
-            this.$loading.show()
+            // location.reload()
+            // this.$loading.show()
             
         },
         editItem(num) {
@@ -160,7 +165,7 @@ export default {
     mounted() {
         this.$store.commit('itens/getItens')
         this.$store.commit('collaborators/getCollabs')
-        this.items = this.$store.state.itens.sendItens
+        this.items = this.$store.getters['itens/getItems']
     }
 }
 </script>

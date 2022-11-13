@@ -146,6 +146,9 @@ export default {
                 }
             })
             return itemToEdit
+        },
+        getItems(state) {
+            return state.sendItens;
         }
     }
 }
