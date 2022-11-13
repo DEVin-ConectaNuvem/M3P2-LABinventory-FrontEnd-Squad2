@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     <tr 
-                    v-for="(item, index) in items" 
+                    v-for="(item, index) in (barraPesquisa ? items : itemsLocal)" 
                     :key="item.patrimonio" 
                     @click="editItem(item.patrimonio)">
                         <td 
@@ -143,9 +143,6 @@ export default {
             let msg1 = "O item está disponível"
             let msg2 = `Item emprestado para ${nome}`
             this.$toast.info(nome !== msg1 ? msg2 : msg1, {position: 'top'})
-            // location.reload()
-            // this.$loading.show()
-            
         },
         editItem(num) {
             this.$store.commit('itens/editItem', num)
@@ -154,7 +151,7 @@ export default {
     computed: {
         // Retorna a lista atual de colaboradores
         allCollabs() {
-            return this.$store.state.collaborators.collabs
+            return this.$store.state.collaborators.collabs;
         },
         itemsLocal() {
             return this.$store.state.itens.sendItens;
@@ -165,7 +162,6 @@ export default {
     mounted() {
         this.$store.dispatch('itens/getItens')
         this.$store.dispatch('collaborators/getCollabs')
-        this.items = this.$store.getters['itens/getItems']
     }
 }
 </script>
