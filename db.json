@@ -117,14 +117,15 @@
       "genero": "Masculino",
       "nascimento": "1985-05-26",
       "telefone": "(87) 54112-1212",
-      "bairro": "Centro",
+      "bairro": "Capoeiras",
       "cargo": "Front-end dev",
       "cep": "88010-200",
       "email": "brindola@gmail.com",
       "localidade": "Florianópolis",
-      "logradouro": "Rua Francisco Tolentino",
+      "logradouro": "Rua Paula Ramos",
       "uf": "SC",
-      "id": 5
+      "id": 5,
+      "complemento": "casa"
     }
   ],
   "itens": [
