@@ -11,7 +11,8 @@
         class="form-control" 
         type="text" 
         id="search-user" 
-        placeholder="Digite para buscar..." 
+        placeholder="Digite para buscar..."
+        v-model="barraPesquisa" 
         @input="setCollabs">
     </div>
     <!-- CARDS de colaboradores -->
@@ -23,7 +24,7 @@
             :img="collab.email" 
             :first="collab.nome" 
             :second="collab.email" 
-            :third="`(${collab.telefone.substring(0, 2)}) ${collab.telefone.substring(2, 3)} ${collab.telefone.substring(3, 11)}`" 
+            :third="collab.telefone" 
             :fourth="collab.cargo" 
             @click="collabDetails(collab)">
             </MediumCard>
@@ -47,7 +48,8 @@ export default {
     data() {
         return {
             // Inicialmente populada pelo mounted, depois pela barra de busca
-            collabs: [] 
+            collabs: [],
+            barraPesquisa: '' 
         }
     },
     methods: {
@@ -55,57 +57,52 @@ export default {
         // Para setar na store o id do colaborador a ser editado
         collabDetails(item) {
             // Retorna o id de uma seleção de colaborador anterior a atual
-            let oldValue = this.$store.getters['collaborators/sendSelectedId']
-            // Se o colaborador selecionado é o mesmo
-            if(oldValue == item.id){
-                // Reseta o id na store para null, que era a condição inicial
-                this.$store.commit('collaborators/setSelectedId', null)
-            }else{
-                // Se for um colaborador diferente, state.selectedId recebe o id atual
-                this.$store.commit('collaborators/setSelectedId', item.id)
-            }
+            this.$store.commit('collaborators/setSelectedId', item.id)
+            //let oldValue = this.$store.getters['collaborators/sendSelectedId']
+           
+            
         },
         // Recebe o input da barra de busca de colaborador
         setCollabs() {
-            // Barra de busca
-            let inputUser = document.getElementById('search-user')
-            // Obtém a lista de colaboradores na store
-            let allUsers = this.$store.getters['collaborators/sendCollabs']
-            // Se a barra de busca estiver vazia
-            if (inputUser == null){
-                // Os colaborares são a lista completa
-                this.collabs = allUsers
-            } else { // Se o input conter algum caracter
-                let filtered = []
-                // Percorre-se o array em busca do caracter
-                allUsers.forEach(user => {
-                    
-                    for (const [key] of Object.entries(user)) {
-                        // Cada valor referente às keys do objeto de cada colaborador
-                        let userKey = user[key]
-                        // Se houver tipo number, transforma para str
-                        if (typeof user[key] !== 'string') {
-                            userKey = String(userKey)
-                        }
-                        // Transforma o caracter ou caracteres digitados para minúsculo
-                        // Verifica se a busca pelo seu index na string retorna != -1
-                        if (userKey.toLowerCase().indexOf(inputUser.value.toLowerCase()) !== -1) {
-                            // Se sim, insere o objeto do colaborador na lista
-                            filtered.push(user)
-                            break
-                        }
+            if(this.barraPesquisa !== '') {
+                let pesquisa = () => {
+                return this.allCollabs.filter(item =>
+                    item.nome
+                    .toLowerCase()
+                        .includes(this.barraPesquisa.toLowerCase()));
+                } 
+                if(pesquisa) {
+                this.collabs = pesquisa(this.barraPesquisa);
+                let count = 0
+                if(this.collabs.length === 0) {
+                    count++
+                    if (count > 0) {
+                        this.$toast.clear();
                     }
-                })
-                // Seta a lista de colaboradores a ser exibida em tela
-                this.collabs = filtered
+                    this.$toast.error('Usuário não econtrado! Tente outro.', {
+                    position: 'top'
+                    });
+                }
+                } 
+            } else {
+                this.collabs = this.allCollabs;
             }
         }
     },
+    computed: {
+        // Retorna a lista atual de colaboradores
+        allCollabs() {
+            return this.$store.state.collaborators.collabs
+        },
+    },
     mounted() {
-        // Popula a lista de colaboradores na store (state.collabs)
-        this.$store.commit('collaborators/getCollabs')
-        // Retorna aqui a lista de colaboradores atual
-        this.collabs = this.$store.getters['collaborators/sendCollabs']
+         // Popula a lista de colaboradores na store (state.collabs)
+         this.$store.dispatch('collaborators/getCollabs')
+         .then((response) => {
+                this.collabs = response
+               this.$store.state.collaborators.collabs = response
+            })
+        
     }
 }
 </script>

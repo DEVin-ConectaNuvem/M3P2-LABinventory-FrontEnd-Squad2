@@ -35,6 +35,12 @@
       "name": "Maycon Robson Campos",
       "email": "maycon.campos@gmail.com",
       "password": "abcd1234"
+    },
+    {
+      "name": "Vinicius",
+      "email": "admin@admin.com.br",
+      "password": "123123123",
+      "id": 7
     }
   ],
   "collaborators": [
@@ -73,34 +79,21 @@
       "uf": "SC"
     },
     {
-      "id": 3,
-      "nome": "Maycon R. Campos",
+      "nome": "Marcelo Coelho",
       "genero": "Masculino",
-      "nascimento": "1982-08-26",
-      "telefone": "(48) 51454-5454",
-      "bairro": "Capoeiras",
+      "nascimento": "2007-02-12",
+      "telefone": "(41) 99453-3678",
+      "bairro": "Santa Felicidade",
       "cargo": "Back-end dev",
-      "complemento": "casa",
-      "email": "maycon@gmail.com",
-      "localidade": "Florianópolis",
-      "logradouro": "Rua Paula Ramos",
-      "numero": "316",
-      "uf": "SC"
-    },
-    {
-      "id": 4,
-      "nome": "Maycon R. Campos",
-      "genero": "Masculino",
-      "nascimento": "1982-08-26",
-      "telefone": "(48) 98444-4444",
-      "bairro": "Vila Nova",
-      "cargo": "Back-end dev",
-      "complemento": "casa",
-      "email": "maycon.campos@gmail.com",
-      "localidade": "Imbituba",
-      "logradouro": "Av Renato Ramos da Silva",
-      "numero": "3013",
-      "uf": "SC"
+      "cep": "82015-040",
+      "complemento": "Casa 12",
+      "email": "mcoelho@email.com",
+      "localidade": "Curitiba",
+      "logradouro": "Rua João Azolin",
+      "numero": "740",
+      "referencia": "Wallmart",
+      "uf": "PR",
+      "id": 3
     }
   ],
   "itens": [
@@ -114,7 +107,7 @@
       "marca": "Logitech",
       "modelo": "K380",
       "descricao": "Teclado Logitech K380 ABNT2 sem fio, teclas de mídia de fácil acesso, conexão USB, pilhas inclusas e layout ABNT2.",
-      "emprestado": "Adriano Matos Meier"
+      "emprestado": "Vinicius Possatto Stormoski"
     },
     {
       "id": 2,
@@ -126,7 +119,7 @@
       "marca": "Dell",
       "modelo": "P3217h",
       "descricao": "Monitor Dell 32 polegadas P3217h 2HDMI 2USB",
-      "emprestado": "Item disponível"
+      "emprestado": "Vinicius Possatto Stormoski"
     },
     {
       "id": 3,
@@ -138,7 +131,7 @@
       "marca": "Apple",
       "modelo": "Air",
       "descricao": "Macbook Air com chip M2 13 inch retina",
-      "emprestado": "Item disponível"
+      "emprestado": "Josinaldo De Andrade Pereira"
     },
     {
       "id": 4,
@@ -150,7 +143,7 @@
       "marca": "Logitech",
       "modelo": "G403 Hero",
       "descricao": "Mouse Gamer Logitech G403 Hero preto com fio",
-      "emprestado": "Item disponível"
+      "emprestado": "Maycon R. Campos"
     }
   ]
 }

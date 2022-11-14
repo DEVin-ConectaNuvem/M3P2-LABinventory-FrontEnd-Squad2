@@ -8,18 +8,14 @@ export default {
             item: {}, // Item selecionado para edição
             toEdit: null, // Código do patrimônio
             stats: {}, // Cálculos para SMALL CARDS no inventário
-            edit: false
+            edit: false,
+            errorMsg: ''
         }
     },
     mutations: {
         
         // Lista atual de todos os itens
-        getItens(state) {
-            axios.get("http://localhost:3000/itens")
-            .then((response) => {
-                state.sendItens = response.data;
-            })
-        },
+        
         // Deve-se chamar getItens primeiro
         // Seta state.item pelo código de patrimônio
         getItem(state, patr) {
@@ -51,6 +47,9 @@ export default {
             })
             state.stats.emprestados = emprestados  
         },
+        setMsgError(state, msg) {
+            state.errorMsg = msg;
+          },
 
     },
     actions: {
@@ -67,7 +66,7 @@ export default {
                     count++
                     axios.patch(`http://localhost:3000/itens/${element.id}`, item, headers)
                     .then(() => {
-                        context.commit("getItens")
+                        context.dispatch("getItens")
                     })
                     .catch((e) => {
                         console.error("error", e)
@@ -104,7 +103,7 @@ export default {
                 if(element.patrimonio === patr) {
                     axios.delete(`http://localhost:3000/itens/${element.id}`)
                     .then(() => {
-                        context.commit("getItens")
+                        context.dispatch("getItens")
                         return true
                     })
                     .catch((e) => {
@@ -124,7 +123,7 @@ export default {
                     item.emprestado = itemEmprestado.itemTo
                     axios.put(`http://localhost:3000/itens/${item.id}`, item, headers)
                         .then(() => {
-                            context.commit("getItens")
+                            context.dispatch("getItens")
                             return true
                         })
                         .catch((e) => {
@@ -133,6 +132,16 @@ export default {
                 }
             })
             
+        },
+        async getItens(context) {
+            await axios.get("http://localhost:3000/itens")
+            .then((response) => {
+                context.state.sendItens = response.data;
+            })
+            .catch(() => {
+                // No caso de qualquer outro erro na requisição
+                context.commit("setMsgError", "Erro na consulta dos itens.");
+              });
         },
     },
     getters: {
@@ -146,6 +155,15 @@ export default {
                 }
             })
             return itemToEdit
-        }
+        },
+        getItems(state) {
+            return state.sendItens;
+        },
+        getStats(state) {
+            return state.stats;
+        },
+        sendErrorMsg(state) {
+            return state.errorMsg;
+          },
     }
 }

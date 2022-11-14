@@ -5,7 +5,7 @@
         <div class="row data-card">
             <SmallCard 
             :icon="'fa-solid fa-users fa-3x'" 
-            :data="allCollabs.length" 
+            :data="allCollabs" 
             :footer="'Colaboradores'">
             </SmallCard>
             <SmallCard 
@@ -36,13 +36,14 @@
             class="form-control" 
             type="text" 
             id="search-item" 
-            placeholder="Digite para buscar..." 
+            placeholder="Digite para buscar..."
+            v-model="barraPesquisa" 
             @input="setItems">
         </div>
 
         <!-- CARDS do inventário -->
         <div id="inv-cards">
-            <div class="inv-card shadow" v-for="item in itemsLocal" :key="item.id">
+            <div class="inv-card shadow" v-for="item in items" :key="item.id">
                 <MediumCard 
                 cardType="inventory" 
                 :img="item.url" 
@@ -77,7 +78,8 @@ export default {
     data() {
         return {
             items: [], // Populado pelo mounted e depois pela barra de busca
-            invStats: {} // Recebe as estatísticas da store
+            invStats: {}, // Recebe as estatísticas da store
+            barraPesquisa: ''
         }
     },
     methods: {
@@ -87,70 +89,76 @@ export default {
         // Chamado pela barra de busca
         // Filtra os cards apresentados em tela
         setItems() {
-            // Barra de busca
-            let inputItem = document.getElementById('search-item')
-            // Obtém a lista de itens na store
-            let allItems = this.$store.state.itens.sendItens
-            // Se o input estiver vazio
-            if (inputItem == null){
-                // Seta a lista completa
-                this.items = allItems
-            } else {
-                // Se houver algum caracter,
-                // Cria uma nova lista de itens vazia
-                let filtered = []
-                // Percorre a lista de itens
-                allItems.forEach(item => {
-                    // Em cada item percorre as keys 
-                    // Se encontrar o caracter ou caracteres digitados
-                    // insere o item na nova lista
-                    for (const [key] of Object.entries(item)) {
-                        // Transforma tudo para minúsculo e verifica se o caracter possui um index 
-                        if (item[key].toLowerCase().indexOf(inputItem.value.toLowerCase()) !== -1) {
-                            filtered.push(item)
-                            break
-                        }
+            if(this.barraPesquisa !== '') {
+                let pesquisa = () => {
+                return this.itemsLocal.filter(item =>
+                item.titulo
+                .toLowerCase()
+                .includes(this.barraPesquisa.toLowerCase()));
+            } 
+            if(pesquisa) {
+                this.items = pesquisa(this.barraPesquisa);
+                let count = 0
+                if(this.items.length === 0) {
+                    count++
+                    if (count > 0) {
+                        this.$toast.clear();
                     }
-                })
-                // Define a nova lista
-                this.items = filtered
-            }
+                    this.$toast.error('Item não econtrado! Tente outro.', {
+                        position: 'top'
+                    });
+                }
+            } 
+        } else {
+            this.items = this.itemsLocal;
         }
-    },
+    }
+},
     computed: {
         // Retorna a lista atual de colaboradores
         allCollabs() {
-            return this.$store.state.collaborators.collabs
+            return this.$store.state.collaborators.totalCollabs;
         },
         itemsLocal() {
             return this.$store.state.itens.sendItens;
+        },
+        stats() {
+            return this.$store.state.itens.stats;
         },  
         // Retorna o valor total em style currency para os SMALL CARDS
         currency() {
             let formatter = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-            minimumFractionDigits: 2
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2
             });
             let str = this.invStats.total
             let curr = formatter.format(str)
             return curr
         }
     },
-    // Carrega store com dados do localstorage
-    // Calcula as estatísticas
+    watch: {
+        itemsLocal() {
+            this.items = this.$store.getters['itens/getItems'];
+        },
+        stats() {
+            this.invStats = this.$store.getters['itens/getStats'];
+        },
+    },
     mounted() {
         // Obtém LISTA DE ITENS
-        this.$store.commit('itens/getItens')
-        // Gera as ESTATÍSTICAS dos SMALL CARDS
-        this.$store.commit('itens/itemStats')
+        this.$store.dispatch('itens/getItens')
         // Popula lista de ESTATÍSTICAS
         this.invStats = this.$store.state.itens.stats
         // Obtém LISTA DE COLABORADORES
-        this.$store.commit('collaborators/getCollabs')
+        this.$store.dispatch('collaborators/getCollabs')
         // Popula lista de ITENS
-        this.items = this.$store.state.itens.sendItens
-    }
+        this.items = this.$store.getters['itens/getItems']
+    },
+    updated() {
+        // Gera as ESTATÍSTICAS dos SMALL CARDS
+        this.$store.commit('itens/itemStats')
+    },
 }
 </script>
 <style scoped>
