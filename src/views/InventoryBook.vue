@@ -37,7 +37,7 @@
             type="text" 
             id="search-item" 
             placeholder="Digite para buscar..."
-            v-model="barraPesquisa" 
+            v-model="searchBar" 
             @input="setItems">
         </div>
 
@@ -79,7 +79,7 @@ export default {
         return {
             items: [], // Populado pelo mounted e depois pela barra de busca
             invStats: {}, // Recebe as estatísticas da store
-            barraPesquisa: ''
+            searchBar: ''
         }
     },
     methods: {
@@ -89,15 +89,15 @@ export default {
         // Chamado pela barra de busca
         // Filtra os cards apresentados em tela
         setItems() {
-            if(this.barraPesquisa !== '') {
-                let pesquisa = () => {
+            if(this.searchBar !== '') {
+                let search = () => {
                 return this.itemsLocal.filter(item =>
                 item.titulo
                 .toLowerCase()
-                .includes(this.barraPesquisa.toLowerCase()));
+                .includes(this.searchBar.toLowerCase()));
             } 
-            if(pesquisa) {
-                this.items = pesquisa(this.barraPesquisa);
+            if(search) {
+                this.items = search(this.searchBar);
                 let count = 0
                 if(this.items.length === 0) {
                     count++
