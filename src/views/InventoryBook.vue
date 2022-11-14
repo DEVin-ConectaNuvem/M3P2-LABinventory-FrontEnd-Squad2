@@ -94,7 +94,17 @@ export default {
                 return this.itemsLocal.filter(item =>
                 item.titulo
                 .toLowerCase()
-                .includes(this.searchBar.toLowerCase()));
+                .includes(this.searchBar.toLowerCase()) || 
+                item.marca
+                .toLowerCase()
+                .includes(this.searchBar.toLowerCase()) ||
+                item.descricao
+                .toLowerCase()
+                .includes(this.searchBar.toLowerCase()) ||
+                item.modelo
+                .toLowerCase()
+                .includes(this.searchBar.toLowerCase())
+                );
             } 
             if(search) {
                 this.items = search(this.searchBar);
