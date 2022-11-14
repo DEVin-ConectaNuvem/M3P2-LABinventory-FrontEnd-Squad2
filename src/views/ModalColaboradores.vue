@@ -183,7 +183,6 @@
                     type="text"
                     class="form-control"
                     name="street"
-                    readonly
                   />
                 </div>
                 <div class="col-3">
@@ -228,7 +227,6 @@
                     type="text"
                     class="form-control"
                     name="zone"
-                    readonly
                   />
                 </div>
               </div>
@@ -335,9 +333,13 @@ export default {
     // Quando o input de CEP tiver mais que 7 caracteres
     // Envia o CEP para store
     getCepInfo() {
-      if (this.cepNum.length >= 8) {
-        this.$store.dispatch("collaborators/cepInfo", this.cepNum);
-      }
+      this.$store.dispatch("collaborators/cepInfo", this.cepNum).then(() => {
+        this.collab.localidade = this.cepInfo.localidade
+        this.collab.uf = this.cepInfo.uf
+        this.collab.logradouro = this.cepInfo.logradouro
+        this.collab.bairro = this.cepInfo.bairro
+
+      })
     },
     // Envia o objeto com os dados do colaborador para a store
     async saveCollab() {
@@ -345,25 +347,24 @@ export default {
       this["collaborators/setEditUser"](true);
 
       // Chamando Action saveCollab com flag de edição ativa
-      await this["collaborators/saveCollab"]({ ...this.collab })
-      .then(() => {
-        let btn = document.getElementById("btnclose")
-        btn.click()
+      await this["collaborators/saveCollab"]({ ...this.collab }).then(() => {
+        let btn = document.getElementById("btnclose");
+        btn.click();
         //this.cleanForm();
       });
 
       this.$toast.info("Colaborador Atualizado com sucesso!", {
-          position: "top",
-        });
+        position: "top",
+      });
     },
     delCollab() {
       let idColab = this.$store.getters["collaborators/sendSelectedId"];
-      console.log(idColab)
+      console.log(idColab);
       this["collaborators/DelCollab"](idColab).then(() => {
         this.$toast.info("Colaborador Excluido com sucesso!", {
           position: "top",
         });
-      })
+      });
       //location.reload();
     },
     cleanForm() {
@@ -376,6 +377,7 @@ export default {
   computed: {
     ...mapState({
       editUser: (state) => state.collaborators.editUser,
+      cepInfo: (state) => state.collaborators.cepInfo
     }),
     // Retorna as mensagens de erro para o input de CEP
     errorMsg() {
