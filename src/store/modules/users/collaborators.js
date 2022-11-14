@@ -11,25 +11,16 @@ export default {
       errorCep: "",
       collabs: [],
       selectedId: null,
-      totalCollabs: 0
+      totalCollabs: 0,
+      editUser: false,
     };
   },
   mutations: {
+    setEditUser(state, status) {
+      state.editUser = status;
+    },
     setSelectedId(state, value) {
       state.selectedId = value;
-    },
-    delCollab(context, collab) {
-        axios
-        .delete(`http://localhost:3000/collaborators/${collab}`)
-        .then((response) => {
-          console.log(response)
-          
-        })
-        .catch(() => {
-          // No caso de qualquer outro erro na requisição
-          context.commit("setMsgError", "Erro na exclusão colaboradores.");
-        });
-
     },
     setCepInfo(state, info) {
       state.cepInfo = {
@@ -58,57 +49,51 @@ export default {
       state.errorCep = msg;
     },
     totalCollabsStats(state, total) {
-      state.totalCollabs = total
-    }
+      state.totalCollabs = total;
+    },
   },
   actions: {
-      
-      async getCollabs(context) {
-        
-        await axios
+    async getCollabs(context) {
+      context.commit("setResetCollabs")
+      await axios
         .get("http://localhost:3000/collaborators")
         .then((response) => {
-          this.state.collabs = response.data
-
+          response.data.forEach((e) => {
+            context.commit("setCollabs", e)
+          })
         })
         .catch(() => {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na consulta de colaboradores.");
         });
-        context.commit("totalCollabsStats", this.state.collabs.length)
-        return this.state.collabs
+      context.commit("totalCollabsStats", context.state.collabs.length);
+      return true
     },
-      async getOneCollab(context, id) {
-      
+    async getOneCollab(context, id) {
       await axios
         .get(`http://localhost:3000/collaborators/${id}`)
         .then((response) => {
-          this.state.collabs = response.data
-          
+          this.state.collabs = response.data;
         })
         .catch(() => {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na consulta do colaborador.");
         });
 
-        return this.state.collabs
+      return this.state.collabs;
     },
     async DelCollab(context, user) {
-      
       await axios
         .delete(`http://localhost:3000/collaborators/${user}`)
-        .then((response) => {
-          console.log(response)
-          
+        .then(() => {
+          context.dispatch("getCollabs")
         })
         .catch(() => {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na exclusão colaboradores.");
         });
-
-        
     },
-    
+
     // Recebe o CEP do novo ou colaborador editado
     // Verifica se o CEP é válido
     async cepInfo(context, cep) {
@@ -136,26 +121,42 @@ export default {
       }, 5000);
     },
     async saveCollab(context, colab) {
+      // Zerando variáveis de controle
       context.commit("setSaveSuccess", false);
       context.commit("setExists", false);
       context.commit("setResetCollabs");
+      // Se flag edit estiver true, entra no bloco pra requisição put
+      if (context.state.editUser) {
+        await axios
+          .put(`http://localhost:3000/collaborators/${colab.id}`, colab)
+          .then(() => {
+            context.commit("setSaveSuccess", true);
+            context.commit("setEditUser", false);
+          });
+          context.dispatch("getCollabs")
+          return true
+        // se flag edit estiver false, entra no bloco post
+      } else {
+        // Fazendo requisição pra coletar todos os colabs do banco
       await axios.get("http://localhost:3000/collaborators").then((res) => {
         res.data.forEach((el) => {
           context.commit("setCollabs", el);
         });
       });
+        // Verifica se email ja se encontra cadastrado no banco
+        context.state.collabs.forEach((el) => {
+          if (el.email === colab.collab.email) {
+            context.commit("setExists", true);
+          }
+        });
 
-      context.state.collabs.forEach((el) => {
-        if (el.email === colab.collab.email) {
-          context.commit("setExists", true);
+        // Se email existir, seta mensagem de erro e retorna false
+        if (context.state.exists) {
+          context.commit("setMsgError", "Usuário já existe na base de dados");
+          return false;
         }
-      });
-
-      if (context.state.exists) {
-        context.commit("setMsgError", "Usuário já existe na base de dados");
-        return false;
       }
-
+      // Se email não existir no banco, colaborador é cadastrado
       let payload = {
         nome: colab.collab.nome,
         genero: colab.collab.genero,

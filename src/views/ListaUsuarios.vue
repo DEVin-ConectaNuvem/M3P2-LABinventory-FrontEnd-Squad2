@@ -37,6 +37,7 @@
 
 import ModalColaboradores from './ModalColaboradores.vue'
 import MediumCard from '@/components/MediumCard.vue'
+import { mapActions } from 'vuex'
 
 export default {
 
@@ -52,15 +53,19 @@ export default {
             barraPesquisa: '' 
         }
     },
+    watch: {
+        allCollabs() {
+            this.collabs = this.allCollabs
+        }
+    },
     methods: {
+        ...mapActions(["collaborators/getCollabs"]),
         // Chamado pelos CARDS, que trazem o item
         // Para setar na store o id do colaborador a ser editado
         collabDetails(item) {
             // Retorna o id de uma seleção de colaborador anterior a atual
             this.$store.commit('collaborators/setSelectedId', item.id)
             //let oldValue = this.$store.getters['collaborators/sendSelectedId']
-           
-            
         },
         // Recebe o input da barra de busca de colaborador
         setCollabs() {
@@ -97,10 +102,9 @@ export default {
     },
     mounted() {
          // Popula a lista de colaboradores na store (state.collabs)
-         this.$store.dispatch('collaborators/getCollabs')
-         .then((response) => {
-                this.collabs = response
-               this.$store.state.collaborators.collabs = response
+         this['collaborators/getCollabs']()
+         .then(() => {
+            this.collabs = this.allCollabs
             })
         
     }
