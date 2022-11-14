@@ -107,7 +107,6 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
 
     })
 
-        // REVISAR
     it("Deve visualizar item emprestado na tela inventário", () => {
         const email = "julia@email.com"
         const password = "abcd1234"
@@ -166,20 +165,23 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
         cy.get(".btn-info").click();
         cy.contains("p", "Item salvo com sucesso.")
 
-        //Voltar Tela 
+        //Voltar Tela emprestimo
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
 
         //Realizar emprestimo
         cy.get('.btns-div > :nth-child(3) > :nth-child(3)').click()
-        cy.get("tbody > tr > :nth-child(4) > .form-select").select("Julia Moura")
+        cy.get('#search-item').type("BR1234-789")
+        cy.get('.form-select').first().select('Julia Moura')
+
+        //Voltar Tela emprestimo
+        cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
 
         // Desfaço emprestimo - COM ERRO ao colocar item disponível
         cy.get('.btns-div > :nth-child(3) > :nth-child(3)').click()
-        cy.get("tbody > tr > :nth-child(4) > .form-select").select("Item disponível")
+        cy.get('#search-item').type("BR1234-789")
+        cy.get('.form-select').first().select('Item disponível')
 
-        //Voltar Tela 
+        // Voltar Tela emprestimo
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
-
-
     })
 })
