@@ -305,8 +305,6 @@ export default {
         email: "required|emailcheck",
         job: "required",
         cep: "required",
-        num: "required",
-        complement: "required",
         ref: "required",
       },
       collab: {}, // Dados do colaborador a ser editado, os dados irão popular os inputs

@@ -53,6 +53,11 @@ export default {
             barraPesquisa: '' 
         }
     },
+    watch: {
+        allCollabs() {
+            this.collabs = this.allCollabs
+        }
+    },
     methods: {
         ...mapActions(["collaborators/getCollabs"]),
         // Chamado pelos CARDS, que trazem o item
@@ -95,14 +100,11 @@ export default {
             return this.$store.state.collaborators.collabs
         },
     },
-    updated() {
-        this.collabs = this.allCollabs
-    },
     mounted() {
          // Popula a lista de colaboradores na store (state.collabs)
          this['collaborators/getCollabs']()
          .then(() => {
-            this.collabs = this.$store.state.collaborators.collabs
+            this.collabs = this.allCollabs
             })
         
     }
