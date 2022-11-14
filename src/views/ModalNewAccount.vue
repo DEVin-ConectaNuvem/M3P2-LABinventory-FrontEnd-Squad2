@@ -13,7 +13,8 @@
             type="button" 
             class="btn-close" 
             data-bs-dismiss="modal" 
-            aria-label="Close">
+            aria-label="Close"
+            @click="cleanForm">
             </button>
           </div>
           <div class="modal-body">
@@ -56,11 +57,27 @@
                     class="form-control" 
                     name="password" 
                     v-model="user.password" 
-                    placeholder="ex.: 1#3A5k78"/>
+                    placeholder="ex.: 1#3A5k78"
+                    ref="password"/>
                     <span 
                     class="text-danger" 
                     v-text="errors.password" 
                     v-show="showError" >
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Confirme a Senha</label>
+                    <newuser-field 
+                    type="password" 
+                    class="form-control" 
+                    name="confirm-pass" 
+                    v-model="confirmPassword" 
+                    placeholder="ex.: 1#3A5k78"
+                    data-vv-as="password"/>
+                    <span 
+                    class="text-danger" 
+                    v-text="confirmError" 
+                    v-show="showConfirmError" >
                     </span>
                 </div>
             </newuser-form>
@@ -70,13 +87,15 @@
             <button 
             type="button" 
             class="btn btn-outline-info" 
-            data-bs-dismiss="modal">
+            data-bs-dismiss="modal"
+            @click="cleanForm">
             Sair
             </button>
             <button 
             type="button" 
             class="btn btn-info" 
-            data-bs-dismiss="modal" 
+            data-bs-dismiss="modal"
+            :disabled="disable"
             @click="setUserAccount()">
             Enviar
             </button>
@@ -85,13 +104,13 @@
       </div>
     </div>
   </div>
-  </template>
-  <script>
-  import { Form, Field } from 'vee-validate'
-  import rules from '../validations/validateusers'
-  import { mapActions, mapState } from 'vuex'
-  
-  rules
+</template>
+<script>
+import { Form, Field } from 'vee-validate'
+import rules from '../validations/validateusers'
+import { mapActions, mapState } from 'vuex'
+
+rules
   
   export default {
       components: {
@@ -105,15 +124,17 @@
                 name: 'required',
                 email: 'required|emailcheck',
                 password: 'required|password',
+              
               },
-              user: {} // Recebe os inputs
+              user: {}, // Recebe os inputs
+              confirmPassword: '',
+              confirmError: 'As senhas devem ser iguais.'
           }
       },
       computed: {
         ...mapState({
           success: (state) => state.users.success
         }),
-        // Se, 0 < caracteres no input < 8, apresenta msg de erro
         showError() {
           if (this.user.password) {
             let show = this.user.password.length
@@ -123,6 +144,47 @@
             }
           }
           return false
+        },
+        cpwLength() {
+          return this.confirmPassword.length
+        },
+        pwLength() {
+          if (this.user.password) {
+            return this.user.password.length
+          } else {
+            return false
+          }
+        },
+        userPw() {
+          if (this.user.password) {
+            return this.user.password
+          } else {
+            return false
+          }
+        },
+        userCPw() {
+          return this.confirmPassword
+        },
+        
+        // eslint-disable-next-line vue/return-in-computed-property
+        disable() {
+          if (this.cpwLength >= 8 && this.userCPw === this.userPw) {
+            return false
+          }
+          else {
+            return true
+          }
+        },
+        showConfirmError() {
+          if (this.userPw) {
+            if (this.cpwLength >= this.pwLength && this.userCPw !== this.userPw) {
+              return true
+            } else {
+              return false
+            }
+          } else {
+            return false
+          }
         }
       },
       methods: {
@@ -142,14 +204,21 @@
             console.log("erro", e)
           }).finally(() => {
             let form = document.getElementById('registerform')
+            this.confirmPassword = ''
             form.reset()
           })
+        },
+        cleanForm() {
+          let form = document.getElementById('registerform')
+          this.confirmPassword = ''
+          form.reset()
         }
-      },
+      }
       
   }
-  </script>
-  <style scoped>
+
+</script>
+<style scoped>
   
   ::placeholder {
     font-size: 12pt;
@@ -158,4 +227,3 @@
     font-weight: 100;
   }
   </style>
-  
