@@ -109,7 +109,7 @@ export default {
             if(this.barraPesquisa !== '') {
                 let pesquisa = () => {
                 return this.itemsLocal.filter(item =>
-                    item.titulo
+                    item.patrimonio
                     .toLowerCase()
                         .includes(this.barraPesquisa.toLowerCase()));
                 } 
