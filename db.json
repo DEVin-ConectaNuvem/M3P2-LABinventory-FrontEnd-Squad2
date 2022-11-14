@@ -111,21 +111,6 @@
       "id": 4,
       "complemento": "ap05",
       "referencia": "Moro na minha casa"
-    },
-    {
-      "nome": "José Brindola",
-      "genero": "Masculino",
-      "nascimento": "1985-05-26",
-      "telefone": "(87) 54112-1212",
-      "bairro": "Capoeiras",
-      "cargo": "Front-end dev",
-      "cep": "88010-200",
-      "email": "brindola@gmail.com",
-      "localidade": "Florianópolis",
-      "logradouro": "Rua Paula Ramos",
-      "uf": "SC",
-      "id": 5,
-      "complemento": "casa"
     }
   ],
   "itens": [
