@@ -1,6 +1,6 @@
 describe("Testando Tela de cadastro de itens", () => {
     it("Deve retornar que os campos é obrigatório", () => {
-        const nome = 'Kauã Kirchner de Souza';
+        const nome = 'kauakirchnersouza';
         const email = "kauakirchner@email.com";
         const senha = 'kaua1234';
 
@@ -9,6 +9,7 @@ describe("Testando Tela de cadastro de itens", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(senha);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
@@ -23,12 +24,13 @@ describe("Testando Tela de cadastro de itens", () => {
         const email = "kauakirchner@email.com";
         const senha = 'kaua1234';
         const coidigoDePatrimonioInvalido = "9910";
-
+        
         cy.visit("/");
         cy.get('.criar-conta > .btn').click();
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(senha);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
@@ -38,18 +40,19 @@ describe("Testando Tela de cadastro de itens", () => {
         cy.get(".btn-info").click();
         cy.contains("span", "Código inválido.")
     })
-
+    
     it("Deve retornar que o Valor do produto é inválido", () => {
         const nome = 'Kauã Kirchner de Souza';
         const email = "kauakirchner@email.com";
         const senha = 'kaua1234';
         const valorInvalido = "0,5";
-
+        
         cy.visit("/");
         cy.get('.criar-conta > .btn').click();
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(senha);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
@@ -64,12 +67,13 @@ describe("Testando Tela de cadastro de itens", () => {
         const email = "kauakirchner@email.com";
         const senha = 'kaua1234';
         const urlInvalida = "stackoverflow.com";
-
+        
         cy.visit("/");
         cy.get('.criar-conta > .btn').click();
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(senha);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
@@ -97,6 +101,7 @@ describe("Testando Tela de cadastro de itens", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(senha);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
