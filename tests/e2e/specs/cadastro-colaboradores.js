@@ -1,10 +1,12 @@
 import { faker } from '@faker-js/faker';
+
+// Usuário para fazer login.
+const nome = 'Kauã Kirchner de Souza';
+const email = "kauakirchner@email.com";
+const senha = 'kaua1234';
+
 describe("Testando Tela de cadastro de colaboradores", () => {
     it("Deve retornar que os campos são obrigatórios", () => {
-        const nome = 'Kauã Kirchner de Souza';
-        const email = "kauakirchner@email.com";
-        const senha = 'kaua1234';
-
         cy.visit("/");
         cy.get('.criar-conta > .btn').click();
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
@@ -38,9 +40,6 @@ describe("Testando Tela de cadastro de colaboradores", () => {
     })
 
     it("Deve retornar que eu devo inserir meu nome completo", () => {
-        const nome = 'Kauã Kirchner de Souza';
-        const email = "kauakirchner@email.com";
-        const senha = 'kaua1234';
         const nomeInvalido = "Kauã";
 
         cy.visit("/");
@@ -60,9 +59,6 @@ describe("Testando Tela de cadastro de colaboradores", () => {
     })
 
     it("Deve retornar que eu devo inserir um número de telefone válido", () => {
-        const nome = 'Kauã Kirchner de Souza';
-        const email = "kauakirchner@email.com";
-        const senha = 'kaua1234';
         const numeroTelefoneInvalido = "40028922";
 
         cy.visit("/");
@@ -82,9 +78,6 @@ describe("Testando Tela de cadastro de colaboradores", () => {
     })
 
     it("Deve retornar que o email inserido é inválido", () => {
-        const nome = 'Kauã Kirchner de Souza';
-        const email = "kauakirchner@email.com";
-        const senha = 'kaua1234';
         const emailInvalido = "kauaemailinvalido";
 
         cy.visit("/");
@@ -104,9 +97,6 @@ describe("Testando Tela de cadastro de colaboradores", () => {
     })
 
     it("Deve retornar que o colaborador foi inserido com sucesso quando passada todas as informações", () => {
-        const nome = 'Kauã Kirchner de Souza';
-        const email = "kauakirchner@email.com";
-        const senha = 'kaua1234';
         const nomeCompleto = "Kauã Kirchner de Souza";
         const dataNascimento = "2005-01-07";
         const telefone = "48984995578";
@@ -142,9 +132,6 @@ describe("Testando Tela de cadastro de colaboradores", () => {
     })
 
     it("Cadastrando um usuário já existente", () => {
-        const nome = 'Kauã Kirchner de Souza';
-        const email = "kauakirchner@email.com";
-        const senha = 'kaua1234';
         const nomeCompleto = "Kauã Kirchner de Souza";
         const dataNascimento = "2005-01-07";
         const telefone = "48984995578";
@@ -180,9 +167,6 @@ describe("Testando Tela de cadastro de colaboradores", () => {
     })
 
     it("Deve retornar que o usuário já existe na base de dados.", () => {
-        const nome = 'Kauã Kirchner de Souza';
-        const email = "kauakirchner@email.com";
-        const senha = 'kaua1234';
         const nomeCompleto = "Kauã Kirchner de Souza";
         const dataNascimento = "2005-01-07";
         const telefone = "48984995578";
