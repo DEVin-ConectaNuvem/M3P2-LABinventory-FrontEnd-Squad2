@@ -344,10 +344,7 @@ export default {
     },
     isEmptyFields() {
       let checkSize = Object.keys(this.collab).length + Object.keys(this.address).length
-      console.log(Object.keys(this.address))
-      console.log(Object.keys(this.collab))
-      console.log(checkSize)
-      if(checkSize < 11) {
+      if(checkSize < 12) {
         return true
       } else {
         return false
