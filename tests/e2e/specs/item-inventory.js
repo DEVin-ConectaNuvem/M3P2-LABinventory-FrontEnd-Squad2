@@ -39,7 +39,6 @@ describe("Testa tela inventory book itens", () => {
         cy.get('.modal-footer > .btn-outline-info').click();
     })
 
-        //REVISAR
     it("Deve editar um item pela tela inventário", () => {
         const email = "julia@email.com"
         const password = "abcd1234"
@@ -82,7 +81,6 @@ describe("Testa tela inventory book itens", () => {
         cy.get('.inv-card > label').click();
     })
 
-        // REVISAR
     it("Deve somar corretamente o valor de mais de um produto cadastrado e quantidade de itens", () => {
         const email = "julia@email.com"
         const password = "abcd1234"
