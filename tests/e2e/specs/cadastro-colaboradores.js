@@ -10,6 +10,7 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(`${senha}{enter}`);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
@@ -47,13 +48,14 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(`${senha}{enter}`);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
         cy.get(".btns-div > :nth-child(2) > :nth-child(2)").click();
         cy.get(".slider").click();
         cy.get(":nth-child(1) > .col-6 > .form-control").type(nomeInvalido)
-        cy.get(".btn-info").click();
+        cy.get(".container").click();
         cy.contains("span", "Informe o nome completo");
     })
 
@@ -68,13 +70,14 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(`${senha}{enter}`);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
         cy.get(".btns-div > :nth-child(2) > :nth-child(2)").click();
         cy.get(".slider").click();
         cy.get(":nth-child(2) > :nth-child(1) > .form-control").type(numeroTelefoneInvalido)
-        cy.get(".btn-info").click();
+        cy.get(".container").click();
         cy.contains("span", "Favor digitar um telefone válido");
     })
 
@@ -89,13 +92,14 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(`${senha}{enter}`);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
         cy.get(".btns-div > :nth-child(2) > :nth-child(2)").click();
         cy.get(".slider").click();
         cy.get(":nth-child(2) > :nth-child(2) > .form-control").type(emailInvalido)
-        cy.get(".btn-info").click();
+        cy.get(".container").click();
         cy.contains("span", "Email inválido.");
     })
 
@@ -117,6 +121,7 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(`${senha}{enter}`);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
@@ -154,6 +159,7 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(`${senha}{enter}`);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
@@ -191,6 +197,7 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(nome);
         cy.get('#registerform > :nth-child(2) > .form-control').type(email);
         cy.get(':nth-child(3) > .form-control').type(senha);
+        cy.get(':nth-child(4) > .form-control').type(`${senha}{enter}`);
         cy.get('.modal-footer > .btn-info').click();
         cy.get('#loginform > :nth-child(1) > .form-control').type(email);
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`);
