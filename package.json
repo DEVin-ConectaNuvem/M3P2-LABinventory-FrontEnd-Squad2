@@ -18,15 +18,16 @@
     "vue": "^3.2.13",
     "vue-loading-overlay": "5.0",
     "vue-router": "^4.0.15",
+    "vue-the-mask": "^0.11.1",
     "vue-toast-notification": "^3.0.2",
     "vue3-cookies": "^1.0.6",
     "vue3-gravatar": "^3.0.0",
-    "vue-the-mask": "^0.11.1",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@faker-js/faker": "^7.6.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-e2e-cypress": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",

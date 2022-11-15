@@ -41,6 +41,12 @@
       "email": "admin@admin.com.br",
       "password": "123123123",
       "id": 7
+    },
+    {
+      "name": "Kauã Kirchn",
+      "email": "kauakirchner@email.com",
+      "password": "kaua1234",
+      "id": 8
     }
   ],
   "collaborators": [
@@ -111,6 +117,47 @@
       "id": 4,
       "complemento": "ap05",
       "referencia": "Moro na minha casa"
+    },
+    {
+      "nome": "Kauã Kirchner de Souza",
+      "genero": "Masculino",
+      "nascimento": "2005-01-07",
+      "telefone": "(48) 98499-5578",
+      "bairro": "Centro",
+      "cargo": "Front-end dev",
+      "cep": "88010-400",
+      "complemento": "anyway",
+      "email": "kauakirchner@email.com",
+      "localidade": "Florianópolis",
+      "logradouro": "Praça Quinze de Novembro",
+      "numero": "96",
+      "referencia": "Árvores",
+      "uf": "SC",
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "email": "kauaemailinvalido",
+      "id": 7
+    },
+    {
+      "nome": "Kauã Kirchner de Souza",
+      "genero": "Masculino",
+      "nascimento": "2005-01-07",
+      "telefone": "(48) 98499-5578",
+      "bairro": "Centro",
+      "cargo": "Front-end dev",
+      "cep": "88010-400",
+      "complemento": "anyway",
+      "email": "Elinore_Schuppe31@gmail.com",
+      "localidade": "Florianópolis",
+      "logradouro": "Praça Quinze de Novembro",
+      "numero": "96",
+      "referencia": "Árvores",
+      "uf": "SC",
+      "id": 8
     }
   ],
   "itens": [
