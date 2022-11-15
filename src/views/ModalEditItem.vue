@@ -203,8 +203,9 @@ export default {
       // Salva as edições no item
       saveItem() {
         // Envia as edições para store
-        this.$store.dispatch('itens/saveItem', this.item)
+        this.$store.dispatch('itens/saveItemedit', this.item)
         let edit = this.$store.state.itens.edit
+        console.log(edit)
             if (!edit) {
               // location.reload()
               // this.$loading.show()
