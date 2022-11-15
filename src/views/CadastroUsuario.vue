@@ -171,6 +171,8 @@
               name="logradouro"
               :disabled="disabled"
             />
+            <span class="text-danger" v-text="errors.logradouro" v-show="errors.logradouro">
+            </span>
           </div>
           <div class="col-2">
             <label class="form-label">Número</label>
@@ -227,6 +229,7 @@
             @click.prevent="saveCollab"
             type="submit"
             class="btn btn-info"
+            :disabled="isEmptyFields"
           >
             Salvar
           </button>
@@ -264,6 +267,9 @@ export default {
         job: "required",
         cep: "required",
         localidade: "required",
+        bairro: "required",
+        logradouro: "required"
+
       },
       collab: {}, // Recebe os inputs
       address: {},
@@ -336,7 +342,18 @@ export default {
     cepError() {
       return this.$store.getters["collaborators/errorCep"];
     },
-  },
+    isEmptyFields() {
+      let checkSize = Object.keys(this.collab).length + Object.keys(this.address).length
+      console.log(Object.keys(this.address))
+      console.log(Object.keys(this.collab))
+      console.log(checkSize)
+      if(checkSize < 11) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
 };
 </script>
 <style scoped>
