@@ -62,7 +62,7 @@ Instalar Vue na maquina através do link abaixo:
 <img width="65px" height="65px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
 </p>
 
-# Desenvolvedores - DEVinSanes:
+# Desenvolvedores - Anyway Group:
 
 Somos o Anyway Group, time de desenvolvedores full-stak, desenvolvemos o projeto LABinventory.
 
