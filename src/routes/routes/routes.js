@@ -37,7 +37,6 @@ const routes = [
           token: to.params.token,
           status: true,
         });
-        
         return (to.path = "/users/inventario");
       }
       let check2 = cookies.get("logged");

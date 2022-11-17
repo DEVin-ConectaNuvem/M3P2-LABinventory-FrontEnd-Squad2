@@ -138,7 +138,9 @@ export default {
             })
         },
         enterWithGoogle() {
-            location.href = this.url_auth
+            this["auth/getUrlAuth"]().then(() => {
+                location.href = this.url_auth
+            })
         },
         cleanForm() {
             let form = document.getElementById('loginform')
@@ -190,7 +192,7 @@ export default {
                 this.$router.push('/users/inventario')
             }
         }
-        this["auth/getUrlAuth"]()
+        
     }
 }
 </script>
