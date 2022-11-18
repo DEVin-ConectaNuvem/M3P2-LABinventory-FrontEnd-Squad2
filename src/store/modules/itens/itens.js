@@ -9,10 +9,15 @@ export default {
             toEdit: null, // Código do patrimônio
             stats: {}, // Cálculos para SMALL CARDS no inventário
             edit: false,
-            errorMsg: ''
+            errorMsg: '',
+            itens: [],
+            exists: false
         }
     },
     mutations: {
+        setExists(state, value) {
+            state.exists = value;
+          },
         
         // Lista atual de todos os itens
         
@@ -28,6 +33,10 @@ export default {
         
         editItem(state, patr) {
             state.toEdit = patr
+        },
+
+        setItens(state, item){
+            state.itens.push(item)
         },
         
         // Calcula estatísticas para SMALL CARDS
@@ -55,11 +64,41 @@ export default {
     actions: {
         // Salva um objeto item novo ou editado no localStorage
         async saveItem(context, item) {
+            context.commit("setExists", false);
+                await axios.get("http://localhost:3000/itens")
+                .then((response) => {
+                    response.data.forEach((element) => {
+                        context.commit("setItens", element)
 
-            // await axios.get("http://localhost:3000/itens")
-            // .then((response) => {
-            //     context.state.sendItens = response.data;
-            // })
+                    });
+                }); 
+                context.state.itens.forEach((el) =>{
+                    if(el.patrimonio === item.patrimonio){
+                        console.log(el.patrimonio)
+                        context.commit("setExists", true);
+                    }
+                });
+
+                if (context.state.exists) {
+                    console.log("Entrou")
+                    context.commit("setMsgError", "Patrimonio já existe na base de dados");
+                    return false;
+                  }
+                  
+            var headers = {
+                        "Content-Type": "application/json"
+                    }
+                    axios.post("http://localhost:3000/itens", item, headers)
+                    .then(() => {
+                        return true
+                    })
+                    .catch((e) => {
+                        console.error("error", e)
+                    })
+            
+        },
+
+        async saveItemedit(context, item) {
             let count = 0
             await context.state.sendItens.forEach(element => {
                 if(element.patrimonio === context.state.toEdit && element.patrimonio === item.patrimonio) {
@@ -88,8 +127,7 @@ export default {
                 .catch((e) => {
                     console.error("error", e)
                 })
-                .finally(() => {
-                })
+                
             }
             
         },
