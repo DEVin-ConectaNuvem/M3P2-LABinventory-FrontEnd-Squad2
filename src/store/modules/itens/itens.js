@@ -95,8 +95,6 @@ export default {
                     .catch((e) => {
                         console.error("error", e)
                     })
-                    .finally(() => {
-                    })
             
         },
 
@@ -129,8 +127,7 @@ export default {
                 .catch((e) => {
                     console.error("error", e)
                 })
-                .finally(() => {
-                })
+                
             }
             
         },
