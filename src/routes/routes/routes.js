@@ -37,6 +37,8 @@ const routes = [
           token: to.params.token,
           status: true,
         });
+        let toast = require("vue-toast-notification")
+        toast.useToast().info(`Bem-vindo(a), ${cookies.get("logged").name}!`, {position: 'top-right'})
         return (to.path = "/users/inventario");
       }
       let check2 = cookies.get("logged");
