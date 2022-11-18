@@ -97,6 +97,9 @@
                         v-show="errors.url">
                         </span>
                     </div>
+                    <div class="loading-container" v-show="isLoading">
+                        <div class="loading" />
+                    </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">
@@ -168,7 +171,6 @@ rules
 export default {
 
     components: {
-
         "newitem-form": Form,
         "newitem-field": Field,
     },
@@ -184,7 +186,8 @@ export default {
                 modelo: 'required'
             },
             item: {}, // Recebe os inputs
-            disabled: true // Inputs desabilitados
+            disabled: true, // Inputs desabilitados
+            isLoading: false
         }
     },
     methods: {
@@ -194,7 +197,11 @@ export default {
             this.$store.dispatch('itens/saveItem', {...this.item})
             let error = this.$store.state.itens.error
             if (!error) {
-                this.$toast.info('Item salvo com sucesso.', {position: 'top'})
+                this.isLoading = true;
+                setTimeout(() => {
+                    this.isLoading = false;
+                    this.$toast.info('Item salvo com sucesso.', {position: 'top'})
+                }, 3000)
                 let form = document.getElementById('newitem-form')
                 form.reset()
             } else {
@@ -217,6 +224,32 @@ export default {
 }
 </script>
 <style scoped>
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading {
+    width: 40px;
+    height: 40px;
+    border: 5px solid;
+    border-color: #0dcaf0 #e6e6e6 #e6e6e6;
+    border-radius: 50%;
+    animation: loading 3s linear infinite;
+    background-position: cover;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
 /* TÍTULO */
 p {
     font-size: 1.8em;

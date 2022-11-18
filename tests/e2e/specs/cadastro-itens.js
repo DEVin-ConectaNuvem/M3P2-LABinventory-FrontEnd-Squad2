@@ -1,5 +1,5 @@
 describe("Testando Tela de cadastro de itens", () => {
-    it("Deve retornar que os campos é obrigatório", () => {
+    it("Deve retornar que os campos são obrigatórios", () => {
         const nome = 'kauakirchnersouza';
         const email = "kauakirchner@email.com";
         const senha = 'kaua1234';
