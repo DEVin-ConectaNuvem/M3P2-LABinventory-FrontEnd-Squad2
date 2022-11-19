@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useCookies } from "vue3-cookies";
+const cookies = useCookies().cookies;
+
 
 export default {
     namespaced: true,
@@ -35,8 +38,8 @@ export default {
             state.toEdit = patr
         },
 
-        setItens(state, item){
-            state.itens.push(item)
+        setItens(state, itens){
+            state.itens = itens
         },
         
         // Calcula estatísticas para SMALL CARDS
@@ -44,9 +47,11 @@ export default {
             // Quantidade de itens
             state.stats.itens = state.sendItens.length
             // Valor total dos itens
-            state.stats.total = state.sendItens.reduce((acc, item) =>
-                Number(item.valor.replace(',', '.')) + acc, 0
-            )
+            var totalValue = 0
+            state.sendItens.forEach((e) => {
+                totalValue = totalValue + e.valor
+            })
+            state.stats.total = totalValue
             // Verifica no array de itens quantos estão emprestados
             let emprestados = 0
             state.sendItens.forEach(item => {
@@ -59,6 +64,10 @@ export default {
         setMsgError(state, msg) {
             state.errorMsg = msg;
           },
+
+        setSendItens(state, itens) {
+            state.sendItens = itens
+        }
 
     },
     actions: {
@@ -99,36 +108,16 @@ export default {
         },
 
         async saveItemedit(context, item) {
-            let count = 0
-            await context.state.sendItens.forEach(element => {
-                if(element.patrimonio === context.state.toEdit && element.patrimonio === item.patrimonio) {
-                    count++
-                    axios.patch(`http://localhost:3000/itens/${element.id}`, item, headers)
-                    .then(() => {
-                        context.dispatch("getItens")
-                    })
-                    .catch((e) => {
-                        console.error("error", e)
-                    })
-                }
-                
-                else if(element.patrimonio === item.patrimonio) {
-                    count++
-                }
-            });
-            if (count == 0) {
-                var headers = {
-                    "Content-Type": "application/json"
-                }
-                axios.post("http://localhost:3000/itens", item, headers)
-                .then(() => {
-                    return true
+            item.valor = item.valor.replace(",", ".")
+            await axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
+                headers: {
+                  'Authorization': cookies.get("logged").token,
+                  'Access-Control-Allow-Origin': "*"
+                }}).then((response) => {
+                    context.dispatch("getItens")
+                    let toast = require("vue-toast-notification")
+                    toast.useToast().info(response.data.sucesso, {position: 'top-right'})
                 })
-                .catch((e) => {
-                    console.error("error", e)
-                })
-                
-            }
             
         },
         // Deleta um objeto item do array de itens pelo código de patrimônio
@@ -172,9 +161,12 @@ export default {
             
         },
         async getItens(context) {
-            await axios.get("http://localhost:3000/itens")
+            await axios.get("http://localhost:5000/items/", {
+                headers: {
+                  'Authorization': cookies.get("logged").token,
+                }})
             .then((response) => {
-                context.state.sendItens = response.data;
+                context.commit("setSendItens", response.data.records)
             })
             .catch(() => {
                 // No caso de qualquer outro erro na requisição
