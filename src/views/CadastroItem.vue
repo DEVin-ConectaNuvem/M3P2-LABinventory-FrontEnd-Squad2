@@ -80,7 +80,7 @@
                         <span 
                         class="text-danger" 
                         v-text="errors.valor" 
-                        v-show="errors.valor">
+                        v-show="errors.valor" >
                         </span>
                     </div>
                     <div class="col-9">
@@ -162,6 +162,7 @@
 
 import { Form, Field } from 'vee-validate'
 import rules from '../validations/validateitens'
+import {mapMutations, mapState} from 'vuex'
 
 rules
 
@@ -184,22 +185,27 @@ export default {
                 modelo: 'required'
             },
             item: {}, // Recebe os inputs
-            disabled: true // Inputs desabilitados
+            disabled: true, // Inputs desabilitados
+            // confirmError: 'Código de patrimônio já existe',
         }
     },
     methods: {
+        ...mapMutations(["itens/editItem"]),
         // Salva no objeto itens no localstorage
         saveItem() {
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
-            let error = this.$store.state.itens.error
-            if (!error) {
-                this.$toast.info('Item salvo com sucesso.', {position: 'top'})
-                let form = document.getElementById('newitem-form')
-                form.reset()
+            .then(() => {
+                console.log(this.exists)
+            if (this.exists) {
+                this.$toast.error(this.msgError, { position: "top" });
             } else {
-                this.$toast.warning('Este patrimônio já está sendo utilizado.', {position: 'top'})
+                this.$toast.info("Usuário inserido com sucesso!", {
+                position: "top",
+                });
+                this.cleanForm();
             }
+            });
         },
         cleanForm() {
             let form = document.getElementById('newitem-form')
@@ -212,6 +218,28 @@ export default {
             } else {
                 this.disabled = true
             }
+        }
+    },
+    computed:{
+        itemsLocal(){
+            return this.$store.state.itens.sendItens;
+        },
+        // showConfirmError() {
+        //     if (this.itemsLocal.patrimonio != this.item.patrimonio) {
+        //         return true
+        //     } else {
+        //         return false
+        //     }
+        //     },
+        ...mapState({
+            exists: (state) => state.itens.exists,
+            msgError: (state) => state.itens.errorMsg,
+            toEdit: (state) => state.itens.toEdit
+        })
+    },
+    watch: {
+        itemsLocal() {
+            this.items = this.$store.getters['itens/getItems'];
         }
     }
 }

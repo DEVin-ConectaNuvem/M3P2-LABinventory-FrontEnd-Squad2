@@ -12,6 +12,7 @@ export default {
       success: false,
       user: null,
       users: [],
+      url_auth: null,
     };
   },
   actions: {
@@ -20,44 +21,43 @@ export default {
     async authentication(context, user) {
       context.commit("setSuccess", false);
       context.commit("setUser", null);
-      context.commit("setMsgError", "");
 
-      await axios.get("http://localhost:3000/users").then((response) => {
-        response.data.forEach((element) => {
-          context.commit("setUsers", element);
-        });
-      });
-      context.state.users.forEach((el) => {
-        if (el.email === user.email) {
-          context.commit("setUser", el);
-        }
-      });
-      if (context.state.user) {
-        if (context.state.user.password === user.password) {
-          cookies.set("logged", {
-            "name": context.state.user.name,
-            "email": user.email,
-            "status": true
-          });
+      await axios.post("http://localhost:5000/users/login", user)
+      .then((response) => {
+        if(response.data.status_code !== 401) {
           context.commit("setSuccess", true);
-          return true;
-        } else {
-          context.commit(
-            "setMsgError",
-            `Senha inválida`
-          );
-          return false;
+          context.commit("setUser", {
+            "name": response.data.name,
+            "email": response.data.email,
+            "token": response.data.token,
+          });
+          cookies.set("logged", {
+                  "name": response.data.name,
+                  "email": response.data.email,
+                  "token": response.data.token,
+                  "status": true,
+                });
+            
         }
-      } else {
-        context.commit(
-            "setMsgError",
-            `Usuário ${user.email} não cadastrado no sistema`
-          );
-          return false;
-      }
+        context.commit("setMsgError", response.data.error);
+        
+      })
+      .catch((e) => {
+        console.error(e)
+      })
     },
+    async getUrlAuth(context) {
+      context.commit("setURL", null);
+      await axios.post("http://localhost:5000/users/auth/google")
+      .then((response) => {
+        context.commit("setURL", response.data.url);
+      })   
+    }
   },
   mutations: {
+    setURL(state, url) {
+      state.url_auth = url
+    },
     setMsgError(state, msg) {
       state.errorMsg = msg;
     },
@@ -70,35 +70,6 @@ export default {
     setUser(state, user) {
       state.user = user;
     },
-    //authUser(state, user) {
-    //    let match = 0 // Se > 0, usuário está cadastrado
-    //    let users = JSON.parse(localStorage.getItem('users'))
-    //    // Caso a lista users seja apagada do localstorage,
-    //    // recria-se aqui
-    //    if (users === null) {
-    //        localStorage.setItem('users', JSON.stringify([]))
-    //        users = JSON.parse(localStorage.getItem('users'))
-    //    }
-    //    if (users.length > 0) {
-    //        users.forEach(element => {
-    //            if (user.email == element.email) {
-    //                match += 1
-    //                //let index = users.indexOf(element)
-    //                if (user.password == element.password) {
-    //                    let userAuth = {name: element.name, email: element.email, status: true}
-    //                    cookies.set('logged', userAuth)
-    //                } else {
-    //                    state.errorMsg = 'E-mail ou senha incorreta.'
-    //                }
-    //            }
-    //        });
-    //    }
-    //    // Se não caiu nos casos anteriores, criar conta
-    //    if (match === 0 || users.length === 0) {
-    //        console.log('auth não passei 3')
-    //        state.errorMsg = 'Você deve criar uma conta antes de efetuar o login.'
-    //    }
-    //},
     logOutUser(state) {
       // Verifica se o usuário está deslogado
       // por motivo de cookie apagado

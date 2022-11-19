@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useCookies } from "vue3-cookies";
+const cookies = useCookies().cookies;
+
 
 export default {
     namespaced: true,
@@ -9,10 +12,15 @@ export default {
             toEdit: null, // Código do patrimônio
             stats: {}, // Cálculos para SMALL CARDS no inventário
             edit: false,
-            errorMsg: ''
+            errorMsg: '',
+            itens: [],
+            exists: false
         }
     },
     mutations: {
+        setExists(state, value) {
+            state.exists = value;
+          },
         
         // Lista atual de todos os itens
         
@@ -29,15 +37,21 @@ export default {
         editItem(state, patr) {
             state.toEdit = patr
         },
+
+        setItens(state, itens){
+            state.itens = itens
+        },
         
         // Calcula estatísticas para SMALL CARDS
         itemStats(state) {
             // Quantidade de itens
             state.stats.itens = state.sendItens.length
             // Valor total dos itens
-            state.stats.total = state.sendItens.reduce((acc, item) =>
-                Number(item.valor.replace(',', '.')) + acc, 0
-            )
+            var totalValue = 0
+            state.sendItens.forEach((e) => {
+                totalValue = totalValue + e.valor
+            })
+            state.stats.total = totalValue
             // Verifica no array de itens quantos estão emprestados
             let emprestados = 0
             state.sendItens.forEach(item => {
@@ -51,46 +65,59 @@ export default {
             state.errorMsg = msg;
           },
 
+        setSendItens(state, itens) {
+            state.sendItens = itens
+        }
+
     },
     actions: {
         // Salva um objeto item novo ou editado no localStorage
         async saveItem(context, item) {
+            context.commit("setExists", false);
+                await axios.get("http://localhost:3000/itens")
+                .then((response) => {
+                    response.data.forEach((element) => {
+                        context.commit("setItens", element)
 
-            // await axios.get("http://localhost:3000/itens")
-            // .then((response) => {
-            //     context.state.sendItens = response.data;
-            // })
-            let count = 0
-            await context.state.sendItens.forEach(element => {
-                if(element.patrimonio === context.state.toEdit && element.patrimonio === item.patrimonio) {
-                    count++
-                    axios.patch(`http://localhost:3000/itens/${element.id}`, item, headers)
+                    });
+                }); 
+                context.state.itens.forEach((el) =>{
+                    if(el.patrimonio === item.patrimonio){
+                        console.log(el.patrimonio)
+                        context.commit("setExists", true);
+                    }
+                });
+
+                if (context.state.exists) {
+                    console.log("Entrou")
+                    context.commit("setMsgError", "Patrimonio já existe na base de dados");
+                    return false;
+                  }
+                  
+            var headers = {
+                        "Content-Type": "application/json"
+                    }
+                    axios.post("http://localhost:3000/itens", item, headers)
                     .then(() => {
-                        context.dispatch("getItens")
+                        return true
                     })
                     .catch((e) => {
                         console.error("error", e)
                     })
-                }
-                
-                else if(element.patrimonio === item.patrimonio) {
-                    count++
-                }
-            });
-            if (count == 0) {
-                var headers = {
-                    "Content-Type": "application/json"
-                }
-                axios.post("http://localhost:3000/itens", item, headers)
-                .then(() => {
-                    return true
+            
+        },
+
+        async saveItemedit(context, item) {
+            item.valor = item.valor.replace(",", ".")
+            await axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
+                headers: {
+                  'Authorization': cookies.get("logged").token,
+                  'Access-Control-Allow-Origin': "*"
+                }}).then((response) => {
+                    context.dispatch("getItens")
+                    let toast = require("vue-toast-notification")
+                    toast.useToast().info(response.data.sucesso, {position: 'top-right'})
                 })
-                .catch((e) => {
-                    console.error("error", e)
-                })
-                .finally(() => {
-                })
-            }
             
         },
         // Deleta um objeto item do array de itens pelo código de patrimônio
@@ -134,9 +161,12 @@ export default {
             
         },
         async getItens(context) {
-            await axios.get("http://localhost:3000/itens")
+            await axios.get("http://localhost:5000/items/", {
+                headers: {
+                  'Authorization': cookies.get("logged").token,
+                }})
             .then((response) => {
-                context.state.sendItens = response.data;
+                context.commit("setSendItens", response.data.records)
             })
             .catch(() => {
                 // No caso de qualquer outro erro na requisição

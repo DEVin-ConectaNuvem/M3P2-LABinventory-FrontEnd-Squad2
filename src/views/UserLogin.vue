@@ -75,7 +75,7 @@
                         <button 
                         id="google" 
                         class="btn btn-outline-info" 
-                        @click="inProgress">
+                        @click="enterWithGoogle">
                         Entrar com Google
                         </button>
                         <p><router-link 
@@ -123,19 +123,23 @@ export default {
         ModalNewAccount
     },
     methods: {
-        ...mapActions(["auth/authentication"]),
+        ...mapActions(["auth/authentication", "auth/getUrlAuth"]),
         auth() {
             this['auth/authentication']({
                 "email": this.user.email,
                 "password": this.user.password
             }).then(() => {
                 if(this.success) {
-                    this.$router.push('/users/inventario')
                     this.$toast.info(`Bem-vindo(a), ${this.userLogged.name}!`, {position: 'top-right'})
-
+                    this.$router.push('/users/inventario')
                 } else {
                     this.$toast.error(this.errorMsg)
                 }
+            })
+        },
+        enterWithGoogle() {
+            this["auth/getUrlAuth"]().then(() => {
+                location.href = this.url_auth
             })
         },
         cleanForm() {
@@ -143,14 +147,15 @@ export default {
             form.reset()
         },
         inProgress() {
-            this.$toast.info(`Pedimos desculpas...as funcionalidades "Entrar com Google" e "Esqueceu senha?" estão em construção.`, {position: 'top-left'});
+            this.$toast.info(`Pedimos desculpas...as funcionalidades "Esqueceu senha?" está em construção.`, {position: 'top-left'});
         }
     },
     computed: {
         ...mapState({
             success: (state) => state.auth.success,
             errorMsg: (state) => state.auth.errorMsg,
-            userLogged: (state) => state.auth.user
+            userLogged: (state) => state.auth.user,
+            url_auth: (state) => state.auth.url_auth,
         }),
         showMailError() {
             // Torna a visualização da mensagem de erro responsiva
@@ -169,7 +174,7 @@ export default {
                 }
             }
             return true
-        },
+        }, 
     },
     mounted() {
         // Cria listas de users e itens vazias no localstorage, caso não existam
@@ -186,7 +191,8 @@ export default {
             if (cookies.get('logged').status === true) {
                 this.$router.push('/users/inventario')
             }
-        } 
+        }
+        
     }
 }
 </script>
