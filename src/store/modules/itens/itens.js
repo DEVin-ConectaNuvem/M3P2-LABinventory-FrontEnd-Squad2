@@ -108,36 +108,16 @@ export default {
         },
 
         async saveItemedit(context, item) {
-            let count = 0
-            await context.state.sendItens.forEach(element => {
-                if(element.patrimonio === context.state.toEdit && element.patrimonio === item.patrimonio) {
-                    count++
-                    axios.patch(`http://localhost:3000/itens/${element.id}`, item, headers)
-                    .then(() => {
-                        context.dispatch("getItens")
-                    })
-                    .catch((e) => {
-                        console.error("error", e)
-                    })
-                }
-                
-                else if(element.patrimonio === item.patrimonio) {
-                    count++
-                }
-            });
-            if (count == 0) {
-                var headers = {
-                    "Content-Type": "application/json"
-                }
-                axios.post("http://localhost:3000/itens", item, headers)
-                .then(() => {
-                    return true
+            item.valor = item.valor.replace(",", ".")
+            await axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
+                headers: {
+                  'Authorization': cookies.get("logged").token,
+                  'Access-Control-Allow-Origin': "*"
+                }}).then((response) => {
+                    context.dispatch("getItens")
+                    let toast = require("vue-toast-notification")
+                    toast.useToast().info(response.data.sucesso, {position: 'top-right'})
                 })
-                .catch((e) => {
-                    console.error("error", e)
-                })
-                
-            }
             
         },
         // Deleta um objeto item do array de itens pelo código de patrimônio
