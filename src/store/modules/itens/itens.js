@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useCookies } from "vue3-cookies";
+const cookies = useCookies().cookies;
+
 
 export default {
     namespaced: true,
@@ -35,8 +38,8 @@ export default {
             state.toEdit = patr
         },
 
-        setItens(state, item){
-            state.itens.push(item)
+        setItens(state, itens){
+            state.itens = itens
         },
         
         // Calcula estatísticas para SMALL CARDS
@@ -44,9 +47,11 @@ export default {
             // Quantidade de itens
             state.stats.itens = state.sendItens.length
             // Valor total dos itens
-            state.stats.total = state.sendItens.reduce((acc, item) =>
-                Number(item.valor.replace(',', '.')) + acc, 0
-            )
+            var totalValue = 0
+            state.sendItens.forEach((e) => {
+                totalValue = totalValue + e.valor
+            })
+            state.stats.total = totalValue
             // Verifica no array de itens quantos estão emprestados
             let emprestados = 0
             state.sendItens.forEach(item => {
@@ -59,6 +64,10 @@ export default {
         setMsgError(state, msg) {
             state.errorMsg = msg;
           },
+
+        setSendItens(state, itens) {
+            state.sendItens = itens
+        }
 
     },
     actions: {
@@ -172,9 +181,12 @@ export default {
             
         },
         async getItens(context) {
-            await axios.get("http://localhost:3000/itens")
+            await axios.get("http://localhost:5000/items/", {
+                headers: {
+                  'Authorization': cookies.get("logged").token,
+                }})
             .then((response) => {
-                context.state.sendItens = response.data;
+                context.commit("setSendItens", response.data.records)
             })
             .catch(() => {
                 // No caso de qualquer outro erro na requisição

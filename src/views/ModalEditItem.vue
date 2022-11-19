@@ -166,6 +166,7 @@
           @click="saveItem">
           Salvar
           </button>
+          
         </div>
       </div>
     </div>
@@ -200,6 +201,9 @@ export default {
       }
     },
     methods: {
+      formatMoneyValue(value) {
+        return value.replace(".", ".")
+      },
       // Salva as edições no item
       saveItem() {
         // Envia as edições para store
@@ -223,10 +227,20 @@ export default {
     watch: {
       // Popula this.item com os dados do item selecionado para edição
       edit(novoItem) {
-        this.item = {...novoItem}
+        this.item = {
+          "patrimonio": novoItem.patrimonio,
+          "titulo": novoItem.titulo,
+          "categoria": novoItem.categoria,
+          "valor": novoItem.valor.toFixed(2).toString().replace(".", ","),
+          "url": novoItem.url,
+          "marca": novoItem.marca,
+          "modelo": novoItem.modelo,
+          "descricao": novoItem.descricao,
+          "emprestado": novoItem.emprestado,
+        }
       }
     },
-    computed: {
+    computed: { 
       // Computada quando um novo item é selecionado
       // em EmprestaItem.vue ou Inventory.vue
       edit() {
