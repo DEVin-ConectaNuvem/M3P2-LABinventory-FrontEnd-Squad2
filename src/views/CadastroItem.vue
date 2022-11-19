@@ -97,6 +97,9 @@
                         v-show="errors.url">
                         </span>
                     </div>
+                    <div class="loading-container" v-show="isLoading">
+                        <div class="loading" />
+                    </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">
@@ -169,7 +172,6 @@ rules
 export default {
 
     components: {
-
         "newitem-form": Form,
         "newitem-field": Field,
     },
@@ -186,6 +188,7 @@ export default {
             },
             item: {}, // Recebe os inputs
             disabled: true, // Inputs desabilitados
+            isLoading: false,
             // confirmError: 'Código de patrimônio já existe',
         }
     },
@@ -196,15 +199,18 @@ export default {
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
             .then(() => {
-                console.log(this.exists)
-            if (this.exists) {
-                this.$toast.error(this.msgError, { position: "top" });
-            } else {
-                this.$toast.info("Usuário inserido com sucesso!", {
-                position: "top",
-                });
-                this.cleanForm();
-            }
+                if (this.exists) {
+                    this.$toast.error(this.msgError, { position: "top" });
+                } else {
+                    this.isLoading = true;
+                    setTimeout(() => {
+                        this.$toast.info("Item inserido com sucesso!", {
+                        position: "top",
+                        });
+                        this.isLoading = false;
+                    }, 3000);
+                    this.cleanForm();
+                }
             });
         },
         cleanForm() {
@@ -245,6 +251,31 @@ export default {
 }
 </script>
 <style scoped>
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading {
+    width: 40px;
+    height: 40px;
+    border: 5px solid;
+    border-color: #0dcaf0 #e6e6e6 #e6e6e6;
+    border-radius: 50%;
+    animation: loading 3s linear infinite;
+    background-position: cover;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
 /* TÍTULO */
 p {
     font-size: 1.8em;

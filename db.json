@@ -134,6 +134,36 @@
       "referencia": "Árvores",
       "uf": "SC",
       "id": 5
+    },
+    {
+      "nome": "Kauã Kirchner de Souza",
+      "genero": "Masculino",
+      "nascimento": "2005-01-07",
+      "telefone": "(48) 99999-9999",
+      "bairro": "Ponte do Imaruim",
+      "cargo": "Front-end dev",
+      "cep": "88130-670",
+      "complemento": "Casa",
+      "email": "kaua5@email.com",
+      "localidade": "Palhoça",
+      "logradouro": "Rua Lázaro Bartolomeu",
+      "uf": "SC",
+      "id": 6
+    },
+    {
+      "nome": "Kauã Kirchner De Souza",
+      "genero": "Masculino",
+      "nascimento": "2005-01-07",
+      "telefone": "(48) 99999-9999",
+      "bairro": "Ponte do Imaruim",
+      "cargo": "Front-end dev",
+      "cep": "88130-670",
+      "complemento": "Casa",
+      "email": "kaua8@gmail.com",
+      "localidade": "Palhoça",
+      "logradouro": "Rua Lázaro Bartolomeu",
+      "uf": "SC",
+      "id": 7
     }
   ],
   "itens": [
@@ -184,6 +214,54 @@
       "modelo": "G403 Hero",
       "descricao": "Mouse Gamer Logitech G403 Hero preto com fio",
       "emprestado": "Maycon R. Campos"
+    },
+    {
+      "patrimonio": "XX9999-999",
+      "titulo": "Pc gamer",
+      "categoria": "Eletrônicos",
+      "valor": "9999,99",
+      "url": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fs2.glbimg.com%2FEt0Z78geq2y9LpHy0U7e0OUHZWQ%3D%2F0x0%3A1200x630%2F984x0%2Fsmart%2Ffilters%3Astrip_icc()%2Fi.s3.glbimg.com%2Fv1%2FAUTH_08fbf48bc0524877943fe86e43087e7a%2Finternal_photos%2Fbs%2F2018%2F3%2FF%2FwN7K1ESaqCaKHclCcNAw%2Fwhatsapp-image-2018-11-26-at-20.19.38.jpeg&imgrefurl=https%3A%2F%2Fwww.techtudo.com.br%2Fnoticias%2F2018%2F11%2Fo-que-significa-pc-notebook-4k-mah-e-outros-termos-de-tecnologia.ghtml&tbnid=j_kAB9KVTu4ShM&vet=12ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ..i&docid=vMCMixvokim4iM&w=984&h=517&q=imagem%20pc&ved=2ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ",
+      "marca": "Dell",
+      "modelo": "PC-3000",
+      "descricao": "Anyway",
+      "emprestado": "Item disponível",
+      "id": 5
+    },
+    {
+      "patrimonio": "XX8888-999",
+      "titulo": "Pc gamer",
+      "categoria": "Eletrônicos",
+      "valor": "9999,99",
+      "url": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fs2.glbimg.com%2FEt0Z78geq2y9LpHy0U7e0OUHZWQ%3D%2F0x0%3A1200x630%2F984x0%2Fsmart%2Ffilters%3Astrip_icc()%2Fi.s3.glbimg.com%2Fv1%2FAUTH_08fbf48bc0524877943fe86e43087e7a%2Finternal_photos%2Fbs%2F2018%2F3%2FF%2FwN7K1ESaqCaKHclCcNAw%2Fwhatsapp-image-2018-11-26-at-20.19.38.jpeg&imgrefurl=https%3A%2F%2Fwww.techtudo.com.br%2Fnoticias%2F2018%2F11%2Fo-que-significa-pc-notebook-4k-mah-e-outros-termos-de-tecnologia.ghtml&tbnid=j_kAB9KVTu4ShM&vet=12ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ..i&docid=vMCMixvokim4iM&w=984&h=517&q=imagem%20pc&ved=2ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ",
+      "marca": "Dell",
+      "modelo": "PC-3000",
+      "descricao": "Anyway",
+      "emprestado": "Item disponível",
+      "id": 6
+    },
+    {
+      "patrimonio": "XX8888-888",
+      "titulo": "Pc gamer",
+      "categoria": "Eletrônicos",
+      "valor": "9999,99",
+      "url": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fs2.glbimg.com%2FEt0Z78geq2y9LpHy0U7e0OUHZWQ%3D%2F0x0%3A1200x630%2F984x0%2Fsmart%2Ffilters%3Astrip_icc()%2Fi.s3.glbimg.com%2Fv1%2FAUTH_08fbf48bc0524877943fe86e43087e7a%2Finternal_photos%2Fbs%2F2018%2F3%2FF%2FwN7K1ESaqCaKHclCcNAw%2Fwhatsapp-image-2018-11-26-at-20.19.38.jpeg&imgrefurl=https%3A%2F%2Fwww.techtudo.com.br%2Fnoticias%2F2018%2F11%2Fo-que-significa-pc-notebook-4k-mah-e-outros-termos-de-tecnologia.ghtml&tbnid=j_kAB9KVTu4ShM&vet=12ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ..i&docid=vMCMixvokim4iM&w=984&h=517&q=imagem%20pc&ved=2ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ",
+      "marca": "Dell",
+      "modelo": "PC-3000",
+      "descricao": "Anyway",
+      "emprestado": "Item disponível",
+      "id": 7
+    },
+    {
+      "patrimonio": "XX3233-333",
+      "titulo": "Pc gamer",
+      "categoria": "Eletrônicos",
+      "valor": "9999,99",
+      "url": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fs2.glbimg.com%2FEt0Z78geq2y9LpHy0U7e0OUHZWQ%3D%2F0x0%3A1200x630%2F984x0%2Fsmart%2Ffilters%3Astrip_icc()%2Fi.s3.glbimg.com%2Fv1%2FAUTH_08fbf48bc0524877943fe86e43087e7a%2Finternal_photos%2Fbs%2F2018%2F3%2FF%2FwN7K1ESaqCaKHclCcNAw%2Fwhatsapp-image-2018-11-26-at-20.19.38.jpeg&imgrefurl=https%3A%2F%2Fwww.techtudo.com.br%2Fnoticias%2F2018%2F11%2Fo-que-significa-pc-notebook-4k-mah-e-outros-termos-de-tecnologia.ghtml&tbnid=j_kAB9KVTu4ShM&vet=12ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ..i&docid=vMCMixvokim4iM&w=984&h=517&q=imagem%20pc&ved=2ahUKEwiko_WKoaL7AhVqBbkGHcqxDk8QMygBegUIARDmAQ",
+      "marca": "Dell",
+      "modelo": "PC-3000",
+      "descricao": "Anyway",
+      "emprestado": "Item disponível",
+      "id": 8
     }
   ]
 }
