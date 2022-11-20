@@ -300,12 +300,12 @@ export default {
     },
     // Salva o colaborador na lista no json server
     saveCollab() {
-      let collab = {
+      let collabData = {
         collab: this.collab,
         address: this.address,
       };
       this.$store
-        .dispatch("collaborators/saveCollab", { ...collab })
+        .dispatch("collaborators/saveCollab", { ...collabData })
         .then(() => {
           if (this.exists) {
             this.$toast.error(this.msgError, { position: "top" });

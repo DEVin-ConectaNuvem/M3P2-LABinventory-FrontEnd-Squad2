@@ -64,6 +64,7 @@ export default {
         // Para setar na store o id do colaborador a ser editado
         collabDetails(item) {
             // Retorna o id de uma seleção de colaborador anterior a atual
+            console.log(item)
             this.$store.commit('collaborators/setSelectedId', item.id)
             //let oldValue = this.$store.getters['collaborators/sendSelectedId']
         },

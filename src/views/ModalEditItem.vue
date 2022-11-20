@@ -248,8 +248,9 @@ export default {
   watch: {
     // Popula this.item com os dados do item selecionado para edição
     edit(novoItem) {
+      console.log(Object.values(novoItem._id))
       this.item = {
-        _id: novoItem._id.$oid,
+        _id: Object.values(novoItem._id)[0],
         patrimonio: novoItem.patrimonio,
         titulo: novoItem.titulo,
         categoria: novoItem.categoria,

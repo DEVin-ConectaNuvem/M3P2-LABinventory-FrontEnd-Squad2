@@ -311,8 +311,9 @@ export default {
   watch: {
     // Quando o modal para edição de colaboradores é chamado
     // esta computada é alterada com o id do colaborador
-    getSelectedId(newId) {
-      this.$store
+    async getSelectedId(newId) {
+      console.log(newId)
+      await this.$store
         .dispatch("collaborators/getOneCollab", newId)
         .then((response) => {
           this.collab = response;
@@ -341,12 +342,12 @@ export default {
       })
     },
     // Envia o objeto com os dados do colaborador para a store
-    async saveCollab() {
+    saveCollab() {
       // Ativando modo edição
       this["collaborators/setEditUser"](true);
-
+      console.log(this.collab)
       // Chamando Action saveCollab com flag de edição ativa
-      await this["collaborators/saveCollab"]({ ...this.collab }).then(() => {
+      this["collaborators/saveCollab"]({ ...this.collab }).then(() => {
         let btn = document.getElementById("btnclose");
         btn.click();
         //this.cleanForm();
