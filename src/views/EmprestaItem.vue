@@ -94,9 +94,8 @@ import ModalEditItem from './ModalEditItem.vue'
 export default {
 
     components: {
-   
         ModalEditItem
-},
+    },
     data() {
         return {
             items: [], // Populado pelo mounted e depois pela barra de busca

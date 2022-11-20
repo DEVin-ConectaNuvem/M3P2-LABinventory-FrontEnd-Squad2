@@ -200,7 +200,7 @@ export default {
             if (this.exists) {
                 this.$toast.error(this.msgError, { position: "top" });
             } else {
-                this.$toast.info("Usuário inserido com sucesso!", {
+                this.$toast.info("Item inserido com sucesso!", {
                 position: "top",
                 });
                 this.cleanForm();

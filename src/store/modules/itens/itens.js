@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useCookies } from "vue3-cookies";
+
 const cookies = useCookies().cookies;
 
 
@@ -39,7 +40,7 @@ export default {
         },
 
         setItens(state, itens){
-            state.itens = itens
+            state.itens.push(itens)
         },
         
         // Calcula estatísticas para SMALL CARDS
@@ -47,11 +48,10 @@ export default {
             // Quantidade de itens
             state.stats.itens = state.sendItens.length
             // Valor total dos itens
-            var totalValue = 0
-            state.sendItens.forEach((e) => {
-                totalValue = totalValue + e.valor
-            })
-            state.stats.total = totalValue
+            console.log(state.sendItens)
+            state.stats.total = state.sendItens.reduce((acc, item) =>
+                Number(item.valor) + acc, 0
+            )
             // Verifica no array de itens quantos estão emprestados
             let emprestados = 0
             state.sendItens.forEach(item => {
@@ -161,12 +161,16 @@ export default {
             
         },
         async getItens(context) {
-            await axios.get("http://localhost:5000/items/", {
-                headers: {
-                  'Authorization': cookies.get("logged").token,
-                }})
+            let cookietoken = cookies.get('logged')
+            let token = cookietoken.token
+            let headers = {
+                "Authorization": `Bearer ${token}`
+            }
+            await axios.get("http://localhost:5000/items/", { 
+                headers: headers
+            })
             .then((response) => {
-                context.commit("setSendItens", response.data.records)
+                context.state.sendItens = response.data.records;
             })
             .catch(() => {
                 // No caso de qualquer outro erro na requisição
