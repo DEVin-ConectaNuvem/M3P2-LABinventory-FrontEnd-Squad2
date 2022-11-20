@@ -32,11 +32,11 @@ export default {
             "token": response.data.token,
           });
           cookies.set("logged", {
-                  "name": response.data.name,
-                  "email": response.data.email,
-                  "token": response.data.token,
-                  "status": true,
-                });
+            "name": response.data.name,
+            "email": response.data.email,
+            "token": response.data.token,
+            "status": true,
+          });
             
         }
         context.commit("setMsgError", response.data.error);

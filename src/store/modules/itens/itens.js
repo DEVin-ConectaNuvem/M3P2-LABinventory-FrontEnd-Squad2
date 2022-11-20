@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useCookies } from "vue3-cookies";
-
 const cookies = useCookies().cookies;
-
 
 export default {
     namespaced: true,
@@ -48,7 +46,6 @@ export default {
             // Quantidade de itens
             state.stats.itens = state.sendItens.length
             // Valor total dos itens
-            console.log(state.sendItens)
             state.stats.total = state.sendItens.reduce((acc, item) =>
                 Number(item.valor) + acc, 0
             )
@@ -71,40 +68,49 @@ export default {
 
     },
     actions: {
-        // Salva um objeto item novo ou editado no localStorage
+
         async saveItem(context, item) {
             context.commit("setExists", false);
-                await axios.get("http://localhost:3000/itens")
+                await axios.get("http://localhost:5000/items/", {
+                    headers: {
+                        'Authorization': cookies.get("logged").token,
+                        'Access-Control-Allow-Origin': "http://localhost:5000/items/",
+                        'Access-Control-Allow-Methods': 'POST, GET',
+                        'Access-Control-Allow-Headers': '*',
+                        'Access-Control-Max-Age': '86400'
+                    }
+                })
                 .then((response) => {
-                    response.data.forEach((element) => {
+                    response.data.records.forEach((element) => {
                         context.commit("setItens", element)
-
                     });
-                }); 
+                })
                 context.state.itens.forEach((el) =>{
                     if(el.patrimonio === item.patrimonio){
-                        console.log(el.patrimonio)
                         context.commit("setExists", true);
                     }
                 });
 
                 if (context.state.exists) {
-                    console.log("Entrou")
                     context.commit("setMsgError", "Patrimonio já existe na base de dados");
                     return false;
                   }
                   
-            var headers = {
-                        "Content-Type": "application/json"
-                    }
-                    axios.post("http://localhost:3000/itens", item, headers)
-                    .then(() => {
-                        return true
-                    })
-                    .catch((e) => {
-                        console.error("error", e)
-                    })
-            
+            axios.post("http://localhost:5000/items/create/", item, {
+                headers: {
+                    'Authorization': cookies.get("logged").token,
+                    'Access-Control-Allow-Origin': "http://localhost:5000/items/create",
+                    'Access-Control-Allow-Methods': 'POST, GET',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Max-Age': '86400'
+                }
+            })
+            .then(() => {
+                return true
+            })
+            .catch((e) => {
+                console.error("error", e)
+            }) 
         },
 
         async saveItemedit(context, item) {
@@ -112,8 +118,12 @@ export default {
             await axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
                 headers: {
                   'Authorization': cookies.get("logged").token,
-                  'Access-Control-Allow-Origin': "*"
-                }}).then((response) => {
+                  'Access-Control-Allow-Origin': "http://localhost:5000/items/",
+                  'Access-Control-Allow-Methods': 'POST, GET, PATCH',
+                  'Access-Control-Allow-Headers': '*',
+                  'Access-Control-Max-Age': '86400'
+                }})
+                .then((response) => {
                     context.dispatch("getItens")
                     let toast = require("vue-toast-notification")
                     toast.useToast().info(response.data.sucesso, {position: 'top-right'})
@@ -122,7 +132,15 @@ export default {
         },
         // Deleta um objeto item do array de itens pelo código de patrimônio
         async delItem(context, patr) {
-            await axios.get("http://localhost:3000/itens")
+            await axios.get("http://localhost:5000/items/", {
+                headers: {
+                    'Authorization': cookies.get("logged").token,
+                    'Access-Control-Allow-Origin': "http://localhost:5000/items/",
+                    'Access-Control-Allow-Methods': 'POST, GET',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Max-Age': '86400'
+                }
+            })
             .then((response) => {
                 context.state.sendItens = response.data;
             })
@@ -142,32 +160,38 @@ export default {
         },
         // Insere key "emprestado: colaborador no item"
         flagItem(context, itemEmprestado) {
-            var headers = {
-                "Content-Type": "application/json"
-            }
+           
             context.state.sendItens.forEach(item => {
                 if (item.patrimonio === itemEmprestado.itemWhich.patrimonio) {
                     item.emprestado = itemEmprestado.itemTo
-                    axios.put(`http://localhost:3000/itens/${item.id}`, item, headers)
-                        .then(() => {
-                            context.dispatch("getItens")
-                            return true
-                        })
-                        .catch((e) => {
-                            console.error("error", e)
-                        })
+                    axios.put(`http://localhost:5000/items/${item.id}`, item, {
+                        headers: {
+                            'Authorization': cookies.get("logged").token,
+                            'Access-Control-Allow-Origin': "http://localhost:5000/items/create",
+                            'Access-Control-Allow-Methods': 'POST, GET, PUT',
+                            'Access-Control-Allow-Headers': '*',
+                            'Access-Control-Max-Age': '86400'
+                        } 
+                    })
+                    .then(() => {
+                        context.dispatch("getItens")
+                        return true
+                    })
+                    .catch((e) => {
+                        console.error("error", e)
+                    })
                 }
             })
-            
         },
         async getItens(context) {
-            let cookietoken = cookies.get('logged')
-            let token = cookietoken.token
-            let headers = {
-                "Authorization": `Bearer ${token}`
-            }
             await axios.get("http://localhost:5000/items/", { 
-                headers: headers
+                headers: {
+                    'Authorization': cookies.get("logged").token,
+                    'Access-Control-Allow-Origin': "http://localhost:5000/items/create",
+                    'Access-Control-Allow-Methods': 'POST, GET',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Max-Age': '86400'
+                }
             })
             .then((response) => {
                 context.state.sendItens = response.data.records;
@@ -198,6 +222,6 @@ export default {
         },
         sendErrorMsg(state) {
             return state.errorMsg;
-          },
+        },
     }
 }

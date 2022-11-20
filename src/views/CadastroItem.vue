@@ -191,20 +191,18 @@ export default {
     },
     methods: {
         ...mapMutations(["itens/editItem"]),
-        // Salva no objeto itens no localstorage
         saveItem() {
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
             .then(() => {
-                console.log(this.exists)
-            if (this.exists) {
-                this.$toast.error(this.msgError, { position: "top" });
-            } else {
-                this.$toast.info("Item inserido com sucesso!", {
-                position: "top",
-                });
-                this.cleanForm();
-            }
+                if (this.exists) {
+                    this.$toast.error(this.msgError, { position: "top" });
+                } else {
+                    this.$toast.info("Item inserido com sucesso!", {
+                    position: "top",
+                    });
+                    this.cleanForm();
+                }
             });
         },
         cleanForm() {
