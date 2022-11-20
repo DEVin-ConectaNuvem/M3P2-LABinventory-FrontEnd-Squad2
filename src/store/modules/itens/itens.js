@@ -167,7 +167,7 @@ export default {
                     axios.put(`http://localhost:5000/items/${item.id}`, item, {
                         headers: {
                             'Authorization': cookies.get("logged").token,
-                            'Access-Control-Allow-Origin': "http://localhost:5000/items/create",
+                            'Access-Control-Allow-Origin': "http://localhost:5000/items/",
                             'Access-Control-Allow-Methods': 'POST, GET, PUT',
                             'Access-Control-Allow-Headers': '*',
                             'Access-Control-Max-Age': '86400'
