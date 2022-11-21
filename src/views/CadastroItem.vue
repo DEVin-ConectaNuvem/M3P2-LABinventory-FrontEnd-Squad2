@@ -193,6 +193,9 @@ export default {
         ...mapMutations(["itens/editItem"]),
         // Salva no objeto itens no localstorage
         saveItem() {
+            let value = this.item.valor
+            this.item.valor = value.replace(",", ".")
+            this.item.valor = Number(this.item.valor)
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
             .then(() => {

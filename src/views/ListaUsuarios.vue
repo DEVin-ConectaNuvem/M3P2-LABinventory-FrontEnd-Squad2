@@ -17,7 +17,7 @@
     </div>
     <!-- CARDS de colaboradores -->
     <div id="collab-cards">
-        <div  class="cards shadow" v-for="collab in collabs" :key="collab.id">
+        <div  class="cards shadow" v-for="collab in collabs" :key="collab._id.$oid">
             <!-- Componente CARD tamanho médio -->
             <MediumCard
             cardType="user-list" 
@@ -64,7 +64,8 @@ export default {
         // Para setar na store o id do colaborador a ser editado
         collabDetails(item) {
             // Retorna o id de uma seleção de colaborador anterior a atual
-            this.$store.commit('collaborators/setSelectedId', item.id)
+            let id = Object.values(item._id)[0]
+            this.$store.commit('collaborators/setSelectedId', id)
             //let oldValue = this.$store.getters['collaborators/sendSelectedId']
         },
         // Recebe o input da barra de busca de colaborador
