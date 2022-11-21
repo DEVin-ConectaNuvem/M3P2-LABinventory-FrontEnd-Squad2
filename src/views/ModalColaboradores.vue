@@ -312,13 +312,11 @@ export default {
     // Quando o modal para edição de colaboradores é chamado
     // esta computada é alterada com o id do colaborador
     async getSelectedId(newId) {
-      console.log(newId)
       await this.$store
         .dispatch("collaborators/getOneCollab", newId)
         .then((response) => {
           this.collab = response;
           this.cepNum = response.cep;
-          //this.$store.state.collaborators.collabs = response
         });
     },
     cepNum() {
@@ -345,7 +343,7 @@ export default {
     saveCollab() {
       // Ativando modo edição
       this["collaborators/setEditUser"](true);
-      console.log(this.collab)
+      this.collab._id = Object.values(this.collab._id)[0]
       // Chamando Action saveCollab com flag de edição ativa
       this["collaborators/saveCollab"]({ ...this.collab }).then(() => {
         let btn = document.getElementById("btnclose");
@@ -358,9 +356,8 @@ export default {
       });
     },
     delCollab() {
-      let idColab = this.$store.getters["collaborators/sendSelectedId"];
-      console.log(idColab);
-      this["collaborators/DelCollab"](idColab).then(() => {
+      let idCollab = this.$store.getters["collaborators/sendSelectedId"];
+      this["collaborators/DelCollab"](idCollab).then(() => {
         this.$toast.info("Colaborador Excluido com sucesso!", {
           position: "top",
         });

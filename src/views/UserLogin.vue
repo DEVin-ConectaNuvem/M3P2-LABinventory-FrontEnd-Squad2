@@ -147,7 +147,7 @@ export default {
             form.reset()
         },
         inProgress() {
-            this.$toast.info(`Pedimos desculpas...as funcionalidades "Esqueceu senha?" está em construção.`, {position: 'top-left'});
+            this.$toast.info(`Pedimos desculpas...a funcionalidade "Esqueceu senha?" está em construção.`, {position: 'top-left'});
         }
     },
     computed: {
@@ -177,15 +177,15 @@ export default {
         }, 
     },
     mounted() {
-        // Cria listas de users e itens vazias no localstorage, caso não existam
-        if (localStorage.getItem('users') === null) {
-            let users = []
-            localStorage.setItem('users', JSON.stringify(users))
-        }
-        if (localStorage.getItem('itens') === null) {
-            let itens = []
-            localStorage.setItem('itens', JSON.stringify(itens))
-        }
+        // // Cria listas de users e itens vazias no localstorage, caso não existam
+        // if (localStorage.getItem('users') === null) {
+        //     let users = []
+        //     localStorage.setItem('users', JSON.stringify(users))
+        // }
+        // if (localStorage.getItem('itens') === null) {
+        //     let itens = []
+        //     localStorage.setItem('itens', JSON.stringify(itens))
+        // }
         // Se usuário já estiver logado, envia para o inventário
         if (cookies.get('logged') !== null) {
             if (cookies.get('logged').status === true) {

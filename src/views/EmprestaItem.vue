@@ -136,10 +136,9 @@ export default {
             // valor do select input
             let nome = document.getElementById(`${index}`).value
             // Insere key "emprestado: colaborador" no item
-            this.$store.dispatch('itens/flagItem', {
-                itemTo: nome,
-                itemWhich: item
-            })
+            item.emprestado = nome
+            item._id = Object.values(item._id)[0]
+            this.$store.dispatch('itens/flagItem', item)
             let msg1 = "O item está disponível"
             let msg2 = `Item emprestado para ${nome}`
             this.$toast.info(nome !== msg1 ? msg2 : msg1, {position: 'top'})
