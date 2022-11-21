@@ -2,7 +2,6 @@ import axios from "axios";
 import { useCookies } from "vue3-cookies";
 const cookies = useCookies().cookies;
 
-
 export default {
     namespaced: true,
     state() {
@@ -76,18 +75,7 @@ export default {
                 });
             });
 
-            context.state.itens.forEach(element => {
-                if (element.patrimonio === item.patrimonio) {
-                    context.commit("setExists", true);
-                }
-            });
-            
-            if (context.state.exists) {
-                context.commit('setMsgError', "Código de patrimônio já existente na base de dados!");
-                return false;
-            }
-
-            axios.post("http://localhost:5000/items/", item, {
+            await axios.post("http://localhost:5000/items/", item, {
                 headers: {
                     'Authorization': "Bearer" + cookies.get("logged").token,
                     'Access-Control-Allow-Origin': "http://localhost:5000/items/",
@@ -95,6 +83,14 @@ export default {
                     'Access-Control-Allow-Headers': '*',
                     'Access-Control-Max-Age': '86400'
                 }
+            })
+            .then(() => {
+                return true;
+            })
+            .catch(e => {
+                context.commit("setExists", true);
+                context.commit('setMsgError', e.response.data.error);
+                return false;
             })
         },
 

@@ -22,12 +22,14 @@
                     <div class="col-3">
                         <label class="form-label">Código de patrimônio</label>
                         <newitem-field 
-                        type="text" 
-                        class="form-control" 
-                        name="patrimonio" 
-                        v-model="item.patrimonio" 
-                        :disabled="disabled" 
-                        placeholder="XX9999-999"/>
+                            type="text" 
+                            class="form-control" 
+                            name="patrimonio" 
+                            v-model="item.patrimonio" 
+                            :disabled="disabled" 
+                            placeholder="XX9999-999"
+                            v-mask="'AA####-###'"
+                        />
                         <span 
                         class="text-danger" 
                         v-text="errors.patrimonio" 
@@ -163,13 +165,16 @@
 import { Form, Field } from 'vee-validate'
 import rules from '../validations/validateitens'
 import {mapMutations, mapState} from 'vuex'
+import { mask } from 'vue-the-mask'
 
 rules
 
 export default {
 
+    directives: {
+        mask
+    },
     components: {
-
         "newitem-form": Form,
         "newitem-field": Field,
     },
