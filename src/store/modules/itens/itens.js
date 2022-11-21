@@ -65,7 +65,29 @@ export default {
         // Salva um objeto item novo ou editado no localStorage
         async saveItem(context, item) {
             context.commit("setExists", false);
-            await axios.post("http://localhost:5000/items/", item, {
+            await axios.get("http://localhost:5000/items/", {
+                headers: {
+                    'Authorization': cookies.get("logged").token,
+                }
+            })
+            .then(response => {
+                response.data.records.forEach(item => {
+                    context.commit("setItens", item);
+                });
+            });
+
+            context.state.itens.forEach(element => {
+                if (element.patrimonio === item.patrimonio) {
+                    context.commit("setExists", true);
+                }
+            });
+            
+            if (context.state.exists) {
+                context.commit('setMsgError', "Código de patrimônio já existente na base de dados!");
+                return false;
+            }
+
+            axios.post("http://localhost:5000/items/", item, {
                 headers: {
                     'Authorization': "Bearer" + cookies.get("logged").token,
                     'Access-Control-Allow-Origin': "http://localhost:5000/items/",
@@ -74,16 +96,6 @@ export default {
                     'Access-Control-Max-Age': '86400'
                 }
             })
-            .then((response) => {
-                console.log(response)
-                if (!response) {
-                    return true
-                }
-            })
-            .catch((e) => {
-                console.error("error", e)
-            })
-            
         },
 
         async saveItemedit(context, item) {
@@ -170,3 +182,6 @@ export default {
           },
     }
 }
+    
+
+    

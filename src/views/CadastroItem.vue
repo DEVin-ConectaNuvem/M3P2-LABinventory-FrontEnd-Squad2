@@ -6,7 +6,7 @@
             <div>
                 <span id="switch-editar">Editar</span>
                 <label class="switch">
-                    <input type="checkbox" @click="edit">
+                    <input type="checkbox" @click="this.disabled = !this.disabled">
                     <span class="slider round"></span>
                 </label>
              </div>
@@ -186,7 +186,7 @@ export default {
             },
             item: {}, // Recebe os inputs
             disabled: true, // Inputs desabilitados
-            // confirmError: 'Código de patrimônio já existe',
+            confirmError: 'Código de patrimônio já existe',
         }
     },
     methods: {
@@ -199,29 +199,20 @@ export default {
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
             .then(() => {
-                console.log(this.exists)
-            if (this.exists) {
-                this.$toast.error(this.msgError, { position: "top" });
-            } else {
-                this.$toast.info("Usuário inserido com sucesso!", {
-                position: "top",
-                });
-                this.cleanForm();
-            }
+                if (this.exists) {
+                    this.$toast.error(this.msgError, { position: "top" });
+                } else {
+                    this.$toast.info("Item cadastrado com sucesso!", {
+                    position: "top",
+                    });
+                    this.cleanForm();
+                }
             });
         },
         cleanForm() {
             let form = document.getElementById('newitem-form')
             form.reset() 
         },
-        // habilita/desabilita edição dos campos
-        edit() {
-            if (this.disabled) {
-                this.disabled = false
-            } else {
-                this.disabled = true
-            }
-        }
     },
     computed:{
         itemsLocal(){
