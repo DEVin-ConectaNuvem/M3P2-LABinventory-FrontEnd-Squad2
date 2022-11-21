@@ -39,11 +39,10 @@ export default {
                 });
             
         }
-        context.commit("setMsgError", response.data.error);
-        
       })
       .catch((e) => {
         console.error(e)
+        context.commit("setMsgError", e.response.data.error);
       })
     },
     async getUrlAuth(context) {
