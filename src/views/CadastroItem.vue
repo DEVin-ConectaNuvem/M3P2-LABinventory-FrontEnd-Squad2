@@ -6,7 +6,7 @@
             <div>
                 <span id="switch-editar">Editar</span>
                 <label class="switch">
-                    <input type="checkbox" @click="edit">
+                    <input type="checkbox" @click="this.disabled = !this.disabled">
                     <span class="slider round"></span>
                 </label>
              </div>
@@ -22,12 +22,14 @@
                     <div class="col-3">
                         <label class="form-label">Código de patrimônio</label>
                         <newitem-field 
-                        type="text" 
-                        class="form-control" 
-                        name="patrimonio" 
-                        v-model="item.patrimonio" 
-                        :disabled="disabled" 
-                        placeholder="XX9999-999"/>
+                            type="text" 
+                            class="form-control" 
+                            name="patrimonio" 
+                            v-model="item.patrimonio" 
+                            :disabled="disabled" 
+                            placeholder="XX9999-999"
+                            v-mask="'AA####-###'"
+                        />
                         <span 
                         class="text-danger" 
                         v-text="errors.patrimonio" 
@@ -163,13 +165,16 @@
 import { Form, Field } from 'vee-validate'
 import rules from '../validations/validateitens'
 import {mapMutations, mapState} from 'vuex'
+import { mask } from 'vue-the-mask'
 
 rules
 
 export default {
 
+    directives: {
+        mask
+    },
     components: {
-
         "newitem-form": Form,
         "newitem-field": Field,
     },
@@ -186,7 +191,7 @@ export default {
             },
             item: {}, // Recebe os inputs
             disabled: true, // Inputs desabilitados
-            // confirmError: 'Código de patrimônio já existe',
+            confirmError: 'Código de patrimônio já existe',
         }
     },
     methods: {
@@ -199,29 +204,20 @@ export default {
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
             .then(() => {
-                console.log(this.exists)
-            if (this.exists) {
-                this.$toast.error(this.msgError, { position: "top" });
-            } else {
-                this.$toast.info("Usuário inserido com sucesso!", {
-                position: "top",
-                });
-                this.cleanForm();
-            }
+                if (this.exists) {
+                    this.$toast.error(this.msgError, { position: "top" });
+                } else {
+                    this.$toast.info("Item cadastrado com sucesso!", {
+                    position: "top",
+                    });
+                    this.cleanForm();
+                }
             });
         },
         cleanForm() {
             let form = document.getElementById('newitem-form')
             form.reset() 
         },
-        // habilita/desabilita edição dos campos
-        edit() {
-            if (this.disabled) {
-                this.disabled = false
-            } else {
-                this.disabled = true
-            }
-        }
     },
     computed:{
         itemsLocal(){

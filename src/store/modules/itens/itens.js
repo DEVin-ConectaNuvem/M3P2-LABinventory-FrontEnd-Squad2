@@ -2,7 +2,6 @@ import axios from "axios";
 import { useCookies } from "vue3-cookies";
 const cookies = useCookies().cookies;
 
-
 export default {
     namespaced: true,
     state() {
@@ -65,6 +64,17 @@ export default {
         // Salva um objeto item novo ou editado no localStorage
         async saveItem(context, item) {
             context.commit("setExists", false);
+            await axios.get("http://localhost:5000/items/", {
+                headers: {
+                    'Authorization': cookies.get("logged").token,
+                }
+            })
+            .then(response => {
+                response.data.records.forEach(item => {
+                    context.commit("setItens", item);
+                });
+            });
+
             await axios.post("http://localhost:5000/items/", item, {
                 headers: {
                     'Authorization': "Bearer" + cookies.get("logged").token,
@@ -74,16 +84,14 @@ export default {
                     'Access-Control-Max-Age': '86400'
                 }
             })
-            .then((response) => {
-                console.log(response)
-                if (!response) {
-                    return true
-                }
+            .then(() => {
+                return true;
             })
-            .catch((e) => {
-                console.error("error", e)
+            .catch(e => {
+                context.commit("setExists", true);
+                context.commit('setMsgError', e.response.data.error);
+                return false;
             })
-            
         },
 
         async saveItemedit(context, item) {
@@ -170,3 +178,6 @@ export default {
           },
     }
 }
+    
+
+    
