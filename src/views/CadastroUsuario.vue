@@ -121,6 +121,9 @@
             </span>
           </div>
         </div>
+        <div class="loading-container" v-show="isLoading">
+          <div class="loading" />
+        </div>
         <h5>Dados de endereço</h5>
         <div class="row mb-2">
           <div class="col-4">
@@ -229,8 +232,7 @@
             @click.prevent="saveCollab"
             type="submit"
             class="btn btn-info"
-            :disabled="isEmptyFields"
-          >
+            :disabled="isEmptyFields">
             Salvar
           </button>
         </div>
@@ -275,6 +277,7 @@ export default {
       address: {},
       disabled: true, // Inputs desabilitados
       cepNum: null, // Recebe o input de CEP
+      isLoading: false,
     };
   },
   watch: {
@@ -313,8 +316,11 @@ export default {
             this.$toast.info("Colaborador inserido com sucesso!", {
               position: "top",
             });
-            this.cleanForm();
-            this.$router.push("/users/colaboradores")
+            this.isLoading = true;
+            setTimeout(() => {
+              this.$router.push("/users/colaboradores")
+              this.cleanForm();
+            }, 3000)
           }
         });
     },
@@ -354,6 +360,31 @@ export default {
 };
 </script>
 <style scoped>
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  width: 40px;
+	height: 40px;
+	border: 5px solid;
+	border-color: #0dcaf0 #e6e6e6 #e6e6e6;
+	border-radius: 50%;
+  animation: loading 3s linear infinite;
+  background-position: cover;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
 /* Título e SWITCH editar */
 .header {
   display: flex;
