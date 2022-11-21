@@ -195,7 +195,7 @@
 <script>
 import { Form, Field } from "vee-validate";
 import rules from "../validations/validateitens";
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 
 rules;
 export default {
@@ -218,12 +218,15 @@ export default {
     };
   },
   methods: {
-    formatMoneyValue(value) {
-      return value.replace(".", ".");
-    },
+    // formatMoneyValue(value) {
+    //   return value.replace(".", ".");
+    // },
     // Salva as edições no item
     saveItem() {
       // Envia as edições para store
+      let value = this.item.valor
+      this.item.valor = value.replace(",", ".")
+      this.item.valor = Number(this.item.valor)
       this.$store.dispatch("itens/saveItemedit", {
         _id: this.item._id,
         patrimonio: this.item.patrimonio,
@@ -248,12 +251,13 @@ export default {
   watch: {
     // Popula this.item com os dados do item selecionado para edição
     edit(novoItem) {
+      // console.log(Object.values(novoItem._id))
       this.item = {
-        _id: novoItem._id.$oid,
+        _id: Object.values(novoItem._id)[0],
         patrimonio: novoItem.patrimonio,
         titulo: novoItem.titulo,
         categoria: novoItem.categoria,
-        valor: novoItem.valor.toFixed(2).toString().replace(".", ","),
+        valor: novoItem.valor.toFixed(2).replace(".", ","),
         url: novoItem.url,
         marca: novoItem.marca,
         modelo: novoItem.modelo,
@@ -263,9 +267,9 @@ export default {
     },
   },
   computed: {
-    ...mapState({
-      edit: (state) => state.itens.edit,
-    }),
+    // ...mapState({
+    //   edit: (state) => state.itens.edit,
+    // }),
     // Computada quando um novo item é selecionado
     // em EmprestaItem.vue ou Inventory.vue
     edit() {

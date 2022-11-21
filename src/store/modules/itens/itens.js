@@ -2,7 +2,6 @@ import axios from "axios";
 import { useCookies } from "vue3-cookies";
 const cookies = useCookies().cookies;
 
-
 export default {
     namespaced: true,
     state() {
@@ -21,11 +20,6 @@ export default {
         setExists(state, value) {
             state.exists = value;
           },
-        
-        // Lista atual de todos os itens
-        
-        // Deve-se chamar getItens primeiro
-        // Seta state.item pelo código de patrimônio
         getItem(state, patr) {
             state.sendItens.forEach(item => {
                 if (item.patrimonio == patr) {
@@ -33,13 +27,11 @@ export default {
                 }
             })
         },
-        
         editItem(state, patr) {
             state.toEdit = patr
         },
-
         setItens(state, itens){
-            state.itens = itens
+            state.itens.push(itens)
         },
         
         // Calcula estatísticas para SMALL CARDS
@@ -64,100 +56,89 @@ export default {
         setMsgError(state, msg) {
             state.errorMsg = msg;
           },
-
         setSendItens(state, itens) {
             state.sendItens = itens
         }
-
     },
     actions: {
         // Salva um objeto item novo ou editado no localStorage
         async saveItem(context, item) {
             context.commit("setExists", false);
-                await axios.get("http://localhost:3000/itens")
-                .then((response) => {
-                    response.data.forEach((element) => {
-                        context.commit("setItens", element)
-
-                    });
-                }); 
-                context.state.itens.forEach((el) =>{
-                    if(el.patrimonio === item.patrimonio){
-                        console.log(el.patrimonio)
-                        context.commit("setExists", true);
-                    }
+            await axios.get("http://localhost:5000/items/", {
+                headers: {
+                    'Authorization': cookies.get("logged").token,
+                }
+            })
+            .then(response => {
+                response.data.records.forEach(item => {
+                    context.commit("setItens", item);
                 });
+            });
 
-                if (context.state.exists) {
-                    console.log("Entrou")
-                    context.commit("setMsgError", "Patrimonio já existe na base de dados");
-                    return false;
-                  }
-                  
-            var headers = {
-                        "Content-Type": "application/json"
-                    }
-                    axios.post("http://localhost:3000/itens", item, headers)
-                    .then(() => {
-                        return true
-                    })
-                    .catch((e) => {
-                        console.error("error", e)
-                    })
-            
+            await axios.post("http://localhost:5000/items/", item, {
+                headers: {
+                    'Authorization': "Bearer" + cookies.get("logged").token,
+                    'Access-Control-Allow-Origin': "http://localhost:5000/items/",
+                    'Access-Control-Allow-Methods': 'POST',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Max-Age': '86400'
+                }
+            })
+            .then(() => {
+                return true;
+            })
+            .catch(e => {
+                context.commit("setExists", true);
+                context.commit('setMsgError', e.response.data.error);
+                return false;
+            })
         },
 
         async saveItemedit(context, item) {
-            item.valor = item.valor.replace(",", ".")
             await axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
                 headers: {
-                  'Authorization': cookies.get("logged").token,
+                  'Authorization': "Bearer" + cookies.get("logged").token,
                   'Access-Control-Allow-Origin': "*"
                 }}).then((response) => {
                     context.dispatch("getItens")
                     let toast = require("vue-toast-notification")
                     toast.useToast().info(response.data.sucesso, {position: 'top-right'})
                 })
-            
         },
         // Deleta um objeto item do array de itens pelo código de patrimônio
         async delItem(context, patr) {
-            await axios.get("http://localhost:3000/itens")
-            .then((response) => {
-                context.state.sendItens = response.data;
-            })
-            context.state.sendItens.forEach(element => {
-                if(element.patrimonio === patr) {
-                    axios.delete(`http://localhost:3000/itens/${element.id}`)
-                    .then(() => {
-                        context.dispatch("getItens")
-                        return true
-                    })
-                    .catch((e) => {
-                        console.error("error", e)
-                    })
-                    return true
+            await axios.delete(`http://localhost:5000/items/${patr}`, {
+                headers: {
+                    'Authorization': "Bearer" + cookies.get("logged").token,
+                    'Access-Control-Allow-Origin': "http://localhost:5000/items",
+                    'Access-Control-Allow-Methods': 'DELETE',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Max-Age': '86400'
                 }
-            });
+            })
+            .then(() => {
+                context.dispatch("getItens")
+                return true
+            })
+            .catch((e) => {
+                console.error("error", e)
+            })
+            return true
         },
         // Insere key "emprestado: colaborador no item"
-        flagItem(context, itemEmprestado) {
-            var headers = {
-                "Content-Type": "application/json"
-            }
-            context.state.sendItens.forEach(item => {
-                if (item.patrimonio === itemEmprestado.itemWhich.patrimonio) {
-                    item.emprestado = itemEmprestado.itemTo
-                    axios.put(`http://localhost:3000/itens/${item.id}`, item, headers)
-                        .then(() => {
-                            context.dispatch("getItens")
-                            return true
-                        })
-                        .catch((e) => {
-                            console.error("error", e)
-                        })
-                }
-            })
+        flagItem(context, item) {
+            axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
+                headers: {
+                    'Authorization': "Bearer" + cookies.get("logged").token,
+                    'Access-Control-Allow-Origin': "*"
+                }})
+                .then(() => {
+                    context.dispatch("getItens")
+                    return true
+                })
+                .catch((e) => {
+                    console.error("error", e)
+                })
             
         },
         async getItens(context) {
@@ -197,3 +178,6 @@ export default {
           },
     }
 }
+    
+
+    

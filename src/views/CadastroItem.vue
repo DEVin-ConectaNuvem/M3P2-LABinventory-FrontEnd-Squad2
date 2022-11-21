@@ -6,7 +6,7 @@
             <div>
                 <span id="switch-editar">Editar</span>
                 <label class="switch">
-                    <input type="checkbox" @click="edit">
+                    <input type="checkbox" @click="this.disabled = !this.disabled">
                     <span class="slider round"></span>
                 </label>
              </div>
@@ -22,12 +22,14 @@
                     <div class="col-3">
                         <label class="form-label">Código de patrimônio</label>
                         <newitem-field 
-                        type="text" 
-                        class="form-control" 
-                        name="patrimonio" 
-                        v-model="item.patrimonio" 
-                        :disabled="disabled" 
-                        placeholder="XX9999-999"/>
+                            type="text" 
+                            class="form-control" 
+                            name="patrimonio" 
+                            v-model="item.patrimonio" 
+                            :disabled="disabled" 
+                            placeholder="XX9999-999"
+                            v-mask="'AA####-###'"
+                        />
                         <span 
                         class="text-danger" 
                         v-text="errors.patrimonio" 
@@ -166,11 +168,15 @@
 import { Form, Field } from 'vee-validate'
 import rules from '../validations/validateitens'
 import {mapMutations, mapState} from 'vuex'
+import { mask } from 'vue-the-mask'
 
 rules
 
 export default {
 
+    directives: {
+        mask
+    },
     components: {
         "newitem-form": Form,
         "newitem-field": Field,
@@ -196,6 +202,9 @@ export default {
         ...mapMutations(["itens/editItem"]),
         // Salva no objeto itens no localstorage
         saveItem() {
+            let value = this.item.valor
+            this.item.valor = value.replace(",", ".")
+            this.item.valor = Number(this.item.valor)
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
             .then(() => {
@@ -217,14 +226,6 @@ export default {
             let form = document.getElementById('newitem-form')
             form.reset() 
         },
-        // habilita/desabilita edição dos campos
-        edit() {
-            if (this.disabled) {
-                this.disabled = false
-            } else {
-                this.disabled = true
-            }
-        }
     },
     computed:{
         itemsLocal(){
