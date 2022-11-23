@@ -34,7 +34,7 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get(".container").click();
         cy.contains("span", "Campo obrigatório.");
 
-        cy.get(":nth-child(4) > .col-4 > .form-control").click();
+        cy.get(":nth-child(5) > .col-4 > .form-control").click();
         cy.get(".container").click();
         cy.contains("span", "Campo obrigatório.");
     })
@@ -124,10 +124,11 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get(":nth-child(2) > :nth-child(1) > .form-control").type(telefone);
         cy.get(":nth-child(2) > :nth-child(2) > .form-control").type(emailColaborador)
         cy.get(":nth-child(3) > .form-select").select("Front-end dev");
-        cy.get(":nth-child(4) > .col-4 > .form-control").type(cep);
-        cy.get(":nth-child(5) > .col-2 > .form-control").type(numeroDaCasa);
-        cy.get(":nth-child(6) > :nth-child(1) > .form-control").type(complemento);
-        cy.get(":nth-child(6) > :nth-child(3) > .form-control").type(pontoDeReferencia);
+
+        cy.get(":nth-child(5) > .col-4 > .form-control").type(cep);
+        cy.get(":nth-child(6) > .col-2 > .form-control").type(numeroDaCasa);
+        cy.get(":nth-child(7) > :nth-child(1) > .form-control").type(complemento);
+        cy.get(":nth-child(7) > :nth-child(3) > .form-control").type(pontoDeReferencia);
         cy.get(".btn-info").click();
     })
 
@@ -159,10 +160,10 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get(":nth-child(2) > :nth-child(1) > .form-control").type(telefone);
         cy.get(":nth-child(2) > :nth-child(2) > .form-control").type(emailColaborador)
         cy.get(":nth-child(3) > .form-select").select("Front-end dev");
-        cy.get(":nth-child(4) > .col-4 > .form-control").type(cep);
-        cy.get(":nth-child(5) > .col-2 > .form-control").type(numeroDaCasa);
-        cy.get(":nth-child(6) > :nth-child(1) > .form-control").type(complemento);
-        cy.get(":nth-child(6) > :nth-child(3) > .form-control").type(pontoDeReferencia);
+        cy.get(":nth-child(5) > .col-4 > .form-control").type(cep);
+        cy.get(":nth-child(6) > .col-2 > .form-control").type(numeroDaCasa);
+        cy.get(":nth-child(7) > :nth-child(1) > .form-control").type(complemento);
+        cy.get(":nth-child(7) > :nth-child(3) > .form-control").type(pontoDeReferencia);
         cy.get(".btn-info").click();
     })
 
@@ -194,10 +195,10 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get(":nth-child(2) > :nth-child(1) > .form-control").type(telefone);
         cy.get(":nth-child(2) > :nth-child(2) > .form-control").type(emailColaborador)
         cy.get(":nth-child(3) > .form-select").select("Front-end dev");
-        cy.get(":nth-child(4) > .col-4 > .form-control").type(cep);
-        cy.get(":nth-child(5) > .col-2 > .form-control").type(numeroDaCasa);
-        cy.get(":nth-child(6) > :nth-child(1) > .form-control").type(complemento);
-        cy.get(":nth-child(6) > :nth-child(3) > .form-control").type(pontoDeReferencia);
+        cy.get(":nth-child(5) > .col-4 > .form-control").type(cep);
+        cy.get(":nth-child(6) > .col-2 > .form-control").type(numeroDaCasa);
+        cy.get(":nth-child(7) > :nth-child(1) > .form-control").type(complemento);
+        cy.get(":nth-child(7) > :nth-child(3) > .form-control").type(pontoDeReferencia);
         cy.get(".btn-info").click();
         cy.contains(".v-toast__text", "Usuário já existe na base de dados");
     })

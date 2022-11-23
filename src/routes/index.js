@@ -7,4 +7,8 @@ const router = createRouter({
     history: createWebHashHistory()
 })
 
+router.beforeEach((to) => {
+    document.title = `${to.meta.title}`
+})
+
 export default router

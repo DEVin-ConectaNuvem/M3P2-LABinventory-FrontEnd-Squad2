@@ -136,28 +136,33 @@
                 <div class="row mb-2">
                 <div class="col-12">
                     <label class="form-label">Descrição</label>
-                    <textarea 
+                    <newitem-field as="textarea" 
                     id="text-area"
                     class="form-control" 
                     name="descricao" 
                     rows="3" 
                     v-model="item.descricao" 
                     :disabled="disabled">
-                    </textarea>
+                    </newitem-field>
+                     <span 
+                        class="text-danger" 
+                        v-text="errors.descricao" 
+                        v-show="errors.descricao">
+                    </span>
                 </div>
                 </div>
                 <div class="modal-footer">
-                <button 
-                class="btn btn-outline-info" 
-                type="button" 
-                @click="cleanForm">
-                Limpar
-                </button>
-                <button 
-                type="submit" 
-                class="btn btn-info">
-                Salvar
-                </button>
+                    <button 
+                    class="btn btn-outline-info" 
+                    type="button" 
+                    @click="cleanForm">
+                    Limpar
+                    </button>
+                    <button 
+                    type="submit" 
+                    class="btn btn-info">
+                    Salvar
+                    </button>
                 </div>
           </newitem-form>
         </div>
@@ -190,7 +195,8 @@ export default {
                 valor: 'required|pricecheck',
                 url: 'required|urlcheck',
                 marca: 'required',
-                modelo: 'required'
+                modelo: 'required',
+                descricao: 'required'
             },
             item: {}, // Recebe os inputs
             disabled: true, // Inputs desabilitados
@@ -223,8 +229,8 @@ export default {
             });
         },
         cleanForm() {
-            let form = document.getElementById('newitem-form')
-            form.reset() 
+            const form = document.getElementById('newitem-form')
+            form.reset();
         },
     },
     computed:{
