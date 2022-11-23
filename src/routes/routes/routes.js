@@ -15,6 +15,7 @@ const routes = [
   {
     path: "/",
     component: UserLogin,
+    meta: {title: "DevInventory - Anyway"},
     beforeEnter: (to) => {
       let check1 = cookies.get("logged");
       if (check1 !== null) {
@@ -50,11 +51,11 @@ const routes = [
       return true;
     },
     children: [
-      { path: "colaboradores", component: ListaUsuarios },
-      { path: "inventario", component: InventoryBook },
-      { path: "emprestar", component: EmprestaItem },
-      { path: "cadastro-item", component: CadastroItem },
-      { path: "cadastro-colaborador", component: CadastroUsuario },
+      { path: "colaboradores", component: ListaUsuarios, meta: {title: "Colaboradores"} },
+      { path: "inventario", component: InventoryBook, meta: {title: "Inventário"} },
+      { path: "emprestar", component: EmprestaItem, meta: {title: "Empréstimos"} },
+      { path: "cadastro-item", component: CadastroItem, meta: {title: "Cadastro Item"} },
+      { path: "cadastro-colaborador", component: CadastroUsuario, meta: {title: "Cadastro Colaborador"} },
     ],
   },
 ];
