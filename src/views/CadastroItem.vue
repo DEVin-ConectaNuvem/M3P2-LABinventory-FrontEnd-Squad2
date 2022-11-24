@@ -192,7 +192,7 @@ export default {
                 patrimonio: 'required|patrimonycheck',
                 titulo: 'required',
                 categoria: 'required',
-                valor: 'required|pricecheck',
+                valor: 'required|pricecheck|positivocheck',
                 url: 'required|urlcheck',
                 marca: 'required',
                 modelo: 'required',
