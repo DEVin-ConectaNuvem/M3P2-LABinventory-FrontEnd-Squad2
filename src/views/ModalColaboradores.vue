@@ -320,7 +320,7 @@ export default {
         });
     },
     cepNum() {
-      if (this.cepNum && this.cepNum.length == 9) {
+      if (this.cepNum && this.cepNum.length == 9 && this.cepNum !== this.collab.cep) {
         this.getCepInfo();
       }
     },
