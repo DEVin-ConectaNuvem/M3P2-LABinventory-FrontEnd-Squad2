@@ -4,7 +4,7 @@ describe("Testando Tela de cadastro de colaboradores", () => {
     const email = "mcoelho@email.com"
     const senha = "@abc1234"
 
-    before(() => {
+    beforeEach(() => {
         cy.visit("/")
         cy.get('#loginform > :nth-child(1) > .form-control').type(email)
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`)
@@ -119,9 +119,7 @@ describe("Testando Tela de cadastro de colaboradores", () => {
         cy.get(":nth-child(7) > :nth-child(1) > .form-control").type(complemento);
         cy.get(":nth-child(7) > :nth-child(3) > .form-control").type(pontoDeReferencia);
         cy.get(".btn-info").click();
-        // Deveria retornar essa mensagem
-        //cy.get('.v-toast__text', { timeout: 5000 }).should('contain', 'Usuário já existe na base de dados');
-        // Essa linha foi adicionada apenas para o teste passar, mas a mensagem de retorno está errada
-        cy.get('.v-toast__text', { timeout: 5000 }).should('contain', 'Colaborador inserido com sucesso!');
+        cy.get('.v-toast__text', { timeout: 5000 }).should('contain', 'Colaborador com email kauakirchner@email.com já existe.');
+        
     })
 })
