@@ -2,14 +2,17 @@ describe("Teste emprestimo de itens", () => {
     const email = "mcoelho@email.com"
     const password = "@abc1234"
 
-    // Faz login
     before(() => {
         cy.visit("/")
         cy.get('#loginform > :nth-child(1) > .form-control').type(email)
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
     })
 
-    it("Acessa a página inicial, faz login e realiza um emprestimo de item", () => {
+    afterEach(() => {
+        cy.get('.btns-div > :nth-child(1) > :nth-child(3)').click()
+    })
+
+    it("Acessa a página inicial e realiza um emprestimo de item", () => {
         const nomeCompleto = "Ana Banana";
         const dataNascimento = "1980-02-07";
         const telefone = "48999998877";
@@ -38,6 +41,7 @@ describe("Teste emprestimo de itens", () => {
         cy.get('.btns-div > :nth-child(3) > :nth-child(3)').click()
         cy.get('#search-item').type("PS9999-999", {force: true})
         cy.get('.form-select').first().select('Ana Banana')
-        cy.contains("p", "Emprestar")
+        cy.get('.v-toast__text', { timeout: 5000 }).should('contain', 'Item emprestado para Ana Banana');
+        //cy.contains("p", "Emprestar")
     })
 })

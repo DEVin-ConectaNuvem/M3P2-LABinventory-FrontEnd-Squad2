@@ -1,14 +1,15 @@
 describe("Testa botoes do menu lateral", () => {
-    it("Clicar em botoes do menu lateral para validar componentes, rotas e o hide", () => {
-        const email = "adriano@email.com"
-        const password = "abcd1234"
+    const email = "mcoelho@email.com"
+    const password = "@abc1234"
 
-        // Login
+    before(() => {
         cy.visit("/")
         cy.get('#loginform > :nth-child(1) > .form-control').type(email)
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
-        
+    })
+
+    it("Clicar em botoes do menu lateral para validar componentes, rotas e o hide", () => {
+
         // Testa componente/rota botão de inventário
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click()
         cy.contains("p", "Inventario")
@@ -41,6 +42,6 @@ describe("Testa botoes do menu lateral", () => {
         
         // Testa logout/botão de sair
         cy.get('.btns-div > :nth-child(1) > :nth-child(3)').click()
-        cy.contains("h2", "Login")
+        cy.get('.v-toast__text', { timeout: 5000 }).should('contain', 'Logout efetuado com sucesso.');
     })
 })

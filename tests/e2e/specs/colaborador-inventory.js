@@ -1,8 +1,18 @@
-describe("Testa tela inventory book colaboradores e emprestimos", () => {  
+describe("Testa tela inventory book colaboradores e emprestimos", () => {
+    const email = "mcoelho@email.com"
+    const senha = "@abc1234"
+
+    beforeEach(() => {
+        cy.visit("/")
+        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
+        cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`)
+    })
+
+    afterEach(() => {
+        cy.get('.btns-div > :nth-child(1) > :nth-child(3)').click()
+    })
     
     it("Deve visualizar colaborador cadastrado na tela inventário", () => {
-        const email = "julia@email.com"
-        const password = "abcd1234"
         const nomeCompleto = "Julia Moura";
         const dataNascimento = "1998-07-14";
         const telefone = "48984995578";
@@ -11,12 +21,6 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
         const numeroDaCasa = "992";
         const complemento = "anyway";
         const pontoDeReferencia = "Casa";
-
-        //Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
 
         // Cadastrando um colaborador para verificar cards: colaboradores, itens, total e emprestados
         cy.get(".btns-div > :nth-child(2) > :nth-child(2)").click();
@@ -36,13 +40,9 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
 
         //Voltar Tela 
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
-
     })
 
     it("Deve visualizar mais de um colaborador cadastrado na tela inventário", () => {
-        const email = "julia@email.com"
-        const password = "abcd1234"
-
         const nomeCompleto = "Julia Moura";
         const dataNascimento = "1998-07-14";
         const telefone = "48984995578";
@@ -60,12 +60,6 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
         const numeroDaCasa2 = "96";
         const complemento2 = "anyway";
         const pontoDeReferencia2 = "Árvores";
-
-        //Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
 
         // Cadastrando um colaborador para verificar cards: colaboradores, itens, total e emprestados
         cy.get(".btns-div > :nth-child(2) > :nth-child(2)").click();
@@ -104,13 +98,9 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
 
         //Voltar Tela 
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
-
     })
 
     it("Deve visualizar item emprestado na tela inventário", () => {
-        const email = "julia@email.com"
-        const password = "abcd1234"
-
         const nomeCompleto = "Julia Moura";
         const dataNascimento = "1998-07-14";
         const telefone = "48984995578";
@@ -127,13 +117,6 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
         const marcaProduto = "Samsung";
         const modeloProduto = "PC-F30NP530XBB";
         const descricao = "Anyway";
-
-
-        //Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
 
         // Cadastrando um colaborador para verificar cards: colaboradores, itens, total e emprestados
         cy.get(".btns-div > :nth-child(2) > :nth-child(2)").click();

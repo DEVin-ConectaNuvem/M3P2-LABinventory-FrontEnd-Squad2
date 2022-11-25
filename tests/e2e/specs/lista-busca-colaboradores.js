@@ -2,14 +2,17 @@ describe("Teste listagem colaboradores", () => {
     const email = "mcoelho@email.com"
     const password = "@abc1234"
 
-    // Faz login
     before(() => {
         cy.visit("/")
         cy.get('#loginform > :nth-child(1) > .form-control').type(email)
         cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
     })
 
-    it("Acessa a página inicial, faz login e lista os colaboradores", () => {
+    afterEach(() => {
+        cy.get('.btns-div > :nth-child(1) > :nth-child(3)').click()
+    })
+
+    it("Acessa a página inicial e lista os colaboradores", () => {
         const nomeCompleto = "Deputado Tiririca";
         const dataNascimento = "1965-05-01";
         const telefone = "48999998877";

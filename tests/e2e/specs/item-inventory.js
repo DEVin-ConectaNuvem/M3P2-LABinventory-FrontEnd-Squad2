@@ -1,8 +1,18 @@
-describe("Testa tela inventory book itens", () => {  
+describe("Testa tela inventory book itens", () => {
+    const email = "mcoelho@email.com"
+    const password = "@abc1234"
+
+    before(() => {
+        cy.visit("/")
+        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
+        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
+    })
+
+    afterEach(() => {
+        cy.get('.btns-div > :nth-child(1) > :nth-child(3)').click()
+    })
 
     it("Deve visualizar item cadastrado na tela inventário", () => {
-        const email = "julia@email.com"
-        const password = "abcd1234"
         const url = "https://lojaibyte.vteximg.com.br/arquivos/ids/185030-1200-1200/39030-01-notebook-samsung-flash-f30-intel-n4000-4gb-ssd-64gb-13-3-full-hd-windows-10.jpg";
         const codigoDePatrimonio = "BR1234-789";
         const titulo = "Pc rosa";
@@ -10,12 +20,6 @@ describe("Testa tela inventory book itens", () => {
         const marcaProduto = "Samsung";
         const modeloProduto = "PC-F30NP530XBB";
         const descricao = "Anyway";
-
-        //Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
 
         // Cadastrando um item para verificar cards: colaboradores, itens, total e emprestados
         cy.get('.btns-div > :nth-child(3) > :nth-child(2)').click();
@@ -29,7 +33,7 @@ describe("Testa tela inventory book itens", () => {
         cy.get(":nth-child(3) > :nth-child(2) > .form-control").type(modeloProduto);
         cy.get("#text-area").type(descricao);
         cy.get(".btn-info").click();
-        cy.contains("p", "Item salvo com sucesso.")
+        cy.contains("p", "Item inserido com sucesso!")
 
         //Voltar Tela 
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
@@ -40,8 +44,6 @@ describe("Testa tela inventory book itens", () => {
     })
 
     it("Deve editar um item pela tela inventário", () => {
-        const email = "julia@email.com"
-        const password = "abcd1234"
         const url = "https://lojaibyte.vteximg.com.br/arquivos/ids/185030-1200-1200/39030-01-notebook-samsung-flash-f30-intel-n4000-4gb-ssd-64gb-13-3-full-hd-windows-10.jpg";
         const codigoDePatrimonio = "BR1234-789";
         const titulo = "Pc rosa";
@@ -50,12 +52,6 @@ describe("Testa tela inventory book itens", () => {
         const modeloProduto = "PC-F30NP530XBB";
         const descricao = "Anyway";
         const novoValor= "3500,00";
-
-        //Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
 
         // Cadastrando um item para verificar cards: colaboradores, itens, total e emprestados
         cy.get('.btns-div > :nth-child(3) > :nth-child(2)').click();
@@ -69,7 +65,7 @@ describe("Testa tela inventory book itens", () => {
         cy.get(":nth-child(3) > :nth-child(2) > .form-control").type(modeloProduto);
         cy.get("#text-area").type(descricao);
         cy.get(".btn-info").click();
-        cy.contains("p", "Item salvo com sucesso.")
+        cy.contains("p", "Item inserido com sucesso!")
 
         //Voltar Tela 
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
@@ -82,8 +78,6 @@ describe("Testa tela inventory book itens", () => {
     })
 
     it("Deve somar corretamente o valor de mais de um produto cadastrado e quantidade de itens", () => {
-        const email = "julia@email.com"
-        const password = "abcd1234"
         const url = "https://lojaibyte.vteximg.com.br/arquivos/ids/185030-1200-1200/39030-01-notebook-samsung-flash-f30-intel-n4000-4gb-ssd-64gb-13-3-full-hd-windows-10.jpg";
         const codigoDePatrimonio = "BR1234-789";
         const titulo = "Pc rosa";
@@ -100,12 +94,6 @@ describe("Testa tela inventory book itens", () => {
         const modeloProduto2 = "PC-3000";
         const descricao2 = "Anyway";
 
-        //Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
-
         // Cadastrando um item para verificar cards: colaboradores, itens, total e emprestados
         cy.get('.btns-div > :nth-child(3) > :nth-child(2)').click();
         cy.get(".slider").click();
@@ -118,7 +106,7 @@ describe("Testa tela inventory book itens", () => {
         cy.get(":nth-child(3) > :nth-child(2) > .form-control").type(modeloProduto);
         cy.get("#text-area").type(descricao);
         cy.get(".btn-info").click();
-        cy.contains("p", "Item salvo com sucesso.")
+        cy.contains("p", "Item inserido com sucesso!")
 
         //Voltar Tela 
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
@@ -135,16 +123,13 @@ describe("Testa tela inventory book itens", () => {
         cy.get(":nth-child(3) > :nth-child(2) > .form-control").type(modeloProduto2);
         cy.get("#text-area").type(descricao2);
         cy.get(".btn-info").click();
-        cy.contains("p", "Item salvo com sucesso.")
+        cy.contains("p", "Item inserido com sucesso!")
 
         //Voltar Tela 
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
-
     })
 
     it("Deve excluir item pela tela inventario", () => {
-        const email = "julia@email.com"
-        const password = "abcd1234"
         const url = "https://lojaibyte.vteximg.com.br/arquivos/ids/185030-1200-1200/39030-01-notebook-samsung-flash-f30-intel-n4000-4gb-ssd-64gb-13-3-full-hd-windows-10.jpg";
         const codigoDePatrimonio = "BR1234-789";
         const titulo = "Pc rosa";
@@ -152,12 +137,6 @@ describe("Testa tela inventory book itens", () => {
         const marcaProduto = "Samsung";
         const modeloProduto = "PC-F30NP530XBB";
         const descricao = "Anyway";
-
-        //Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-        cy.contains("p", "Inventario")
 
         // Cadastrando um item para verificar cards: colaboradores, itens, total e emprestados
         cy.get('.btns-div > :nth-child(3) > :nth-child(2)').click();
@@ -171,12 +150,11 @@ describe("Testa tela inventory book itens", () => {
         cy.get(":nth-child(3) > :nth-child(2) > .form-control").type(modeloProduto);
         cy.get("#text-area").type(descricao);
         cy.get(".btn-info").click();
-        cy.contains("p", "Item salvo com sucesso.")
+        cy.contains("p", "Item inserido com sucesso!")
 
         //Voltar Tela 
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
         cy.get('.inv-card > label').click();
         cy.get('.btn-outline-danger').click();
-
     })
 })
