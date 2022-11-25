@@ -23,6 +23,14 @@ export default {
             }
             return true
         }),
+         // Verifica se está no formato 9999,99
+         positivocheck: defineRule('positivocheck', value => {
+            if (parseFloat(value.replace(',','.')) <= 0) {
+                return 'Valor não pode ser menor ou igual a zero'
+                
+            }
+            return true
+        }),
         urlcheck: defineRule('urlcheck', url => {
             // Valida o formato da URL
             let regexp = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
