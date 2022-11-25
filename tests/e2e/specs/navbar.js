@@ -5,8 +5,8 @@
 describe('Navbar tests', () => {
     it('Check NavBar title, user name, and user icon', () => {
         
-        const name = 'Marcoelho'
-        const email = 'marcoelho@email.com'
+        const name = 'alfredboris'
+        const email = 'alfredboris@email.com'
         const password = '12345678'
         
         cy.visit('/')
@@ -19,11 +19,11 @@ describe('Navbar tests', () => {
         cy.get('#loginform > :nth-child(2) > .form-control').type(password)
         cy.get('#loginform > .btn-info').click()
         cy.location().should((loc) => {
-            expect(loc.toString()).to.eq('http://localhost:8080/#/users/inventario')
+            expect(loc.toString().split('#')[1]).to.eq('/users/inventario')
         })
         cy.get('.router').children().first().get('.current-route').should('have.text', 'Inventario')
         cy.get('.router').children().first().get('#user').get('img.gravatar').should('be.visible')
-        cy.get('.router').children().first().get('#user').children().first().should('have.text', 'Marcoelho')
+        cy.get('.router').children().first().get('#user').children().first().should('have.text', 'alfredboris')
         cy.get('.btns-div > :nth-child(2) > :nth-child(3)').click()
         cy.get('.router').children().first().get('.current-route').should('have.text', 'Colaboradores')
         cy.get('.btns-div > :nth-child(3) > :nth-child(3)').click()

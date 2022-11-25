@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useCookies } from "vue3-cookies";
+const cookies = useCookies().cookies;
 
 export default {
   namespaced: true,
@@ -11,25 +13,16 @@ export default {
       errorCep: "",
       collabs: [],
       selectedId: null,
-      totalCollabs: 0
+      totalCollabs: 0,
+      editUser: false,
     };
   },
   mutations: {
+    setEditUser(state, status) {
+      state.editUser = status;
+    },
     setSelectedId(state, value) {
       state.selectedId = value;
-    },
-    delCollab(context, collab) {
-        axios
-        .delete(`http://localhost:3000/collaborators/${collab}`)
-        .then((response) => {
-          console.log(response)
-          
-        })
-        .catch(() => {
-          // No caso de qualquer outro erro na requisição
-          context.commit("setMsgError", "Erro na exclusão colaboradores.");
-        });
-
     },
     setCepInfo(state, info) {
       state.cepInfo = {
@@ -58,57 +51,76 @@ export default {
       state.errorCep = msg;
     },
     totalCollabsStats(state, total) {
-      state.totalCollabs = total
-    }
+      state.totalCollabs = total;
+    },
   },
   actions: {
-      
-      async getCollabs(context) {
-        
-        await axios
-        .get("http://localhost:3000/collaborators")
+    async getCollabs(context) {
+      let headers = { 
+        headers: {
+            'Authorization': "Bearer" + cookies.get("logged").token,
+            'Access-Control-Allow-Origin': "http://localhost:5000/collabs/",
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Max-Age': '86400'
+        }
+    }
+      context.commit("setResetCollabs")
+      await axios
+        .get("http://localhost:5000/collabs/", headers)
         .then((response) => {
-          this.state.collabs = response.data
-
+          response.data.records.forEach((e) => {
+            context.commit("setCollabs", e)
+          })
         })
         .catch(() => {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na consulta de colaboradores.");
         });
-        context.commit("totalCollabsStats", this.state.collabs.length)
-        return this.state.collabs
+      context.commit("totalCollabsStats", context.state.collabs.length);
+      return true
     },
-      async getOneCollab(context, id) {
-      
+    async getOneCollab(context, id) {
       await axios
-        .get(`http://localhost:3000/collaborators/${id}`)
+        .get(`http://localhost:5000/collabs/collab/?_id=${id}`, { 
+          headers: {
+              'Authorization': "Bearer" + cookies.get("logged").token,
+              'Access-Control-Allow-Origin': "http://localhost:5000/collabs/collab/",
+              'Access-Control-Allow-Methods': 'GET',
+              'Access-Control-Allow-Headers': '*',
+              'Access-Control-Max-Age': '86400'
+          }
+      })
         .then((response) => {
-          this.state.collabs = response.data
-          
+          this.state.collabs = response.data.records;
         })
         .catch(() => {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na consulta do colaborador.");
         });
 
-        return this.state.collabs
+      return this.state.collabs;
     },
-    async DelCollab(context, user) {
-      
+    async DelCollab(context, id) {
       await axios
-        .delete(`http://localhost:3000/collaborators/${user}`)
-        .then((response) => {
-          console.log(response)
-          
+        .delete(`http://localhost:5000/collabs/collab/?_id=${id}`, { 
+          headers: {
+              'Authorization': "Bearer" + cookies.get("logged").token,
+              'Access-Control-Allow-Origin': "http://localhost:5000/collabs/collab/",
+              'Access-Control-Allow-Methods': 'DELETE',
+              'Access-Control-Allow-Headers': '*',
+              'Access-Control-Max-Age': '86400'
+          }
+      })
+        .then(() => {
+          context.dispatch("getCollabs")
         })
         .catch(() => {
           // No caso de qualquer outro erro na requisição
           context.commit("setMsgError", "Erro na exclusão colaboradores.");
         });
-
-        
     },
-    
+
     // Recebe o CEP do novo ou colaborador editado
     // Verifica se o CEP é válido
     async cepInfo(context, cep) {
@@ -136,44 +148,41 @@ export default {
       }, 5000);
     },
     async saveCollab(context, colab) {
+      let collab = {...colab.collab, ...colab.address}
+      // Zerando variáveis de controle
       context.commit("setSaveSuccess", false);
       context.commit("setExists", false);
       context.commit("setResetCollabs");
-      await axios.get("http://localhost:3000/collaborators").then((res) => {
-        res.data.forEach((el) => {
-          context.commit("setCollabs", el);
-        });
-      });
-
-      context.state.collabs.forEach((el) => {
-        if (el.email === colab.collab.email) {
-          context.commit("setExists", true);
-        }
-      });
-
-      if (context.state.exists) {
-        context.commit("setMsgError", "Usuário já existe na base de dados");
-        return false;
+      // Se flag edit estiver true, entra no bloco pra requisição put
+      if (context.state.editUser) {
+        let id = colab._id
+        await axios
+          .put(`http://localhost:5000/collabs/edit/?_id=${id}`, colab, { 
+            headers: {
+                'Authorization': "Bearer" + cookies.get("logged").token,
+                'Access-Control-Allow-Origin': "http://localhost:5000/collabs/edit/",
+                'Access-Control-Allow-Methods': 'PUT',
+                'Access-Control-Allow-Headers': '*',
+                'Access-Control-Max-Age': '86400'
+            }
+        })
+          .then(() => {
+            context.commit("setSaveSuccess", true);
+            context.commit("setEditUser", false);
+          });
+          context.dispatch("getCollabs")
+          return true
       }
-
-      let payload = {
-        nome: colab.collab.nome,
-        genero: colab.collab.genero,
-        nascimento: colab.collab.nascimento,
-        telefone: colab.collab.telefone,
-        bairro: colab.address.bairro,
-        cargo: colab.collab.cargo,
-        cep: colab.address.cep,
-        complemento: colab.collab.complemento,
-        email: colab.collab.email,
-        localidade: colab.address.localidade,
-        logradouro: colab.address.logradouro,
-        numero: colab.collab.numero,
-        referencia: colab.collab.referencia,
-        uf: colab.address.uf,
-      };
       await axios
-        .post("http://localhost:3000/collaborators", payload)
+        .post("http://localhost:5000/collabs/", collab, { 
+          headers: {
+              'Authorization': "Bearer" + cookies.get("logged").token,
+              'Access-Control-Allow-Origin': "http://localhost:5000/collabs/",
+              'Access-Control-Allow-Methods': 'POST',
+              'Access-Control-Allow-Headers': '*',
+              'Access-Control-Max-Age': '86400'
+          }
+      })
         .then(() => {
           context.commit("setSaveSuccess", true);
           return true;

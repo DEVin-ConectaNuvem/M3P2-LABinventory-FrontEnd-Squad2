@@ -6,7 +6,7 @@
             <div>
                 <span id="switch-editar">Editar</span>
                 <label class="switch">
-                    <input type="checkbox" @click="edit">
+                    <input type="checkbox" @click="this.disabled = !this.disabled">
                     <span class="slider round"></span>
                 </label>
              </div>
@@ -22,12 +22,14 @@
                     <div class="col-3">
                         <label class="form-label">Código de patrimônio</label>
                         <newitem-field 
-                        type="text" 
-                        class="form-control" 
-                        name="patrimonio" 
-                        v-model="item.patrimonio" 
-                        :disabled="disabled" 
-                        placeholder="XX9999-999"/>
+                            type="text" 
+                            class="form-control" 
+                            name="patrimonio" 
+                            v-model="item.patrimonio" 
+                            :disabled="disabled" 
+                            placeholder="XX9999-999"
+                            v-mask="'AA####-###'"
+                        />
                         <span 
                         class="text-danger" 
                         v-text="errors.patrimonio" 
@@ -80,7 +82,7 @@
                         <span 
                         class="text-danger" 
                         v-text="errors.valor" 
-                        v-show="errors.valor">
+                        v-show="errors.valor" >
                         </span>
                     </div>
                     <div class="col-9">
@@ -96,6 +98,9 @@
                         v-text="errors.url" 
                         v-show="errors.url">
                         </span>
+                    </div>
+                    <div class="loading-container" v-show="isLoading">
+                        <div class="loading" />
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -131,28 +136,33 @@
                 <div class="row mb-2">
                 <div class="col-12">
                     <label class="form-label">Descrição</label>
-                    <textarea 
+                    <newitem-field as="textarea" 
                     id="text-area"
                     class="form-control" 
                     name="descricao" 
                     rows="3" 
                     v-model="item.descricao" 
                     :disabled="disabled">
-                    </textarea>
+                    </newitem-field>
+                     <span 
+                        class="text-danger" 
+                        v-text="errors.descricao" 
+                        v-show="errors.descricao">
+                    </span>
                 </div>
                 </div>
                 <div class="modal-footer">
-                <button 
-                class="btn btn-outline-info" 
-                type="button" 
-                @click="cleanForm">
-                Limpar
-                </button>
-                <button 
-                type="submit" 
-                class="btn btn-info">
-                Salvar
-                </button>
+                    <button 
+                    class="btn btn-outline-info" 
+                    type="button" 
+                    @click="cleanForm">
+                    Limpar
+                    </button>
+                    <button 
+                    type="submit" 
+                    class="btn btn-info">
+                    Salvar
+                    </button>
                 </div>
           </newitem-form>
         </div>
@@ -162,13 +172,17 @@
 
 import { Form, Field } from 'vee-validate'
 import rules from '../validations/validateitens'
+import {mapMutations, mapState} from 'vuex'
+import { mask } from 'vue-the-mask'
 
 rules
 
 export default {
 
+    directives: {
+        mask
+    },
     components: {
-
         "newitem-form": Form,
         "newitem-field": Field,
     },
@@ -178,45 +192,97 @@ export default {
                 patrimonio: 'required|patrimonycheck',
                 titulo: 'required',
                 categoria: 'required',
-                valor: 'required|pricecheck',
+                valor: 'required|pricecheck|positivocheck',
                 url: 'required|urlcheck',
                 marca: 'required',
-                modelo: 'required'
+                modelo: 'required',
+                descricao: 'required'
             },
             item: {}, // Recebe os inputs
-            disabled: true // Inputs desabilitados
+            disabled: true, // Inputs desabilitados
+            isLoading: false,
+            // confirmError: 'Código de patrimônio já existe',
         }
     },
     methods: {
+        ...mapMutations(["itens/editItem"]),
         // Salva no objeto itens no localstorage
         saveItem() {
+            let value = this.item.valor
+            this.item.valor = value.replace(",", ".")
+            this.item.valor = Number(this.item.valor)
             this.item.emprestado = 'Item disponível'
             this.$store.dispatch('itens/saveItem', {...this.item})
-            let error = this.$store.state.itens.error
-            if (!error) {
-                this.$toast.info('Item salvo com sucesso.', {position: 'top'})
-                let form = document.getElementById('newitem-form')
-                form.reset()
-            } else {
-                this.$toast.warning('Este patrimônio já está sendo utilizado.', {position: 'top'})
-            }
+            .then(() => {
+                if (this.exists) {
+                    this.$toast.error(this.msgError, { position: "top" });
+                } else {
+                    this.isLoading = true;
+                    setTimeout(() => {
+                        this.$toast.info("Item inserido com sucesso!", {
+                        position: "top",
+                        });
+                        this.isLoading = false;
+                    }, 3000);
+                    this.cleanForm();
+                }
+            });
         },
         cleanForm() {
-            let form = document.getElementById('newitem-form')
-            form.reset() 
+            const form = document.getElementById('newitem-form')
+            form.reset();
         },
-        // habilita/desabilita edição dos campos
-        edit() {
-            if (this.disabled) {
-                this.disabled = false
-            } else {
-                this.disabled = true
-            }
+    },
+    computed:{
+        itemsLocal(){
+            return this.$store.state.itens.sendItens;
+        },
+        // showConfirmError() {
+        //     if (this.itemsLocal.patrimonio != this.item.patrimonio) {
+        //         return true
+        //     } else {
+        //         return false
+        //     }
+        //     },
+        ...mapState({
+            exists: (state) => state.itens.exists,
+            msgError: (state) => state.itens.errorMsg,
+            toEdit: (state) => state.itens.toEdit
+        })
+    },
+    watch: {
+        itemsLocal() {
+            this.items = this.$store.getters['itens/getItems'];
         }
     }
 }
 </script>
 <style scoped>
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading {
+    width: 40px;
+    height: 40px;
+    border: 5px solid;
+    border-color: #0dcaf0 #e6e6e6 #e6e6e6;
+    border-radius: 50%;
+    animation: loading 3s linear infinite;
+    background-position: cover;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
 /* TÍTULO */
 p {
     font-size: 1.8em;

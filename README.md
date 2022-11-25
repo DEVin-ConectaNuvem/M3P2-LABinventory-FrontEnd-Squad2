@@ -62,7 +62,7 @@ Instalar Vue na maquina através do link abaixo:
 <img width="65px" height="65px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
 </p>
 
-# Desenvolvedores - DEVinSanes:
+# Desenvolvedores - Anyway Group:
 
 Somos o Anyway Group, time de desenvolvedores full-stak, desenvolvemos o projeto LABinventory.
 
@@ -70,12 +70,12 @@ Somos o Anyway Group, time de desenvolvedores full-stak, desenvolvemos o projeto
 
 <ul>
 <li><a href="https://www.linkedin.com/in/adriano-matos-meier/" target="_blank"><i>Adriano Matos Meier</i></a></li>
-<li><a href="" target="_blank"><i>Josinaldo De Andrade Pereira</i></a></li>
+<li><a href="https://www.linkedin.com/in/josinaldo-andrade-147083226/" target="_blank"><i>Josinaldo De Andrade Pereira</i></a></li>
 <li><a href="https://www.linkedin.com/in/julia-m-9abba9110/" target="_blank"><i>Julia Moura</i></a></li>
 <li><a href="https://www.linkedin.com/in/kau%C3%A3-kirchner-de-souza-4b8327219/" target="_blank"><i>Kauã Kirchner de Souza</i></a></li>
 <li><a href="https://www.linkedin.com/in/mayconrcampos/" target="_blank"><i>Maycon Campos</i></a></li>
-<li><a href="" target="_blank"><i>Marcelo Coelho</i></a></li>
-<li><a href="" target="_blank"><i>Vinicius Possatto Stormoski</i></a></li>
+<li><a href="https://www.linkedin.com/in/mcoelho222/" target="_blank"><i>Marcelo Coelho</i></a></li>
+<li><a href="https://www.linkedin.com/in/vinicius-possatto-stormoski-3696a922b/" target="_blank"><i>Vinicius Possatto Stormoski</i></a></li>
 </ul>
 
 # Referências:
