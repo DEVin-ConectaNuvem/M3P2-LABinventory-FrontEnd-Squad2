@@ -1,6 +1,6 @@
 describe("Teste listagem colaboradores", () => {
-    const email = "adriano@email.com"
-    const password = "abcd1234"
+    const email = "mcoelho@email.com"
+    const password = "@abc1234"
 
     // Faz login
     before(() => {
@@ -28,19 +28,18 @@ describe("Teste listagem colaboradores", () => {
         cy.get(":nth-child(2) > :nth-child(1) > .form-control").type(telefone)
         cy.get(":nth-child(2) > :nth-child(2) > .form-control").type(emailColaborador)
         cy.get(":nth-child(3) > .form-select").select("DevOps")
-        cy.get(":nth-child(4) > .col-4 > .form-control").type(cep)
-        cy.get(":nth-child(5) > .col-2 > .form-control").type(numeroDaCasa)
-        cy.get(":nth-child(6) > :nth-child(1) > .form-control").type(complemento)
-        cy.get(":nth-child(6) > :nth-child(3) > .form-control").type(pontoDeReferencia)
+        cy.get(':nth-child(5) > .col-4 > .form-control').type(cep)
+        cy.get(':nth-child(6) > .col-2 > .form-control').type(numeroDaCasa)
+        cy.get(':nth-child(7) > :nth-child(1) > .form-control').type(complemento)
+        cy.get(":nth-child(7) > :nth-child(3) > .form-control").type(pontoDeReferencia)
         cy.get(".btn-info").click()
-        cy.contains("p", "Dados do colaborador salvos com sucesso.")
 
         // Lista todos os colaboradores
         cy.get('.btns-div > :nth-child(2) > :nth-child(3)').click()
         cy.contains('.first', "Deputado Tiririca")
 
         // Faz busca por colaborador especifico
-        cy.get('#search-user').type("Tiririca")
+        cy.get('#search-user').type("Tiririca", {force: true})
         cy.contains('.first', "Deputado Tiririca")
     })
 })
