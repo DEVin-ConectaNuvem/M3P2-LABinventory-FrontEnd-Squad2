@@ -59,7 +59,7 @@ export default {
       let headers = { 
         headers: {
             'Authorization': "Bearer" + cookies.get("logged").token,
-            'Access-Control-Allow-Origin': "http://localhost:5000/collabs/",
+            'Access-Control-Allow-Origin': "https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/",
             'Access-Control-Allow-Methods': 'GET',
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Max-Age': '86400'
@@ -67,7 +67,7 @@ export default {
     }
       context.commit("setResetCollabs")
       await axios
-        .get("http://localhost:5000/collabs/", headers)
+        .get("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/", headers)
         .then((response) => {
           response.data.records.forEach((e) => {
             context.commit("setCollabs", e)
@@ -82,10 +82,10 @@ export default {
     },
     async getOneCollab(context, id) {
       await axios
-        .get(`http://localhost:5000/collabs/collab/?_id=${id}`, { 
+        .get(`https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/collab/?_id=${id}`, { 
           headers: {
               'Authorization': "Bearer" + cookies.get("logged").token,
-              'Access-Control-Allow-Origin': "http://localhost:5000/collabs/collab/",
+              'Access-Control-Allow-Origin': "https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/collab/",
               'Access-Control-Allow-Methods': 'GET',
               'Access-Control-Allow-Headers': '*',
               'Access-Control-Max-Age': '86400'
@@ -103,10 +103,10 @@ export default {
     },
     async DelCollab(context, id) {
       await axios
-        .delete(`http://localhost:5000/collabs/collab/?_id=${id}`, { 
+        .delete(`https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/collab/?_id=${id}`, { 
           headers: {
               'Authorization': "Bearer" + cookies.get("logged").token,
-              'Access-Control-Allow-Origin': "http://localhost:5000/collabs/collab/",
+              'Access-Control-Allow-Origin': "https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/collab/",
               'Access-Control-Allow-Methods': 'DELETE',
               'Access-Control-Allow-Headers': '*',
               'Access-Control-Max-Age': '86400'
@@ -157,10 +157,10 @@ export default {
       if (context.state.editUser) {
         let id = colab._id
         await axios
-          .put(`http://localhost:5000/collabs/edit/?_id=${id}`, colab, { 
+          .put(`https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/edit/?_id=${id}`, colab, { 
             headers: {
                 'Authorization': "Bearer" + cookies.get("logged").token,
-                'Access-Control-Allow-Origin': "http://localhost:5000/collabs/edit/",
+                'Access-Control-Allow-Origin': "https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/edit/",
                 'Access-Control-Allow-Methods': 'PUT',
                 'Access-Control-Allow-Headers': '*',
                 'Access-Control-Max-Age': '86400'
@@ -174,10 +174,10 @@ export default {
           return true
       }
       await axios
-        .post("http://localhost:5000/collabs/", collab, { 
+        .post("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/", collab, { 
           headers: {
               'Authorization': "Bearer" + cookies.get("logged").token,
-              'Access-Control-Allow-Origin': "http://localhost:5000/collabs/",
+              'Access-Control-Allow-Origin': "https://labinventory-backend-vjqcwqvuka-uc.a.run.app/collabs/",
               'Access-Control-Allow-Methods': 'POST',
               'Access-Control-Allow-Headers': '*',
               'Access-Control-Max-Age': '86400'

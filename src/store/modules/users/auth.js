@@ -22,7 +22,7 @@ export default {
       context.commit("setSuccess", false);
       context.commit("setUser", null);
 
-      await axios.post("http://localhost:5000/users/login", user)
+      await axios.post("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/users/login", user)
       .then((response) => {
         if(response.data.status_code !== 401) {
           context.commit("setSuccess", true);
@@ -47,7 +47,7 @@ export default {
     },
     async getUrlAuth(context) {
       context.commit("setURL", null);
-      await axios.post("http://localhost:5000/users/auth/google")
+      await axios.post("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/users/auth/google")
       .then((response) => {
         context.commit("setURL", response.data.url);
       })   

@@ -36,7 +36,7 @@ export default {
             var headers = {
                 "Content-Type": "application/json"
             }
-            await axios.post("http://localhost:5000/users/create", user, headers)
+            await axios.post("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/users/create", user, headers)
             .then((response) => {
                 if(response.status == 201) {
                     context.commit('setSuccess', true)

@@ -64,7 +64,7 @@ export default {
         // Salva um objeto item novo ou editado no localStorage
         async saveItem(context, item) {
             context.commit("setExists", false);
-            await axios.get("http://localhost:5000/items/", {
+            await axios.get("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items/", {
                 headers: {
                     'Authorization': cookies.get("logged").token,
                 }
@@ -75,10 +75,10 @@ export default {
                 });
             });
 
-            await axios.post("http://localhost:5000/items/", item, {
+            await axios.post("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items/", item, {
                 headers: {
                     'Authorization': "Bearer" + cookies.get("logged").token,
-                    'Access-Control-Allow-Origin': "http://localhost:5000/items/",
+                    'Access-Control-Allow-Origin': "https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items/",
                     'Access-Control-Allow-Methods': 'POST',
                     'Access-Control-Allow-Headers': '*',
                     'Access-Control-Max-Age': '86400'
@@ -95,7 +95,7 @@ export default {
         },
 
         async saveItemedit(context, item) {
-            await axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
+            await axios.patch(`https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items/?_id=${item._id}`, item, {
                 headers: {
                   'Authorization': "Bearer" + cookies.get("logged").token,
                   'Access-Control-Allow-Origin': "*"
@@ -107,10 +107,10 @@ export default {
         },
         // Deleta um objeto item do array de itens pelo código de patrimônio
         async delItem(context, patr) {
-            await axios.delete(`http://localhost:5000/items/${patr}`, {
+            await axios.delete(`https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items/${patr}`, {
                 headers: {
                     'Authorization': "Bearer" + cookies.get("logged").token,
-                    'Access-Control-Allow-Origin': "http://localhost:5000/items",
+                    'Access-Control-Allow-Origin': "https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items",
                     'Access-Control-Allow-Methods': 'DELETE',
                     'Access-Control-Allow-Headers': '*',
                     'Access-Control-Max-Age': '86400'
@@ -127,7 +127,7 @@ export default {
         },
         // Insere key "emprestado: colaborador no item"
         flagItem(context, item) {
-            axios.patch(`http://localhost:5000/items/?_id=${item._id}`, item, {
+            axios.patch(`https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items/?_id=${item._id}`, item, {
                 headers: {
                     'Authorization': "Bearer" + cookies.get("logged").token,
                     'Access-Control-Allow-Origin': "*"
@@ -142,7 +142,7 @@ export default {
             
         },
         async getItens(context) {
-            await axios.get("http://localhost:5000/items/", {
+            await axios.get("https://labinventory-backend-vjqcwqvuka-uc.a.run.app/items/", {
                 headers: {
                   'Authorization': cookies.get("logged").token,
                 }})
