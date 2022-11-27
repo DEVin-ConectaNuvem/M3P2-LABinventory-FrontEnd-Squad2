@@ -80,26 +80,6 @@ describe("Testa tela inventory book itens", () => {
         cy.get('.img').click();
     })
 
-    // it("Deve editar um item pela tela inventário", () => {
-
-    //     const email = "mcoelho@email.com"
-    //     const password = "@abc1234"
-
-    //     // Login
-    //     cy.visit("/")
-    //     cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-    //     cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-
-
-    //     cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click()
-    //     cy.get('#search-item').type("pc rosa", {force: true})
-
-    // //     // Editar dados do produto
-    //     cy.get('.img').click();
-    //     cy.get(".form-select").select("Acessórios");
-    //     cy.get('.btn-info').click();
-    //     cy.get('.inv-card > label').click();
-    // })
 
     it("Deve excluir item pela tela inventario", () => {
         const email = "mcoelho@email.com"
