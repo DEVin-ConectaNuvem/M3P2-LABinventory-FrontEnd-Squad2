@@ -9,7 +9,8 @@ describe("Cria conta de usuario", () => {
         cy.get('#registerform > :nth-child(1) > .form-control').type(name)
         cy.get('#registerform > :nth-child(2) > .form-control').type(email)
         cy.get(':nth-child(3) > .form-control').type(password)
+        cy.get(':nth-child(4) > .form-control').type(password)
         cy.get('.modal-footer > .btn-info').click();
-        cy.contains("h2", "Login")
+        cy.get('.v-toast__text', { timeout: 5000 }).should('contain', 'Conta criada com sucesso!');
     })
 })

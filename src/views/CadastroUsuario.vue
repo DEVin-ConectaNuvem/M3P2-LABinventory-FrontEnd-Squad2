@@ -327,6 +327,7 @@ export default {
     cleanForm() {
       this.collab = {};
       this.address = {};
+      this.cepNum = null;
     },
     // Acionado pelo switch button,
     // Habilita/desabilita edição dos campos

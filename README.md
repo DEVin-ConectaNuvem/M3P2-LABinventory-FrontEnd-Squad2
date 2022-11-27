@@ -4,6 +4,10 @@
 
 O projeto Front-end desenvolvido durante o Módulo 3, consiste no desenvolvimento de software utilizando o framework VueJS para controle de itens virtuais, sucessor do produto DEVinventory.
 
+# Repositório Back-end:
+
+<a>https://github.com/DEVin-ConectaNuvem/M3P2-LABinventory-BackEnd-Squad2</a>
+
 # Requisitos:
 
 <ul>
@@ -13,7 +17,7 @@ O projeto Front-end desenvolvido durante o Módulo 3, consiste no desenvolviment
   <li><i>Utilizar animações de loading e transições entre páginas.</i> </li>
   <li><i>Utilizar consumo da API ViaCEP para cadastro de endereço</i> </li>
   <li><i>Utilizar favicon, título de página e demais assets</i> </li>
-  <li><i>Utilizar o localStorage para guardar as informações cadastradas.</i> </li>
+  <li><i>Utilizar API e MongoDB para guardar as informações</i> </li>
   <li><i>Utilizar o GitHub como versionador de código</i></li>
   <li><i>Utilizar o Trello para organização das atividades do projeto</i></li>
   <li><i>Utilizar o Cypress para realizar testes na aplicação</i></li>
@@ -34,7 +38,6 @@ Instalar Vue na maquina através do link abaixo:
 
 <li>Para start do projeto dev <<i>npm run serve</i>></li>
 <li>Para start do projeto prod <<i>npm run build</i>></li>
-<li>Para start do json-server <<i>json-server --watch db.json</i>></li>
 <li>Para start dos tests <<i>npm run test:e2e test/e2e/specs</i>></li>
 
 

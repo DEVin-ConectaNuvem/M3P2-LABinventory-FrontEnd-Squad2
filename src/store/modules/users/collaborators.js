@@ -188,7 +188,9 @@ export default {
           return true;
         })
         .catch((e) => {
-          context.commit("setMsgError", "Erro ao cadastrar usuário", e);
+          console.log(e.response.data)
+          context.commit("setExists", true)
+          context.commit("setMsgError", e.response.data.error);
           return false;
         });
     },
