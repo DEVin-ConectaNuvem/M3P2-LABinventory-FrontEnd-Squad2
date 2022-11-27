@@ -1,15 +1,20 @@
 describe("Testa tela inventory book colaboradores e emprestimos", () => {
+    const email = "mcoelho@email.com"
+    const senha = "@abc1234"
+
+    beforeEach(() => {
+        cy.visit("/")
+        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
+        cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`)
+    })
+
+    afterEach(() => {
+        cy.get('.btns-div > :nth-child(1) > :nth-child(3)').click()
+    })
         
     it("Deve visualizar colaborador cadastrado na tela inventário", () => {
-        const email = "mcoelho@email.com"
-        const senha = "@abc1234"
 
-         // Login
-         cy.visit("/")
-         cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`)
-
-        const nomeCompleto = "Juliana Moura"; 
+        const nomeCompleto = "Paula Moura"; 
         const dataNascimento = "1998-07-14";
         const telefone = "48984995578";
         const emailColaborador = "julia@gmail.com";
@@ -38,21 +43,12 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
         cy.get('.btns-div > :nth-child(1) > :nth-child(2)').click();
     })
 
-
     it("Deve visualizar item emprestado na tela inventário", () => {
-        const email = "mcoelho@email.com"
-        const senha = "@abc1234"
-
-         // Login
-         cy.visit("/")
-         cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-         cy.get('#loginform > :nth-child(2) > .form-control').type(`${senha}{enter}`)
-
 
         //Realizar emprestimo
         cy.get('.btns-div > :nth-child(3) > :nth-child(3)').click()
         cy.get('#search-item').type("AB5214-567", {force: true})
-        cy.get('.form-select').first().select('Juliana Moura')
+        cy.get('.form-select').first().select('Paula Moura')
         
 
         //Voltar Tela inventario
@@ -69,20 +65,13 @@ describe("Testa tela inventory book colaboradores e emprestimos", () => {
         cy.get('#search-item').type("Monitor 23'' Samsumg", {force: true})
     })
 
-
-    it("Deve excluir colaborador criado", () => {
-        const email = "mcoelho@email.com"
-        const password = "@abc1234"
-
-        // Login
-        cy.visit("/")
-        cy.get('#loginform > :nth-child(1) > .form-control').type(email)
-        cy.get('#loginform > :nth-child(2) > .form-control').type(`${password}{enter}`)
-
-        cy.get('.btns-div > :nth-child(2) > :nth-child(3)').click();
-        cy.get('#search-user').type("Juliana Moura", {force: true})
+    it("Deve excluir colaborador", () => {
+       
+        cy.get('.btns-div > :nth-child(2) > :nth-child(3)').click()
+        cy.get('#search-user').type("Paula Moura", {force: true})
         cy.get('#modal-btn > .gravatar').click();
-        cy.get('.btn-outline-danger').click();
+
+        cy.get('.btn-outline-danger').click()
     })
     
 })
