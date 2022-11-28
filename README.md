@@ -4,9 +4,13 @@
 
 O projeto Front-end desenvolvido durante o Módulo 3, consiste no desenvolvimento de software utilizando o framework VueJS para controle de itens virtuais, sucessor do produto DEVinventory.
 
-# Repositório Back-end:
+# Back-end disponível em:
 
-<a>https://github.com/DEVin-ConectaNuvem/M3P2-LABinventory-BackEnd-Squad2</a>
+- Github: 
+[`Lab_Inventory_Backend`](https://github.com/DEVin-ConectaNuvem/M3P2-LABinventory-BackEnd-Squad2)
+
+- Docker imagem:
+[`Docker_Backend`](https://hub.docker.com/r/et3rn4ls/devinventary-backend)
 
 # Requisitos:
 
